@@ -66,7 +66,7 @@ def ex04():
                 print("a data informada não é valida")
             if m in (4, 6, 9, 11) and d > 30:
                 print("a data informada não é valida")
-            if (m == 28 and d > 28) or ((a % 4 == 0 and (a % 400 == 0 or a % 100 != 0)) and d > 29):
+            if (m == 28 and d > 28) or (((a % 4 == 0 and a % 100 != 0) or (a % 400 == 0)) and d > 29):
                 print("a data informada não é valida")
         else:
             print("a data informada não é valida")
@@ -91,8 +91,7 @@ def ordem(lista_ns : list):
         if index != None:
             ns_sort.append(ns[index])
             ns.pop(index)
-    return ns_sort
-                
+    return ns_sort             
 def ex05():
     ns = []
     print("informe 3 numeros:")
@@ -101,4 +100,57 @@ def ex05():
         ns.append(n)
     print(*ordem(ns))
 
-ex05()
+def ex06():
+    ns = ""
+    for i in range(10):
+        ns += str(i + 1 if i % 2 == 0 else -(i+1)) + (" " if  i < 9 else "") 
+    print(ns)
+
+def ex07():
+    palavras = input("Digite uma frase:\n").split()
+    print("")
+    for i in range(len(palavras)):
+        for j in range(i, len(palavras)):
+            print(palavras[j], end=" ")
+        print("")
+
+def ex08():
+    texto = input("Digite uma frase:\n")
+    print("")
+    for i in range(len(texto)):
+        print(texto[i+1:len(texto)] + texto[0:i+1])
+
+def ex09():
+    palavras = input("Digite uma frase:\n").split()
+    print("")
+    for p in palavras:
+        p_i = ""
+        for i in range(len(p) - 1, -1, -1):
+            p_i += p[i]
+        print(p_i)
+
+def ex10():
+    for i in range(1, 11):
+        linha = str(i)
+        for j in range(1, i + 1):
+            if j % 2 == 0 and j <= i:
+                linha += " " + str(j)
+        print(linha)
+
+def Diagonal(b, h):
+    return (b**2 + h**2)**(1/2)
+def ex11():
+    b = float(input("Base: "))
+    h = float(input("Altura: "))
+    print("Diagonal = {:.2f}".format(Diagonal(b, h)))
+
+def MenorInteiro(x):
+    if x < 0 and x != int(x):
+        return int(x) - 1
+    return int(x)
+def ex12():
+    x = float(input("Digite um número real: "))
+    print("Menor inteiro = {}".format(MenorInteiro(x)))
+
+
+ex11()
