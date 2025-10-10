@@ -6,13 +6,10 @@ public class Ex05 {
         while(x1 != 0 && x2 != 0 && y1 != 0 && y2 != 0){
             if (x1 == x2 && y1 == y2)
                 System.out.println(0);
-            else if (Math.abs(x1 - x2) == Math.abs(y1 - y2))
+            else if (x1 == x2 || y1 == y2 || Math.abs(x1 - x2) == Math.abs(y1 - y2))
                 System.out.println(1);
-            else{
-                int maior = Math.abs(x1 - x2);
-                if (Math.abs(y1 - y2) > maior) maior = Math.abs(y1 - y2);
-                System.out.println(maior);
-            }
+            else
+                System.out.println(2);
             x1 = sc.nextInt();
             y1 = sc.nextInt();
             x2 = sc.nextInt();
