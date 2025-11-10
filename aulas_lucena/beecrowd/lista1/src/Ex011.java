@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class Ex011 {
     public static void main(String[] args) {
         Scanner entrada = new Scanner(System.in);
-        double a = entrada.nextDouble();
+        double a = entrada.nextInt();
         double b = entrada.nextDouble();
         double c = entrada.nextDouble();
         double pi = 3.14159;
@@ -11,6 +11,6 @@ public class Ex011 {
                 "TRAPEZIO: %.3f\n" +
                 "QUADRADO: %.3f\n" +
                 "RETANGULO: %.3f\n",
-                a*c/2, c * c * pi, (a+b) * c / 2, b * b, a * b);
+                a*c/2, c * c * pi, (a+b) * c );
     }
 }
