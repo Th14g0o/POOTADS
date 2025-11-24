@@ -7,7 +7,7 @@ public class Racional{
         this.den = den;
     }
     public Racional(int num){
-        this(num, 1) // chama o constrututor
+        this(num, 1); // chama o constrututor
     }
 
     public Racional multiplicar(Racional b){

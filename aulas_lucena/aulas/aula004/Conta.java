@@ -13,14 +13,14 @@ public class Conta{
         this.saldo = saldo;
     }
 
-    public double getConta(){
+    public String getConta(){
         return this.conta;
     }
     public double getSaldo(){
         return this.saldo;
     }
 
-    public double depositar(double valor){
+    public void depositar(double valor){
         if (valor > 0) this.saldo += valor;
     }
     public double sacar(double valor){
@@ -28,9 +28,9 @@ public class Conta{
         return this.saldo;
     }
     
-    public transferirPara(Conta c, double valor){
-        double saldoAtual = this.saldo
-        double valor = this.sacar(valor)
-        if (saldoAtual != valor) c.depositar(valor)
+    public void transferirPara(Conta c, double valor){
+        double saldoAtual = this.saldo;
+        double saldoFinal = this.sacar(valor);
+        if (saldoAtual != saldoFinal) c.depositar(valor);
     }
 }
