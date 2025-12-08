@@ -1,8 +1,16 @@
 # Interfaces
 
-contrato que um classe segue. Os metodos e constantes da interface devem existir na classe.
+Tipo especial de classe, que não tem implementação
 
-na interface tudo é publico
+Uma interface define um protocolo
+
+Classes podem implementar uma ou mais interfaces
+
+Contrato que um classe segue. Os metodos e constantes da interface devem existir na classe. 
+
+Na interface tudo é publico.
+
+A interface exige que classes que a implementam declarem seus metodos, por isso o termo contrato.
 
 List<String> -> List é uma interface. que vai trabalhar com um tipo. mas ela pode receber tanto um ArrayList<>() quanto um LinkedList<>() que impplementa os elementos da interface List
 
