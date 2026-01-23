@@ -1,3 +1,4 @@
+package aulas_lucena.projetoFinal.modelos;
 // import java.util.ArrayList;
 import java.util.List;
 
