@@ -1,4 +1,7 @@
 # Programação Orientada a Objetos TADS
+
+> Segundo Período de TADS
+
 ![Java](https://img.shields.io/badge/Java-FFFFFF?style=for-the-badge&logo=openjdk&logoColor=000000)
 ![IntelliJ](https://img.shields.io/badge/Intellij-FFFFFF?style=for-the-badge&logo=intellijidea&logoColor=000000)
 
