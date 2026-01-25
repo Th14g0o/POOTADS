@@ -1,7 +1,0 @@
-package aulas_lucena.projetoFinal.modelos;
-
-public class Pokemon{
-    private int id;
-    private String nome;
-    private int regiaoId;
-}
