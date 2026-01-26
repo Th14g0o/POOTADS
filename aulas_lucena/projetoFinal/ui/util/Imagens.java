@@ -100,4 +100,24 @@ public class Imagens {
             larg, altu
         );
     }
+
+    public static ImageIcon iconeCheckBox(int larg, int altu) {
+        return getImagemIcone(
+            "/aulas_lucena/projetoFinal/conteudos/imgs/comuns/CheckBox.png",
+            larg, altu
+        );
+    }
+    public static ImageIcon iconeCheckBoxSelecionado(int larg, int altu) {
+        return getImagemIcone(
+            "/aulas_lucena/projetoFinal/conteudos/imgs/comuns/CheckBoxSelecionado.png",
+            larg, altu
+        );
+    }
+
+    public static ImageIcon iconeBtSalvar(int larg, int altu) {
+        return getImagemIcone(
+            "/aulas_lucena/projetoFinal/conteudos/imgs/comuns/iconeSalvar.png",
+            larg, altu
+        );
+    }
 }

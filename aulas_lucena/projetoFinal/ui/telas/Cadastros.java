@@ -19,10 +19,10 @@ public class Cadastros extends JPanel  {;
         painelButoes.setBackground(Cores.AZUL);
         add(painelButoes, BorderLayout.PAGE_START);
 
-        JButton btnJogo = new BotaoIconeTexto("Jogo", Imagens.iconeCadastroJogo(tamIcones, tamIcones));
-        JButton btnRegiao = new BotaoIconeTexto("Região", Imagens.iconeCadastroRegiao(tamIcones, tamIcones));
-        JButton btnPokemon = new BotaoIconeTexto("Pokemon", Imagens.iconeCadastroPokemon(tamIcones, tamIcones));
-        JButton btnElemento = new BotaoIconeTexto("Elemento", Imagens.iconeCadastroElemento(tamIcones, tamIcones));
+        JButton btnJogo = new BotaoIconeTexto("JOGO", Imagens.iconeCadastroJogo(tamIcones, tamIcones));
+        JButton btnRegiao = new BotaoIconeTexto("REGIÃO", Imagens.iconeCadastroRegiao(tamIcones, tamIcones));
+        JButton btnPokemon = new BotaoIconeTexto("POKEMON", Imagens.iconeCadastroPokemon(tamIcones, tamIcones));
+        JButton btnElemento = new BotaoIconeTexto("ELEMENTO", Imagens.iconeCadastroElemento(tamIcones, tamIcones));
 
         painelButoes.add(btnJogo);
         painelButoes.add(btnRegiao);

@@ -1,62 +1,64 @@
 package aulas_lucena.projetoFinal.ui.componentes;
 
-import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 import aulas_lucena.projetoFinal.ui.util.Cores;
 import aulas_lucena.projetoFinal.ui.util.Imagens;
 
-import java.awt.FlowLayout;
-
 public class BarraJanela extends JPanel {
     private boolean maximizado = false;
     private Rectangle tamanhoAnterior;
+    private JButton btnMinimizar;
+    private JButton btnMaximizar;
+    private JButton btnFechar;
 
-    public BarraJanela(JFrame frame) {
+    public BarraJanela(Window janela) {
         setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
         setBackground(Cores.VERMELHO);
         setPreferredSize(new Dimension(1000, 32));
 
-        JButton btnMinimizar = new JButton(Imagens.iconeBarraJanelaMinimizar(12, 12));
-        JButton btnMaximizar = new JButton(Imagens.iconeBarraJanelaMaximizar(12, 12));
-        JButton btnFechar = new JButton(Imagens.iconeBarraJanelaFechar(12, 12));
+        btnMinimizar = new JButton(Imagens.iconeBarraJanelaMinimizar(12, 12));
+        btnMaximizar = new JButton(Imagens.iconeBarraJanelaMaximizar(12, 12));
+        btnFechar = new JButton(Imagens.iconeBarraJanelaFechar(12, 12));
 
-        btnMinimizar.addActionListener(e -> frame.setState(JFrame.ICONIFIED));
-        btnFechar.addActionListener(e -> System.exit(0));
-        btnMaximizar.addActionListener(e -> alternarMaximizacao(frame));
+        btnMinimizar.addActionListener(e -> {
+            if (janela instanceof Frame f) {
+                f.setState(Frame.ICONIFIED);
+            }
+        });
 
-        btnMinimizar.setFocusPainted(false);
-        btnFechar.setFocusPainted(false);
-        btnMaximizar.setFocusPainted(false);
+        btnMaximizar.addActionListener(e -> alternarMaximizacao(janela));
+        btnFechar.addActionListener(e -> janela.dispose());
 
-        btnMinimizar.setOpaque(false);
-        btnFechar.setOpaque(false);
-        btnMaximizar.setOpaque(false);
-
-        btnMinimizar.setBackground(Cores.VERMELHO);
-        btnFechar.setBackground(Cores.VERMELHO);
-        btnMaximizar.setBackground(Cores.VERMELHO);
-
-        btnMinimizar.setBorderPainted(false);
-        btnFechar.setBorderPainted(false);
-        btnMaximizar.setBorderPainted(false);
+        configurarBotao(btnMinimizar);
+        configurarBotao(btnMaximizar);
+        configurarBotao(btnFechar);
 
         add(btnMinimizar);
         add(btnMaximizar);
         add(btnFechar);
 
-        habilitarArraste(frame);
+        habilitarArraste(janela);
     }
 
-    private void habilitarArraste(JFrame frame) {
+    public void visibilidadeBtnMaximizar(boolean visivel){
+        btnMaximizar.setVisible(visivel);
+    }
+    public void visibilidadeBtnMinizar(boolean visivel){
+        btnMinimizar.setVisible(visivel);
+    }
+
+    private void configurarBotao(JButton btn) {
+        btn.setFocusPainted(false);
+        btn.setOpaque(false);
+        btn.setBackground(Cores.VERMELHO);
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+
+    private void habilitarArraste(Window janela) {
         final Point[] mouseDown = { null };
 
         addMouseListener(new MouseAdapter() {
@@ -68,7 +70,7 @@ public class BarraJanela extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
                 Point p = e.getLocationOnScreen();
-                frame.setLocation(
+                janela.setLocation(
                     p.x - mouseDown[0].x,
                     p.y - mouseDown[0].y
                 );
@@ -76,7 +78,9 @@ public class BarraJanela extends JPanel {
         });
     }
 
-    private void alternarMaximizacao(JFrame frame) {
+    private void alternarMaximizacao(Window janela) {
+        if (!(janela instanceof Frame frame)) return;
+
         GraphicsEnvironment ge =
             GraphicsEnvironment.getLocalGraphicsEnvironment();
         Rectangle areaUtil = ge.getMaximumWindowBounds();

@@ -1,51 +1,48 @@
 package aulas_lucena.projetoFinal.ui.telas.tabs;
 
 import java.awt.*;
+import java.util.List;
+
 import javax.swing.*;
 
-import aulas_lucena.projetoFinal.ui.util.Cores;
+import aulas_lucena.projetoFinal.ui.componentes.BotaoSalvar;
+import aulas_lucena.projetoFinal.ui.componentes.CampoGrupoRadio;
+import aulas_lucena.projetoFinal.ui.componentes.CampoSelect.Opcao;
+import aulas_lucena.projetoFinal.ui.componentes.CampoSelect;
 
 public class CadastroVantagem extends JPanel{
     public CadastroVantagem() {
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        // Fundo
-        JPanel fundo = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        fundo.setBackground(Cores.VERMELHO);
-        add(fundo, BorderLayout.CENTER);
 
         // Organização do form em grid
         JPanel formulario = new JPanel(new GridBagLayout());
         formulario.setOpaque(false);
-        fundo.add(formulario);
+        add(formulario);
 
         // criação do grid
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.anchor = GridBagConstraints.WEST;
 
-        // texto
         gbc.gridx = 0;
         gbc.gridy = 0;
-        JLabel lblNome = new JLabel("Nome:");
-        lblNome.setForeground(Color.WHITE);
-        formulario.add(lblNome, gbc);
+        CampoSelect campoElementoAlvo  = new CampoSelect("Elemento alvo:");
+        campoElementoAlvo.setOpcao(new Opcao(1, "alvo"));
+        formulario.add(campoElementoAlvo, gbc);
 
-        // input
-        gbc.gridx = 0;
         gbc.gridy = 1;
-        JTextField txtNome = new JTextField(20);
-        formulario.add(txtNome, gbc);
-        
+        CampoSelect campoElementoVantagemDesvantagem  = new CampoSelect("Elemento vantagem/desvantagem:");
+        campoElementoVantagemDesvantagem.setOpcao(new Opcao(1, "asds"));
+        formulario.add(campoElementoVantagemDesvantagem, gbc);
 
-        // Scroll
-        //JScrollPane scroll = new JScrollPane(formulario);
-        //scroll.setBorder(null);
-        //scroll.getViewport().setOpaque(false);
-        //scroll.setOpaque(false);
+        gbc.gridy = 2;
+        CampoGrupoRadio radioVantagem = new CampoGrupoRadio(List.of("Vantagem", "Desvantagem"));
+        formulario.add(radioVantagem, gbc);
 
-        //add(scroll, BorderLayout.CENTER);
+        gbc.gridy = 3;
+        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar.addActionListener(e -> {});
+        formulario.add(btSalvar, gbc);
     }
 }

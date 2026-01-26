@@ -10,7 +10,8 @@ import java.util.List;
 public class TabCadastros extends JPanel {
     private JPanel painelTabs;
     private CardLayout cardLayout;
-    private JPanel painelConteudo;
+    private JPanel fundoTab;
+     private JPanel painelConteudo;
     private List<BotaoTab> botoes;
 
     private void selecionarTab(BotaoTab ativa, CardLayout layout, JPanel conteudo, String card, List<BotaoTab> todas) {
@@ -49,9 +50,18 @@ public class TabCadastros extends JPanel {
             );
         }
         
+        fundoTab = new JPanel();
+        fundoTab.setLayout(new BoxLayout(fundoTab, BoxLayout.Y_AXIS));
+        fundoTab.setBackground(Cores.AZUL);
+        fundoTab.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        add(fundoTab, BorderLayout.CENTER);
+
+        // Fundo
         cardLayout = new CardLayout();
         painelConteudo = new JPanel(cardLayout);
-        painelConteudo.setBackground(Cores.AZUL);
-        add(painelConteudo, BorderLayout.CENTER);
+        painelConteudo.setBackground(Cores.VERMELHO);
+        painelConteudo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        fundoTab.add(painelConteudo);
+        
     }
 }
