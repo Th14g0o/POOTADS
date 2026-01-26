@@ -18,5 +18,17 @@ public class Utils {
             }
         }
     }
+
+    public static void aplicarOpaco(Component c, boolean ehOpaco) {
+        if (c instanceof JComponent jc) {
+            jc.setOpaque(ehOpaco);
+        }
+
+        if (c instanceof Container container) {
+            for (Component filho : container.getComponents()) {
+                aplicarOpaco(filho, ehOpaco);
+            }
+        }
+    }
     
 }

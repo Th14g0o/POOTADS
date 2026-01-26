@@ -48,7 +48,7 @@ public class CadastroPokedex extends JPanel{
         formulario.add(campoNumero, gbc);
 
         gbc.gridy = 4;
-        CampoAreaTexto campoDescricao = new CampoAreaTexto("Número:");
+        CampoAreaTexto campoDescricao = new CampoAreaTexto("Descrição:");
         formulario.add(campoDescricao, gbc);
 
         gbc.gridy = 5;
@@ -72,7 +72,8 @@ public class CadastroPokedex extends JPanel{
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         scrollPane.setOpaque(false);
         scrollPane.setBackground(Cores.TRANSPARENTE);
-        //Utils.aplicarTema(scrollPane, Cores.TRANSPARENTE, Color.WHITE);
+        scrollPane.getViewport().setOpaque(false);
+        // Utils.aplicarOpaco(scrollPane, false);
 
         add(scrollPane, BorderLayout.CENTER);
     }
