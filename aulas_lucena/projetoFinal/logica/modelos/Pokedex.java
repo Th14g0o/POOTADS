@@ -13,4 +13,6 @@ public class Pokedex {
 
     private int idPokemon;
     private int idJogo;
+    private int idRegiao;
+
 }

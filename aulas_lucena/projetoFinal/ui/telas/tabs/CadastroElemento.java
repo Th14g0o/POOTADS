@@ -2,9 +2,7 @@ package aulas_lucena.projetoFinal.ui.telas.tabs;
 
 import java.awt.*;
 import javax.swing.*;
-
 import aulas_lucena.projetoFinal.ui.componentes.BotaoSalvar;
-import aulas_lucena.projetoFinal.ui.componentes.CampoAreaTexto;
 import aulas_lucena.projetoFinal.ui.componentes.CampoSelecionaCor;
 import aulas_lucena.projetoFinal.ui.componentes.CampoTexto;
 

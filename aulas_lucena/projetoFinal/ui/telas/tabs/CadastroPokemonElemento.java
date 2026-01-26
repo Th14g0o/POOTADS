@@ -1,12 +1,12 @@
 package aulas_lucena.projetoFinal.ui.telas.tabs;
 
-import aulas_lucena.projetoFinal.ui.componentes.BotaoSalvar;
-import aulas_lucena.projetoFinal.ui.componentes.CampoTexto;
 import java.awt.*;
 import javax.swing.*;
+import aulas_lucena.projetoFinal.ui.componentes.BotaoSalvar;
+import aulas_lucena.projetoFinal.ui.componentes.CampoSelect;
 
-public class CadastroJogo extends JPanel{
-    public CadastroJogo() {
+public class CadastroPokemonElemento extends JPanel{
+    public CadastroPokemonElemento() {
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
 
@@ -22,12 +22,15 @@ public class CadastroJogo extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoTexto campoNome = new CampoTexto("Nome:");
-        formulario.add(campoNome, gbc);
+        CampoSelect campoPokemon = new CampoSelect("Pokemon:");
+        formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 1;
+        CampoSelect campoElemento = new CampoSelect("Elemento:");
+        formulario.add(campoElemento, gbc);
+
+        gbc.gridy = 2;
         BotaoSalvar btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
     }
-    
 }

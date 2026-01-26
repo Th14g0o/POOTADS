@@ -33,29 +33,32 @@ public class TabCadastros extends JPanel {
         }
     }
 
-    public TabCadastros(List<BotaoTab> botoes) {
-        setLayout(new BorderLayout());
-        setOpaque(false);
+    public void setBotoes(List<BotaoTab> botoes){
         this.botoes = botoes;
-
-        // tab
-        painelTabs = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        painelTabs.setOpaque(false);
-        add(painelTabs, BorderLayout.NORTH);
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         for (BotaoTab btTab : botoes) {
             painelTabs.add(btTab);
             btTab.addActionListener(e ->
                 selecionarTab(btTab, cardLayout, painelConteudo, btTab.idTab, botoes)
             );
         }
+    }
+
+    public TabCadastros() {
+        setLayout(new BorderLayout());
+        setOpaque(false);
+        // tab
+        painelTabs = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        painelTabs.setOpaque(false);
+        add(painelTabs, BorderLayout.NORTH);
+        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        
         
         fundoTab = new JPanel();
         fundoTab.setLayout(new BoxLayout(fundoTab, BoxLayout.Y_AXIS));
         fundoTab.setBackground(Cores.AZUL);
         fundoTab.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(fundoTab, BorderLayout.CENTER);
-
+        
         // Fundo
         cardLayout = new CardLayout();
         painelConteudo = new JPanel(cardLayout);

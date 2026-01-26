@@ -15,7 +15,7 @@ public class CadastrosElemento extends TabCadastros  {
         List<BotaoTab> bts = new ArrayList<>();
         bts.add(new BotaoTab("Elemento", "CADASTRO_ELEMENTO"));
         bts.add(new BotaoTab("Vantagem/Desvantagem", "CADASTRO_VANTAGEM_DESVANTAGEM"));
-        super(bts);
+        setBotoes(bts);
         adicionarConteudo(new CadastroElemento(), "CADASTRO_ELEMENTO");
         adicionarConteudo(new CadastroVantagem(), "CADASTRO_VANTAGEM_DESVANTAGEM");
         iniciarTab();

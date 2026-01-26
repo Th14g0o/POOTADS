@@ -8,6 +8,7 @@ import javax.swing.*;
 import aulas_lucena.projetoFinal.ui.componentes.BotaoSalvar;
 import aulas_lucena.projetoFinal.ui.componentes.CampoGrupoRadio;
 import aulas_lucena.projetoFinal.ui.componentes.CampoSelect.Opcao;
+import aulas_lucena.projetoFinal.ui.componentes.CampoTexto;
 import aulas_lucena.projetoFinal.ui.componentes.CampoSelect;
 
 public class CadastroVantagem extends JPanel{
@@ -41,6 +42,10 @@ public class CadastroVantagem extends JPanel{
         formulario.add(radioVantagem, gbc);
 
         gbc.gridy = 3;
+        CampoTexto campoNome = new CampoTexto("Multiplicador:");
+        formulario.add(campoNome, gbc);
+
+        gbc.gridy = 4;
         BotaoSalvar btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e -> {});
         formulario.add(btSalvar, gbc);
