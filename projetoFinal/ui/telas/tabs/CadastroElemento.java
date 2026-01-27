@@ -3,6 +3,7 @@ package projetoFinal.ui.telas.tabs;
 import java.awt.*;
 import javax.swing.*;
 import projetoFinal.ui.componentes.BotaoSalvar;
+import projetoFinal.ui.componentes.CampoImagem;
 import projetoFinal.ui.componentes.CampoSelecionaCor;
 import projetoFinal.ui.componentes.CampoTexto;
 
@@ -27,10 +28,14 @@ public class CadastroElemento extends JPanel{
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
+        CampoImagem campoFoto = new CampoImagem("Imagem do Jogo:");
+        formulario.add(campoFoto, gbc);
+
+        gbc.gridy = 2;
         CampoSelecionaCor campoCor = new CampoSelecionaCor("Selecione a cor representante:");
         formulario.add(campoCor, gbc);
 
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         BotaoSalvar btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
     }

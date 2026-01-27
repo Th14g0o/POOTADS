@@ -120,4 +120,11 @@ public class Imagens {
             larg, altu
         );
     }
+
+    public static ImageIcon iconeAnexarImagem(int larg, int altu) {
+        return getImagemIcone(
+            "/projetoFinal/conteudos/imgs/comuns/anexarImagem.png",
+            larg, altu
+        );
+    }
 }

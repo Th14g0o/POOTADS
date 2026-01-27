@@ -1,6 +1,7 @@
 package projetoFinal.ui.telas.tabs;
 
 import projetoFinal.ui.componentes.BotaoSalvar;
+import projetoFinal.ui.componentes.CampoImagem;
 import projetoFinal.ui.componentes.CampoTexto;
 import java.awt.*;
 import javax.swing.*;
@@ -26,6 +27,10 @@ public class CadastroJogo extends JPanel{
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
+        CampoImagem campoFoto = new CampoImagem("Imagem do Jogo:");
+        formulario.add(campoFoto, gbc);
+
+        gbc.gridy = 2;
         BotaoSalvar btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
     }

@@ -8,9 +8,7 @@ import javax.swing.*;
 import projetoFinal.ui.componentes.BotaoSalvar;
 import projetoFinal.ui.componentes.CampoGrupoRadio;
 import projetoFinal.ui.componentes.CampoNumero;
-import projetoFinal.ui.componentes.CampoSelect.Opcao;
 import projetoFinal.ui.util.Enuns.TipoNumero;
-import projetoFinal.ui.componentes.CampoTexto;
 import projetoFinal.ui.componentes.CampoSelect;
 
 public class CadastroVantagem extends JPanel{
@@ -31,12 +29,10 @@ public class CadastroVantagem extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 0;
         CampoSelect campoElementoAlvo  = new CampoSelect("Elemento alvo:");
-        campoElementoAlvo.setOpcao(new Opcao(1, "alvo"));
         formulario.add(campoElementoAlvo, gbc);
 
         gbc.gridy = 1;
         CampoSelect campoElementoVantagemDesvantagem  = new CampoSelect("Elemento vantagem/desvantagem:");
-        campoElementoVantagemDesvantagem.setOpcao(new Opcao(1, "asds"));
         formulario.add(campoElementoVantagemDesvantagem, gbc);
 
         gbc.gridy = 2;
@@ -47,7 +43,7 @@ public class CadastroVantagem extends JPanel{
         CampoNumero campoNome = new CampoNumero("Multiplicador:", 7, TipoNumero.DOUBLE);
         formulario.add(campoNome, gbc);
 
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         BotaoSalvar btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e -> {});
         formulario.add(btSalvar, gbc);
