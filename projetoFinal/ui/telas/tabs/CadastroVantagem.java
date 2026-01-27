@@ -7,7 +7,9 @@ import javax.swing.*;
 
 import projetoFinal.ui.componentes.BotaoSalvar;
 import projetoFinal.ui.componentes.CampoGrupoRadio;
+import projetoFinal.ui.componentes.CampoNumero;
 import projetoFinal.ui.componentes.CampoSelect.Opcao;
+import projetoFinal.ui.util.Enuns.TipoNumero;
 import projetoFinal.ui.componentes.CampoTexto;
 import projetoFinal.ui.componentes.CampoSelect;
 
@@ -42,7 +44,7 @@ public class CadastroVantagem extends JPanel{
         formulario.add(radioVantagem, gbc);
 
         gbc.gridy = 3;
-        CampoTexto campoNome = new CampoTexto("Multiplicador:");
+        CampoNumero campoNome = new CampoNumero("Multiplicador:", 7, TipoNumero.DOUBLE);
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 4;

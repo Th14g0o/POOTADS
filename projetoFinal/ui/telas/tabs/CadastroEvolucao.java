@@ -3,8 +3,8 @@ package projetoFinal.ui.telas.tabs;
 import java.awt.*;
 import javax.swing.*;
 import projetoFinal.ui.componentes.BotaoSalvar;
+import projetoFinal.ui.componentes.CampoNumero;
 import projetoFinal.ui.componentes.CampoSelect;
-import projetoFinal.ui.componentes.CampoTexto;
 
 public class CadastroEvolucao extends JPanel{
     public CadastroEvolucao() {
@@ -27,7 +27,7 @@ public class CadastroEvolucao extends JPanel{
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        CampoTexto campoEstagio = new CampoTexto("Estagio:");
+        CampoNumero campoEstagio = new CampoNumero("Estagio:");
         formulario.add(campoEstagio, gbc);
 
         gbc.gridy = 2;

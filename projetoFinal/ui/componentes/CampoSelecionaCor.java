@@ -1,10 +1,8 @@
 package projetoFinal.ui.componentes;
 
 import javax.swing.*;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
-
 import projetoFinal.ui.util.Cores;
-
+import projetoFinal.ui.util.Uteis;
 import java.awt.*;
 
 public class CampoSelecionaCor extends JPanel {
@@ -37,21 +35,6 @@ public class CampoSelecionaCor extends JPanel {
         add(preview);
     }
 
-    private void aplicarTema(Component c, Color fundo, Color texto) {
-        c.setBackground(fundo);
-        c.setForeground(texto);
-
-        if (c instanceof JComponent jc) {
-            jc.setOpaque(true);
-        }
-
-        if (c instanceof Container container) {
-            for (Component filho : container.getComponents()) {
-                aplicarTema(filho, fundo, texto);
-            }
-        }
-    }
-
     private void abrirDialogo() {
         JColorChooser chooser = new JColorChooser(corSelecionada);
         // mantém só RGB
@@ -62,7 +45,7 @@ public class CampoSelecionaCor extends JPanel {
         }
         chooser.setPreviewPanel(new JPanel());
         chooser.setOpaque(true);
-        aplicarTema(chooser, Cores.AZUL, Color.WHITE);
+        Uteis.aplicarTema(chooser, Cores.AZUL, Color.WHITE);
 
         JDialog dialog = new JDialog(
                 SwingUtilities.getWindowAncestor(this),

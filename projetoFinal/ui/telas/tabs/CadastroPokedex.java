@@ -2,13 +2,15 @@ package projetoFinal.ui.telas.tabs;
 
 import java.awt.*;
 import javax.swing.*;
+
+import projetoFinal.ui.componentes.BarraRolagem;
 import projetoFinal.ui.componentes.BotaoSalvar;
 import projetoFinal.ui.componentes.CampoAreaTexto;
+import projetoFinal.ui.componentes.CampoNumero;
 import projetoFinal.ui.componentes.CampoSelecionaCor;
 import projetoFinal.ui.componentes.CampoSelect;
 import projetoFinal.ui.componentes.CampoTexto;
 import projetoFinal.ui.util.Cores;
-import projetoFinal.ui.util.Utils;
 
 public class CadastroPokedex extends JPanel{
     public CadastroPokedex() {
@@ -44,7 +46,7 @@ public class CadastroPokedex extends JPanel{
         formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 3;
-        CampoTexto campoNumero = new CampoTexto("Número:");
+        CampoNumero campoNumero = new CampoNumero("Número:");
         formulario.add(campoNumero, gbc);
 
         gbc.gridy = 4;
@@ -73,8 +75,10 @@ public class CadastroPokedex extends JPanel{
         scrollPane.setOpaque(false);
         scrollPane.setBackground(Cores.TRANSPARENTE);
         scrollPane.getViewport().setOpaque(false);
-        // Utils.aplicarOpaco(scrollPane, false);
-
+        JScrollBar barraRolagem = scrollPane.getVerticalScrollBar();
+        barraRolagem.setUI(new BarraRolagem());
+        barraRolagem.setPreferredSize(new Dimension(12, Integer.MAX_VALUE));
+        barraRolagem.setOpaque(false);
         add(scrollPane, BorderLayout.CENTER);
     }
 }

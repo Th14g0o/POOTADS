@@ -25,7 +25,7 @@ public class CadastroPokemon extends JPanel{
         CampoTexto campoNome = new CampoTexto("Nome:");
         formulario.add(campoNome, gbc);
 
-        gbc.gridy = 2;
+        gbc.gridy = 1;
         BotaoSalvar btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
     }
