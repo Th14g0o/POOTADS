@@ -30,6 +30,10 @@ public class CadastroPokemonElemento extends JPanel{
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 2;
+        CampoSelect campoJogo = new CampoSelect("Jogo:");
+        formulario.add(campoJogo, gbc);
+
+        gbc.gridy = 3;
         BotaoSalvar btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
     }

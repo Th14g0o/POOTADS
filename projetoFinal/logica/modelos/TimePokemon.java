@@ -1,8 +1,7 @@
 package projetoFinal.logica.modelos;
 
-public class PokemonElemento {
+public class TimePokemon {
     private int id;
+    private int idTime;
     private int idPokemon;
-    private int idElemento;
-    private int idJogo;
 }
