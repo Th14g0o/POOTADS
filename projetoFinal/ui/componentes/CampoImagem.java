@@ -15,8 +15,8 @@ public class CampoImagem extends JPanel {
     private JLabel preview;
     private File arquivoImagem;
 
-    private static final int LARGURA = 70;
-    private static final int ALTURA = 70;
+    private static final int LARGURA = 120;
+    private static final int ALTURA = 120;
 
     public CampoImagem(String labelTexto) {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
