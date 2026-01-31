@@ -9,8 +9,8 @@ public class BarraRolagem  extends BasicScrollBarUI {
 
     @Override
     protected void configureScrollBarColors() {
-        thumbColor = Cores.AMARELO;      // cor do thumb
-        trackColor = new Color(0, 0, 0, 0);              // trilha transparente
+        thumbColor = Cores.AMARELO;     
+        trackColor = new Color(0, 0, 0, 0);            
     }
 
     @Override

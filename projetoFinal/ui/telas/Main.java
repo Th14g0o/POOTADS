@@ -3,16 +3,28 @@ package projetoFinal.ui.telas;
 import javax.swing.*;
 
 import projetoFinal.ui.componentes.BarraJanela;
-import projetoFinal.ui.componentes.BotaoVermelho;
+import projetoFinal.ui.componentes.botoes.BotaoVermelho;
+import projetoFinal.ui.telas.cadastros.Cadastros;
+import projetoFinal.ui.telas.listagem.Listas;
 import projetoFinal.ui.util.Cores;
 import projetoFinal.ui.util.Imagens;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main extends JFrame {
     private CardLayout cardLayout;
     private JPanel painelConteudo;
+    private List<JButton> botoesHeader = new ArrayList<JButton>();
+
+    private void destacarBotaoAtual(JButton botao){
+        for (JButton bt : botoesHeader){
+            if (botao != bt)  bt.setForeground(Color.WHITE);
+            else bt.setForeground(Cores.AMARELO);
+        }
+    }
 
     public Main() {
         // Criando tela
@@ -56,13 +68,22 @@ public class Main extends JFrame {
 
         JButton btnHome = new BotaoVermelho("Home");
         JButton btnCadastros = new BotaoVermelho("Cadastros");
+        JButton btnListas = new BotaoVermelho("Listagem");
         JButton btnTime = new BotaoVermelho("Time");
         JButton btnPokedex = new BotaoVermelho("Pokedex");
+        botoesHeader.add(btnHome);
+        botoesHeader.add(btnCadastros);
+        botoesHeader.add(btnListas);
+        botoesHeader.add(btnTime);
+        botoesHeader.add(btnPokedex);
+
 
         painelBotoes.add(btnHome);
         painelBotoes.add(btnCadastros);
+        painelBotoes.add(btnListas);
         painelBotoes.add(btnTime);
         painelBotoes.add(btnPokedex);
+        
 
         cabecalho.add(painelLogo, BorderLayout.WEST);
         cabecalho.add(painelBotoes, BorderLayout.EAST);
@@ -73,6 +94,7 @@ public class Main extends JFrame {
         painelConteudo.setBackground(new  Color(208, 61, 108));
         painelConteudo.add(new Home(), "HOME");
         painelConteudo.add(new Cadastros(), "CADASTROS");
+        painelConteudo.add(new Listas(), "LISTAGEM");
         painelConteudo.add(new Time(), "TIME");
         painelConteudo.add(new Pokedex(), "POKEDEX");
         
@@ -84,31 +106,23 @@ public class Main extends JFrame {
         // Eventos de clique para botões
         btnHome.addActionListener(e -> {
             cardLayout.show(painelConteudo, "HOME");
-            btnHome.setForeground(Cores.AMARELO);
-            btnCadastros.setForeground(Color.WHITE);
-            btnTime.setForeground(Color.WHITE);
-            btnPokedex.setForeground(Color.WHITE);
+            this.destacarBotaoAtual(btnHome);
         });
         btnCadastros.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS");
-            btnHome.setForeground(Color.WHITE);
-            btnCadastros.setForeground(Cores.AMARELO);
-            btnTime.setForeground(Color.WHITE);
-            btnPokedex.setForeground(Color.WHITE);
+            this.destacarBotaoAtual(btnCadastros);
         });
         btnTime.addActionListener(e -> {
             cardLayout.show(painelConteudo, "TIME");
-            btnHome.setForeground(Color.WHITE);
-            btnCadastros.setForeground(Color.WHITE);
-            btnTime.setForeground(Cores.AMARELO);
-            btnPokedex.setForeground(Color.WHITE);
+            this.destacarBotaoAtual(btnTime);
         });
         btnPokedex.addActionListener(e -> {
             cardLayout.show(painelConteudo, "POKEDEX");
-            btnHome.setForeground(Color.WHITE);
-            btnCadastros.setForeground(Color.WHITE);
-            btnTime.setForeground(Color.WHITE);
-            btnPokedex.setForeground(Cores.AMARELO);
+            this.destacarBotaoAtual(btnPokedex);
+        });
+        btnListas.addActionListener(e ->{
+            cardLayout.show(painelConteudo, "LISTAGEM");
+            this.destacarBotaoAtual(btnListas);
         });
     }
 
