@@ -4,30 +4,39 @@ import javax.swing.*;
 import projetoFinal.ui.util.Imagens;
 import java.awt.*;
 import java.util.List;
+import java.util.ArrayList;
 
 public class CampoGrupoRadio extends JPanel{
-    private List<JRadioButton> radios;
+    private List<JRadioButton> radios = new ArrayList<JRadioButton>();
     public ButtonGroup grupo = new ButtonGroup();
 
     public CampoGrupoRadio(List<String> textos){
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
-        ButtonGroup grupo = new ButtonGroup();
+        addOpcao(textos);
+    }
+
+    public void addOpcao(String texto){
+        JRadioButton campo = new JRadioButton(texto, Imagens.iconeCheckBox(20, 20));
+        campo.setSelectedIcon(Imagens.iconeCheckBoxSelecionado(20, 20));
+        campo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        campo.setContentAreaFilled(false);
+        campo.setOpaque(false);
+        campo.setForeground(Color.WHITE);
+        campo.setFocusPainted(false);
+        campo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        grupo.add(campo);
+        radios.add(campo);
+        this.add(campo);
+    }
+    public void addOpcao(List<String> textos){
         for (String texto : textos){
-            JRadioButton campo = new JRadioButton(texto, Imagens.iconeCheckBox(20, 20));
-            campo.setSelectedIcon(Imagens.iconeCheckBoxSelecionado(20, 20));
-            campo.setAlignmentX(Component.LEFT_ALIGNMENT);
-            campo.setContentAreaFilled(false);
-            campo.setOpaque(false);
-            campo.setForeground(Color.WHITE);
-            campo.setFocusPainted(false);
-            campo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            grupo.add(campo);
-            add(campo);
+            addOpcao(texto);
         }
     }
 
     public void limpar() {
+        radios = new ArrayList<JRadioButton>();
         grupo.clearSelection();
     }
     public int getValor() {
