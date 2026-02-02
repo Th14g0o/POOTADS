@@ -19,10 +19,10 @@ public class Time {
         return this.nome;
     }
 
-    public void setIdJogo(Long id){
-        this.id = id;
+    public void setIdJogo(Long idJogo){
+        this.idJogo = idJogo;
     }
     public Long getIdJogo(){
-        return this.id;
+        return this.idJogo;
     }
 }
