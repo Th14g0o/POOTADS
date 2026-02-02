@@ -1,6 +1,28 @@
 package projetoFinal.logica.modelos;
 
 public class Time {
-    private int id;
+    private Long id;
     private String nome;
+    private Long idJogo;
+
+    public void setId(Long id){
+        this.id = id;
+    }
+    public Long getId(){
+        return this.id;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    public String getNome(){
+        return this.nome;
+    }
+
+    public void setIdJogo(Long id){
+        this.id = id;
+    }
+    public Long getIdJogo(){
+        return this.id;
+    }
 }

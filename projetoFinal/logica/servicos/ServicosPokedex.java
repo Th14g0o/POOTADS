@@ -1,0 +1,146 @@
+package projetoFinal.logica.servicos;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import projetoFinal.logica.dto.ElementoDTO;
+import projetoFinal.logica.dto.FraquezaVantagemDTO;
+import projetoFinal.logica.dto.PokemonPokedexDTO;
+import projetoFinal.logica.modelos.Elemento;
+import projetoFinal.logica.modelos.Evolucao;
+import projetoFinal.logica.modelos.FraquezaVantagem;
+import projetoFinal.logica.modelos.Jogo;
+import projetoFinal.logica.modelos.Pokedex;
+import projetoFinal.logica.modelos.Pokemon;
+import projetoFinal.logica.modelos.PokemonElemento;
+import projetoFinal.logica.modelos.Regiao;
+import projetoFinal.logica.persistencia.DAO.ElementoDAO;
+import projetoFinal.logica.persistencia.DAO.EvolucaoDAO;
+import projetoFinal.logica.persistencia.DAO.FraquezaVantagemDAO;
+import projetoFinal.logica.persistencia.DAO.JogoDAO;
+import projetoFinal.logica.persistencia.DAO.PokedexDAO;
+import projetoFinal.logica.persistencia.DAO.PokemonDAO;
+import projetoFinal.logica.persistencia.DAO.PokemonElementoDAO;
+import projetoFinal.logica.persistencia.DAO.RegiaoDAO;
+
+public class ServicosPokedex {
+    private PokedexDAO daoPokedex = new PokedexDAO();
+    private PokemonDAO daoPokemon = new PokemonDAO();
+    private ElementoDAO daoElemento = new ElementoDAO();
+    private PokemonElementoDAO daoPokemonElemento = new PokemonElementoDAO();
+    private RegiaoDAO daoRegiao = new RegiaoDAO();
+    private JogoDAO daoJogo = new JogoDAO();
+    private FraquezaVantagemDAO daoFV = new FraquezaVantagemDAO();
+    private EvolucaoDAO daoEvolucao = new EvolucaoDAO();
+
+    public void criar(Pokedex obj){
+        daoPokedex.inserir(obj);
+    }
+    public void atualizar(Pokedex obj){
+        daoPokedex.atualizar(obj);
+    }
+    public Pokedex achar(Long id){
+        Pokedex obj = daoPokedex.buscarPorId(id);
+        return obj;
+    }
+    public void listar(Pokedex obj){
+        daoPokedex.inserir(obj);
+    }
+    public void apagar(Long id){
+        daoPokedex.deletar(id);
+    }
+
+    private PokemonPokedexDTO criarPokemonPokedexDTO(Pokedex pokedex, Jogo jogo, Regiao regiao, Pokemon pokemon, Evolucao evolucao , 
+        List<ElementoDTO> elementos)
+    {
+        PokemonPokedexDTO p = new PokemonPokedexDTO();
+        p.setNomeJogo(jogo.getNome());
+        p.setIdJogo(jogo.getId());
+        p.setNomeRegiao(regiao.getNome());
+        p.setNomePokemon(pokemon.getNome());
+        p.setIdPokemon(pokemon.getId());
+        p.setImagemPokemon(pokemon.getImagem());
+        p.setCor(pokedex.getCor());
+        p.setNumeroPokemon(pokedex.getNumeroPokemon());
+        p.setDescricaoPokemon(pokedex.getDescricaoPokemon());
+        p.setElementos(elementos);
+        if (evolucao != null){
+            p.setEstagio(evolucao.getEstagio());
+            p.setRequisitos(evolucao.getRequisitos());
+        }
+        return p;
+    }
+
+    private PokemonPokedexDTO criarPokemonPokedexDTO(long idPokedex)
+    {
+        Pokedex pokedex = daoPokedex.buscarPorId(idPokedex);
+        Jogo jogo = daoJogo.buscarPorId(pokedex.getIdJogo());
+        Regiao regiao = daoRegiao.buscarPorId(pokedex.getIdRegiao());
+        Pokemon pokemon = daoPokemon.buscarPorId(pokedex.getIdPokemon());
+        Evolucao evolucao = daoEvolucao.listarPorPokemon(pokemon.getId());
+        List<PokemonElemento> pokemonElementos =  daoPokemonElemento.listarElementosPorPokemonJogo(pokemon.getId(), jogo.getId());
+        List<ElementoDTO> elementos = new ArrayList<ElementoDTO>();
+        List<FraquezaVantagemDTO> fvsDTO = new ArrayList<FraquezaVantagemDTO>();
+        for (PokemonElemento pe : pokemonElementos){
+            Elemento e = daoElemento.buscarPorId(pe.getIdElemento());
+            ElementoDTO eDTO = new ElementoDTO();
+            eDTO.setId(e.getId());
+            eDTO.setImagem(e.getImagem());
+            eDTO.setCor(e.getCor());
+            eDTO.setNome(e.getNome());
+            List<FraquezaVantagem> fvs = daoFV.listarPorElementoJogo(e.getId(), jogo.getId());
+            for (FraquezaVantagem fv : fvs){
+                FraquezaVantagemDTO fvDTO = new FraquezaVantagemDTO();
+                Elemento eFV = daoElemento.buscarPorId(fv.getIdElementoFraquezaVantagem());
+                fvDTO.setId(fv.getId());
+                fvDTO.setNome(eFV.getNome());
+                fvDTO.setCor(eFV.getCor());
+                fvDTO.setImagem(eFV.getImagem());
+                fvDTO.setEhFraqueza(fv.getEhFraqueza());
+                fvDTO.setMultiplicador(fv.getMultiplicador());
+                fvsDTO.add(fvDTO);
+                eDTO.addVantagemFraqueza(fvDTO);
+            }
+            elementos.add(eDTO);
+        }
+
+        PokemonPokedexDTO p = criarPokemonPokedexDTO(pokedex, jogo, regiao, pokemon, evolucao, elementos);
+        return p;
+    }
+
+
+    private PokemonPokedexDTO montarPokemonPokedexDTO(long idPokedex)
+    {
+        PokemonPokedexDTO pokemon = criarPokemonPokedexDTO(idPokedex);
+
+        Evolucao proximoEstagio = daoEvolucao.listarPorPokemon(pokemon.getIdPokemon());
+        Evolucao anteriorEstagio = daoEvolucao.listarPorPokemonEvolucao(pokemon.getIdPokemon());
+        List<PokemonPokedexDTO> proximos = new ArrayList<PokemonPokedexDTO>();
+        List<PokemonPokedexDTO> anteriores = new ArrayList<PokemonPokedexDTO>();
+        while (proximoEstagio != null){
+            Pokedex pokedex = daoPokedex.buscarPorIdJogoPokemon(pokemon.getIdJogo(), proximoEstagio.getPokemonId());
+            PokemonPokedexDTO prox = criarPokemonPokedexDTO(pokedex.getId());
+            proximos.add(prox);
+            proximoEstagio = daoEvolucao.listarPorPokemon(proximoEstagio.getPokemonId());
+
+        }
+        while (anteriorEstagio != null){
+            Pokedex pokedex = daoPokedex.buscarPorIdJogoPokemon(pokemon.getIdJogo(), anteriorEstagio.getPokemonId());
+            PokemonPokedexDTO ante = criarPokemonPokedexDTO(pokedex.getId());
+            anteriores.add(ante);
+            anteriorEstagio = daoEvolucao.listarPorPokemonEvolucao(anteriorEstagio.getPokemonId());
+        }
+        anteriores = anteriores.reversed();
+        anteriores.addAll(proximos);
+        pokemon.setEvolucoes(anteriores);
+        return pokemon;
+    } 
+
+    public PokemonPokedexDTO acharPokemon(Long idPokedex){
+        return montarPokemonPokedexDTO(idPokedex);
+    }
+    public PokemonPokedexDTO listarPokemonsPorJogo(Long idJogo){
+        return new PokemonPokedexDTO();
+    }
+    
+}

@@ -127,4 +127,18 @@ public class Imagens {
             larg, altu
         );
     }
+
+    public static ImageIcon iconeLapisVerde(int larg, int altu) {
+        return getImagemIcone(
+            "/projetoFinal/conteudos/imgs/comuns/iconeLapisVerde.png",
+            larg, altu
+        );
+    }
+
+    public static ImageIcon iconeLixeiraVermelha(int larg, int altu) {
+        return getImagemIcone(
+            "/projetoFinal/conteudos/imgs/comuns/iconeLixeiraVermelha.png",
+            larg, altu
+        );
+    }
 }
