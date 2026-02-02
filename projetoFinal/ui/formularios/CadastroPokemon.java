@@ -1,5 +1,9 @@
 package projetoFinal.ui.formularios;
 
+import projetoFinal.logica.modelos.Pokemon;
+import projetoFinal.logica.servicos.ServicosPokemon;
+import projetoFinal.ui.componentes.ModalErro;
+import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoTexto;
@@ -33,6 +37,22 @@ public class CadastroPokemon extends JPanel{
 
         gbc.gridy = 2;
         BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar.addActionListener(e ->{
+            Pokemon poke = new Pokemon();
+            if(campoNome.temTexto())
+            {
+                poke.setNome(campoNome.getValor());
+                poke.setImagem(campoFoto.getByteImagem());
+                ServicosPokemon.criar(poke);
+                ModalSucesso.ExibirModal("Sucesso ao criar Pokemon!");
+                campoNome.limparValor();
+                campoFoto.limpar();
+            }
+            else{
+                ModalErro.ExibirModal("Faltou preencher o nome do Pokemon.");
+            }
+            
+        });
         formulario.add(btSalvar, gbc); 
     }
     

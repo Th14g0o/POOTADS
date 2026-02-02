@@ -6,10 +6,12 @@ import projetoFinal.ui.componentes.BarraJanela;
 import projetoFinal.ui.util.Cores;
 import projetoFinal.ui.util.Uteis;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CampoSelecionaCor extends JPanel {
     private JPanel preview;
-    private Color corSelecionada = Color.WHITE;
+    private Color corSelecionada = null;
     public CampoSelecionaCor(String labelTexto){
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
@@ -24,13 +26,17 @@ public class CampoSelecionaCor extends JPanel {
         preview = new JPanel();
         preview.setPreferredSize(new Dimension(20, 20));
         preview.setMaximumSize(new Dimension(20, 20));
-        preview.setBackground(corSelecionada);
+        preview.setOpaque(false);
         preview.setCursor(new Cursor(Cursor.HAND_CURSOR));
         preview.setBorder(null);
-        preview.setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
-        preview.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
+        preview.setBorder(
+            BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.WHITE, 1), 
+                BorderFactory.createEmptyBorder(4, 6, 4, 6)   
+            )
+        );
+        preview.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
                 abrirDialogo();
             }
         });
@@ -38,7 +44,7 @@ public class CampoSelecionaCor extends JPanel {
     }
 
     private void abrirDialogo() {
-        JColorChooser chooser = new JColorChooser(corSelecionada);
+        JColorChooser chooser = new JColorChooser(corSelecionada != null ? corSelecionada : Color.WHITE);
         for (var panel : chooser.getChooserPanels()) {
             if (!panel.getDisplayName().equalsIgnoreCase("RGB")) {
                 chooser.removeChooserPanel(panel);
@@ -88,7 +94,10 @@ public class CampoSelecionaCor extends JPanel {
             dialog.dispose();
         });
 
-        cancelar.addActionListener(e -> dialog.dispose());
+        cancelar.addActionListener(e -> {
+            limpar();
+            dialog.dispose();
+    });
 
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         botoes.setOpaque(false);
@@ -108,15 +117,24 @@ public class CampoSelecionaCor extends JPanel {
         return corSelecionada;
     }
 
+    public String getCorSelecionadaHex() {
+        return Cores.ColorParaHex(corSelecionada);
+    }
+
     public void setCor(Color cor) {
         this.corSelecionada = cor;
+        preview.setOpaque(true);
         preview.setBackground(cor);
         repaint();
     }
 
+    public void setCorHex(String cor) {
+        setCor(Cores.HexParaColor(cor));
+    }
+
     public void limpar() {
-        this.corSelecionada = Color.WHITE;
-        preview.setBackground(this.corSelecionada);
+        this.corSelecionada = null;
+        preview.setOpaque(false);
         repaint();
     }
     

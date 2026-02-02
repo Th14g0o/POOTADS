@@ -3,6 +3,10 @@ package projetoFinal.ui.formularios;
 import java.awt.*;
 import javax.swing.*;
 
+import projetoFinal.logica.modelos.Elemento;
+import projetoFinal.logica.servicos.ServicosElemento;
+import projetoFinal.ui.componentes.ModalErro;
+import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoSelecionaCor;
@@ -38,6 +42,24 @@ public class CadastroElemento extends JPanel{
 
         gbc.gridy = 3;
         BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar.addActionListener(e ->{
+            Elemento elemento = new Elemento();
+            if(campoNome.temTexto())
+            {
+                elemento.setNome(campoNome.getValor());
+                elemento.setImagem(campoFoto.getByteImagem());
+                elemento.setCor(campoCor.getCorSelecionadaHex());
+                ServicosElemento.criar(elemento);
+                ModalSucesso.ExibirModal("Sucesso ao criar Elemento!");
+                campoNome.limparValor();
+                campoFoto.limpar();
+                campoCor.limpar();
+            }
+            else{
+                ModalErro.ExibirModal("Faltou preencher o nome do Elemento.");
+            }
+            
+        });
         formulario.add(btSalvar, gbc); 
     }
 }

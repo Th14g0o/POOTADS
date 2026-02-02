@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.List;
 
 public class CampoSelect extends JPanel {
-    public record Opcao(int id, String texto){
+    public record Opcao(Long id, String texto){
         @Override
         public String toString(){
             return texto;
@@ -16,6 +16,11 @@ public class CampoSelect extends JPanel {
     private JComboBox<Opcao> campo;
     private DefaultComboBoxModel<Opcao> opcoes;
 
+    public void addOpcao(Long id, String texto){
+        Opcao op = new Opcao(id, texto);
+        setOpcao(op);
+    }
+
     public void setOpcao(Opcao op){
         this.opcoes.addElement(op);
     }
@@ -24,10 +29,13 @@ public class CampoSelect extends JPanel {
             this.setOpcao(op);
         }
     }
-    public int getValorSelecionado(){
+    public Long getValorSelecionado(){
+        if (opcoes == null || opcoes.getSize() < 1) return null;
         Opcao selecionada = (Opcao)campo.getSelectedItem();
-        if (selecionada == null) return -1;
         return selecionada.id();
+    }
+    public boolean temValor(){
+        return getValorSelecionado() != null;
     }
     public void limpar(){
         campo.setModel(null);

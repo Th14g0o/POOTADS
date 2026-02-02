@@ -16,6 +16,7 @@ public class PokemonDAO implements IDataAcessObject<Pokemon> {
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, p.getNome());
+            ps.setBytes(2, p.getImagem());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {

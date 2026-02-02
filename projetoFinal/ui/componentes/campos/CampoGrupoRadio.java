@@ -27,10 +27,11 @@ public class CampoGrupoRadio extends JPanel{
         }
     }
 
-    public void limparValor() {
+    public void limpar() {
         grupo.clearSelection();
     }
     public int getValor() {
+        if (radios == null || radios.size() < 1) return -1;
         int i = 0;
         for (JRadioButton radio : radios) {
             if (radio.isSelected()) {
@@ -49,7 +50,7 @@ public class CampoGrupoRadio extends JPanel{
         }
     }
     public boolean temValor() {
-        return grupo.getSelection() != null;
+        return getValor() != -1;
     }
     
 }

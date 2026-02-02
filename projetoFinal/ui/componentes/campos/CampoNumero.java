@@ -52,6 +52,10 @@ public class CampoNumero extends JPanel {
         String txt = campo.getText();
         return txt.isEmpty() ? null : Double.parseDouble(txt);
     }
+    
+    public boolean temTexto(){
+        return !(campo.getText().isEmpty());
+    }
 
     public void setValor(Number valor) {
         campo.setText(valor == null ? "" : valor.toString());

@@ -1,5 +1,9 @@
 package projetoFinal.ui.formularios;
 
+import projetoFinal.logica.modelos.Regiao;
+import projetoFinal.logica.servicos.ServicosRegiao;
+import projetoFinal.ui.componentes.ModalErro;
+import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoTexto;
 
@@ -28,6 +32,20 @@ public class CadastroRegiao extends JPanel{
 
         gbc.gridy = 1;
         BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar.addActionListener(e ->{
+            Regiao r = new Regiao();
+            if(campoNome.temTexto())
+            {
+                r.setNome(campoNome.getValor());
+                ServicosRegiao.criar(r);
+                ModalSucesso.ExibirModal("Sucesso ao criar Região!");
+                campoNome.limparValor();
+            }
+            else{
+                ModalErro.ExibirModal("Faltou preencher o nome da Região.");
+            }
+            
+        });
         formulario.add(btSalvar, gbc); 
     }
     
