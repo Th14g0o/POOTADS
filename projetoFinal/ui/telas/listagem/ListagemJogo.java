@@ -11,7 +11,7 @@ public class ListagemJogo extends TabPadrao  {
     private JPanel conteudoJogo = new JPanel();
     public ListagemJogo() {
         List<BotaoTab> bts = new ArrayList<>();
-        bts.add(new BotaoTab("Elemento", "LISTA_JOGO"));
+        bts.add(new BotaoTab("Jogo", "LISTA_JOGO"));
         setBotoes(bts);
         this.configurarConteudoJogo();
         adicionarConteudo(conteudoJogo, "LISTA_JOGO");

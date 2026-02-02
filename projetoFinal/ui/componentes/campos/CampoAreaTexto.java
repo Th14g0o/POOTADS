@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CampoAreaTexto extends JPanel {
+    private JTextArea campo;
     public CampoAreaTexto(String labelTexto){
         this(labelTexto, 20, 5);
     }
@@ -18,11 +19,20 @@ public class CampoAreaTexto extends JPanel {
         
         add(Box.createRigidArea(new Dimension(0,5)));
     
-        JTextArea campo = new JTextArea(linhas, colunas);
+        campo = new JTextArea(linhas, colunas);
         campo.setAlignmentX(Component.LEFT_ALIGNMENT);
         campo.setBorder(null);
         campo.setBorder(BorderFactory.createEmptyBorder(4, 6, 4, 6));
         add(campo);
     }
-    
+
+    public void limparValor(){
+        campo.setText("");
+    }
+    public String getValor(){
+        return campo.getText();
+    }
+    public boolean temTexto(){
+        return !(campo.getText().isEmpty());
+    }
 }

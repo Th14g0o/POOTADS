@@ -1,5 +1,9 @@
 package projetoFinal.ui.formularios;
 
+import projetoFinal.logica.modelos.Jogo;
+import projetoFinal.logica.servicos.ServicosJogo;
+import projetoFinal.ui.componentes.ModalErro;
+import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoTexto;
@@ -33,6 +37,22 @@ public class CadastroJogo extends JPanel{
 
         gbc.gridy = 2;
         BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar.addActionListener(e ->{
+            Jogo joghuin = new Jogo();
+            if(campoNome.temTexto())
+            {
+                joghuin.setNome(campoNome.getValor());
+                joghuin.setImagem(campoFoto.getByteImagem());
+                ServicosJogo.criar(joghuin);
+                ModalSucesso.ExibirModal("Sucesso ao criar Jogo!");
+                campoNome.limparValor();
+                campoFoto.limpar();
+            }
+            else{
+                ModalErro.ExibirModal("Faltou preencher o nome do Jogo.");
+            }
+            
+        });
         formulario.add(btSalvar, gbc); 
     }
     

@@ -1,25 +1,27 @@
 package projetoFinal.logica.servicos;
 
+import java.util.List;
+
 import projetoFinal.logica.modelos.Regiao;
 import projetoFinal.logica.persistencia.DAO.RegiaoDAO;
 
 public class ServicosRegiao {
-    private RegiaoDAO daoRegiao = new RegiaoDAO();
+    private static RegiaoDAO daoRegiao = new RegiaoDAO();
 
-    public void criar(Regiao obj){
+    public static void criar(Regiao obj){
         daoRegiao.inserir(obj);
     }
-    public void atualizar(Regiao obj){
+    public static void atualizar(Regiao obj){
         daoRegiao.atualizar(obj);
     }
-    public Regiao achar(Long id){
+    public static Regiao achar(Long id){
         Regiao obj = daoRegiao.buscarPorId(id);
         return obj;
     }
-    public void listar(Regiao obj){
-        daoRegiao.inserir(obj);
+    public static List<Regiao> listar(){
+        return daoRegiao.listarTodos();
     }
-    public void apagar(Long id){
+    public static void apagar(Long id){
         daoRegiao.deletar(id);
     }
 }

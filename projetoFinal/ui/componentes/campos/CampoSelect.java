@@ -29,6 +29,9 @@ public class CampoSelect extends JPanel {
         if (selecionada == null) return -1;
         return selecionada.id();
     }
+    public void limpar(){
+        campo.setModel(null);
+    }
 
     public CampoSelect(String labelTexto){
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));

@@ -113,5 +113,11 @@ public class CampoSelecionaCor extends JPanel {
         preview.setBackground(cor);
         repaint();
     }
+
+    public void limpar() {
+        this.corSelecionada = Color.WHITE;
+        preview.setBackground(this.corSelecionada);
+        repaint();
+    }
     
 }

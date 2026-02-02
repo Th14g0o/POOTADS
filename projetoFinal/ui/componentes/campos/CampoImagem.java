@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 public class CampoImagem extends JPanel {
 
@@ -61,6 +63,9 @@ public class CampoImagem extends JPanel {
             arquivoImagem = chooser.getSelectedFile();
             atualizarPreview();
         }
+        if (res == JFileChooser.CANCEL_OPTION || res == JFileChooser.ERROR_OPTION){
+            this.limpar();
+        }
     }
 
     private void atualizarPreview() {
@@ -74,6 +79,25 @@ public class CampoImagem extends JPanel {
     public File getArquivoImagem() {
         return arquivoImagem;
     }
+
+    public byte[] getByteImagem() {
+        File conteudo = getArquivoImagem();
+        if (conteudo == null) {
+            return null;
+        }
+        if (!conteudo.exists()) {
+            return null;
+        }
+        if (!conteudo.isFile()) {
+            return null;
+        }
+        try {
+            return Files.readAllBytes(conteudo.toPath());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     public boolean temImagem() {
         return arquivoImagem != null;
     }

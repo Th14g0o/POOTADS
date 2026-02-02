@@ -1,6 +1,7 @@
 package projetoFinal.logica.servicos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import projetoFinal.logica.dto.ElementoDTO;
@@ -24,33 +25,33 @@ import projetoFinal.logica.persistencia.DAO.PokemonElementoDAO;
 import projetoFinal.logica.persistencia.DAO.RegiaoDAO;
 
 public class ServicosPokedex {
-    private PokedexDAO daoPokedex = new PokedexDAO();
-    private PokemonDAO daoPokemon = new PokemonDAO();
-    private ElementoDAO daoElemento = new ElementoDAO();
-    private PokemonElementoDAO daoPokemonElemento = new PokemonElementoDAO();
-    private RegiaoDAO daoRegiao = new RegiaoDAO();
-    private JogoDAO daoJogo = new JogoDAO();
-    private FraquezaVantagemDAO daoFV = new FraquezaVantagemDAO();
-    private EvolucaoDAO daoEvolucao = new EvolucaoDAO();
+    private static PokedexDAO daoPokedex = new PokedexDAO();
+    private static PokemonDAO daoPokemon = new PokemonDAO();
+    private static ElementoDAO daoElemento = new ElementoDAO();
+    private static PokemonElementoDAO daoPokemonElemento = new PokemonElementoDAO();
+    private static RegiaoDAO daoRegiao = new RegiaoDAO();
+    private static JogoDAO daoJogo = new JogoDAO();
+    private static FraquezaVantagemDAO daoFV = new FraquezaVantagemDAO();
+    private static EvolucaoDAO daoEvolucao = new EvolucaoDAO();
 
-    public void criar(Pokedex obj){
+    public static void criar(Pokedex obj){
         daoPokedex.inserir(obj);
     }
-    public void atualizar(Pokedex obj){
+    public static void atualizar(Pokedex obj){
         daoPokedex.atualizar(obj);
     }
-    public Pokedex achar(Long id){
+    public static Pokedex achar(Long id){
         Pokedex obj = daoPokedex.buscarPorId(id);
         return obj;
     }
-    public void listar(Pokedex obj){
-        daoPokedex.inserir(obj);
+    public static List<Pokedex> listar(){
+        return daoPokedex.listarTodos();
     }
-    public void apagar(Long id){
+    public static void apagar(Long id){
         daoPokedex.deletar(id);
     }
 
-    private PokemonPokedexDTO criarPokemonPokedexDTO(Pokedex pokedex, Jogo jogo, Regiao regiao, Pokemon pokemon, Evolucao evolucao , 
+    private static PokemonPokedexDTO criarPokemonPokedexDTO(Pokedex pokedex, Jogo jogo, Regiao regiao, Pokemon pokemon, Evolucao evolucao , 
         List<ElementoDTO> elementos)
     {
         PokemonPokedexDTO p = new PokemonPokedexDTO();
@@ -71,7 +72,7 @@ public class ServicosPokedex {
         return p;
     }
 
-    private PokemonPokedexDTO criarPokemonPokedexDTO(long idPokedex)
+    private static PokemonPokedexDTO criarPokemonPokedexDTO(long idPokedex)
     {
         Pokedex pokedex = daoPokedex.buscarPorId(idPokedex);
         Jogo jogo = daoJogo.buscarPorId(pokedex.getIdJogo());
@@ -109,7 +110,7 @@ public class ServicosPokedex {
     }
 
 
-    private PokemonPokedexDTO montarPokemonPokedexDTO(long idPokedex)
+    private static PokemonPokedexDTO montarPokemonPokedexDTO(long idPokedex)
     {
         PokemonPokedexDTO pokemon = criarPokemonPokedexDTO(idPokedex);
 
@@ -130,16 +131,16 @@ public class ServicosPokedex {
             anteriores.add(ante);
             anteriorEstagio = daoEvolucao.listarPorPokemonEvolucao(anteriorEstagio.getPokemonId());
         }
-        anteriores = anteriores.reversed();
+        Collections.reverse(anteriores);
         anteriores.addAll(proximos);
         pokemon.setEvolucoes(anteriores);
         return pokemon;
     } 
 
-    public PokemonPokedexDTO acharPokemon(Long idPokedex){
+    public static PokemonPokedexDTO acharPokemon(Long idPokedex){
         return montarPokemonPokedexDTO(idPokedex);
     }
-    public PokemonPokedexDTO listarPokemonsPorJogo(Long idJogo){
+    public static PokemonPokedexDTO listarPokemonsPorJogo(Long idJogo){
         return new PokemonPokedexDTO();
     }
     

@@ -6,7 +6,9 @@ import java.awt.*;
 import java.util.List;
 
 public class CampoGrupoRadio extends JPanel{
+    private List<JRadioButton> radios;
     public ButtonGroup grupo = new ButtonGroup();
+
     public CampoGrupoRadio(List<String> textos){
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         setOpaque(false);
@@ -23,6 +25,31 @@ public class CampoGrupoRadio extends JPanel{
             grupo.add(campo);
             add(campo);
         }
+    }
+
+    public void limparValor() {
+        grupo.clearSelection();
+    }
+    public int getValor() {
+        int i = 0;
+        for (JRadioButton radio : radios) {
+            if (radio.isSelected()) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+    public void setValor(String valor) {
+        for (JRadioButton radio : radios) {
+            if (radio.getText().equals(valor)) {
+                radio.setSelected(true);
+                return;
+            }
+        }
+    }
+    public boolean temValor() {
+        return grupo.getSelection() != null;
     }
     
 }
