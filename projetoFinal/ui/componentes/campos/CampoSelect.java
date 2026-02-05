@@ -3,9 +3,15 @@ package projetoFinal.ui.componentes.campos;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CampoSelect extends JPanel {
+    public interface AoMudar {
+        void mudou(Long id);
+    }
+
     public record Opcao(Long id, String texto){
         @Override
         public String toString(){
@@ -13,16 +19,19 @@ public class CampoSelect extends JPanel {
         }
     }
 
-    private JComboBox<Opcao> campo;
+    public JComboBox<Opcao> campo;
     private DefaultComboBoxModel<Opcao> opcoes;
+    private List<Opcao> todasOpcoes = new ArrayList<Opcao>();
+    private AoMudar aoMudar;
 
     public void addOpcao(Long id, String texto){
         Opcao op = new Opcao(id, texto);
-        setOpcao(op);
+        this.setOpcao(op);
     }
 
     public void setOpcao(Opcao op){
         this.opcoes.addElement(op);
+        this.todasOpcoes.add(op);
     }
     public void setOpcoes(List<Opcao> ops){
         for (Opcao op : ops){
@@ -30,15 +39,16 @@ public class CampoSelect extends JPanel {
         }
     }
     public Long getValorSelecionado(){
-        if (opcoes == null || opcoes.getSize() < 1) return null;
-        Opcao selecionada = (Opcao)campo.getSelectedItem();
+        if (this.opcoes == null || this.opcoes.getSize() < 1) return null;
+        Opcao selecionada = (Opcao)this.campo.getSelectedItem();
         return selecionada.id();
     }
     public boolean temValor(){
-        return getValorSelecionado() != null;
+        return this.getValorSelecionado() != null;
     }
     public void limpar(){
-        campo.setModel(null);
+        this.opcoes.removeAllElements();
+        this.recarregarOpcoes();
     }
 
     public CampoSelect(String labelTexto){
@@ -70,7 +80,54 @@ public class CampoSelect extends JPanel {
                 return btn;
             }
         });
+        campo.addActionListener(e -> {
+            if (aoMudar != null) aoMudar.mudou(getValorSelecionado());
+        });
+        addOpcao(null, "Selecione uma opção");
         add(campo);
+    }
+
+    public void filtrarIdDiferentes(Long id){
+        Long sel = this.getValorSelecionado();
+        this.opcoes.removeAllElements();
+        for (Opcao op : this.todasOpcoes){
+            if (!Objects.equals(op.id(), (id)) || Objects.equals(op.id(), null)) this.opcoes.addElement(op);
+        }
+        this.selecionarPorId(sel);
+    }
+
+    public void retirarFiltros(Long id){
+        Long sel = this.getValorSelecionado();
+        this.opcoes.removeAllElements();
+        for (Opcao op : this.todasOpcoes){
+            this.opcoes.addElement(op);
+        }
+        this.selecionarPorId(sel);
+    }
+
+    public void recarregarOpcoes(){
+        this.opcoes.removeAllElements();
+        for (Opcao op : this.todasOpcoes){
+            this.opcoes.addElement(op);
+        }
+        if (opcoes.getSize() > 0) campo.setSelectedIndex(0);
+    }
+
+    private void selecionarPorId(Long id){
+        for (int i = 0; i < opcoes.getSize(); i++){
+            Opcao op = opcoes.getElementAt(i);
+            if (Objects.equals(op.id(), id))
+                campo.setSelectedIndex(i);
+        }
+        if (Objects.equals(id, null) && opcoes.getSize() > 0) campo.setSelectedIndex(0);
+    }
+
+    public void setOnChange(AoMudar fn){
+         this.aoMudar = fn;
+    }
+
+    public void dispararAoMudar(){
+        if (aoMudar != null) aoMudar.mudou(getValorSelecionado());
     }
     
 }

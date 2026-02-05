@@ -16,6 +16,7 @@ import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoGrupoRadio;
 import projetoFinal.ui.componentes.campos.CampoNumero;
 import projetoFinal.ui.componentes.campos.CampoSelect;
+import projetoFinal.ui.componentes.campos.CampoSelect.AoMudar;
 import projetoFinal.ui.util.Enuns.TipoNumero;
 
 public class CadastroVantagem extends JPanel{
@@ -49,12 +50,16 @@ public class CadastroVantagem extends JPanel{
         gbc.gridy = 0;
         CampoSelect campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
+        
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 1;
         CampoSelect campoVD = new CampoSelect("Elemento que tem vantagem/desvantagem:");
         for (Elemento e : fvs) campoVD.addOpcao(e.getId(), e.getNome());
         formulario.add(campoVD, gbc);
+
+        campoElemento.setOnChange(new AoMudar() {public void mudou(Long id) {campoVD.filtrarIdDiferentes(id);}});
+        campoVD.setOnChange(new AoMudar() {public void mudou(Long id) {campoElemento.filtrarIdDiferentes(id);}});
 
         gbc.gridy = 2;
         CampoGrupoRadio radioVantagem = new CampoGrupoRadio(List.of("Vantagem", "Desvantagem"));
