@@ -132,6 +132,10 @@ public class CampoSelecionaCor extends JPanel {
         setCor(Cores.HexParaColor(cor));
     }
 
+    public boolean temCorSelecionada() {
+        return corSelecionada != null;
+    }
+
     public void limpar() {
         this.corSelecionada = null;
         preview.setOpaque(false);

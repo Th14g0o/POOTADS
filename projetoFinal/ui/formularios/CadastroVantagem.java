@@ -49,8 +49,7 @@ public class CadastroVantagem extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 0;
         CampoSelect campoElemento = new CampoSelect("Elemento:");
-        for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
-        
+        for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome()); 
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 1;

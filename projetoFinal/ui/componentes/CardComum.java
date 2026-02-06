@@ -2,7 +2,6 @@ package projetoFinal.ui.componentes;
 
 import javax.swing.*;
 import projetoFinal.ui.componentes.botoes.BotaoIconeTexto;
-import projetoFinal.ui.componentes.tab.PainelArredondado;
 import projetoFinal.ui.util.Cores;
 import java.awt.*;
 import java.util.List;

@@ -1,4 +1,4 @@
-package projetoFinal.ui.componentes.tab;
+package projetoFinal.ui.componentes;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
