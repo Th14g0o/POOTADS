@@ -61,6 +61,6 @@ basta ir no ```ui/telas/Main.java``` e clicar no run do metodo main(Gerado pelo 
 
 basta apagar o ```banco.db``` e rodar o ````logica/persistencia/Migracoes.java``` e clicar no run do metodo main(Gerado pelo Extension Pack for Java).
 
-#### Dependencias
+## Dependencias
 - SQLite JDBC Driver - 3.51.1.0 ([Fonte aqui!](https://github.com/xerial/sqlite-jdbc/releases))
 - Extension Pack for Java - Extenção - [Baixe aqui!](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
