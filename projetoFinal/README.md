@@ -3,7 +3,7 @@
 ## Especificação do projeto
 ### 1. Requisitos Funcionais:
 - O sistema deve permitir o cadastro, edição, exclusão e consulta das entidades principais (ex: livros, usuários, produtos, etc.).⏳
-> Foi feito cadastro edição e listagem. A listagem não atualiza dinamicamente
+> Foi feito cadastro e listagem de todas as entidades, edição e exclusão não estão implementadas, fiz testes em elementos então ele a lsitagem de elemento possui o modal de edição e exclusão. A listagem não atualiza dinamicamente, mas os selects do cadastro sim, deixei para depois e acabou não tendo tempo.
 - Deve haver funcionalidades específicas para o domínio do sistema (ex: empréstimo de livros, fechamento de pedidos, agendamento de consultas, etc.).❌
 - O sistema deve gerar relatórios ou listagens relevantes (ex: listar todos os livros emprestados, produtos com estoque baixo, consultas agendadas, etc.).❌
 ### 2. Requisitos Técnicos:
@@ -30,7 +30,7 @@
 - Qualidade do Código: O código deve ser modular, bem organizado e seguir as boas práticas de POO. ✔
 - Originalidade: O sistema deve ser único e criativo, evitando cópias de projetos prontos. ✔
 - Complexidade: O projeto deve demonstrar um nível adequado de complexidade, utilizando os conceitos aprendidos na disciplina. ✔
-> A maior complexidade foi trabalhar na interface, visto que tive que aprender enquanto fazia
+> A maior complexidade foi trabalhar na interface, visto que tive que aprender enquanto fazia necessitava de tempo e eu não consegui ter muito
 
 ## Ideia de Sistema
 
@@ -55,11 +55,11 @@ Se tiverem mais ```.jar``` dentro basta adicionar eles tambem
 
 Necessaria para rodar. 
 
-basta ir no ```ui/telas/Main.java``` e clicar no run do metodo main(Gerado pelo Extension Pack for Java).
+basta ir no ```.\projetoFinal\ui\telas\Main.java``` e clicar no run do metodo main(o run é gerado pelo Extension Pack for Java).
 
 ### Resetar banco (Opcional)
 
-basta apagar o ```banco.db``` e rodar o ````logica/persistencia/Migracoes.java``` e clicar no run do metodo main(Gerado pelo Extension Pack for Java).
+basta apagar o ```.\projetoFinal\banco.db``` e rodar o ```.\projetoFinal\logica\persistencia\Migracoes.java``` e clicar no run do metodo main(o run é gerado pelo Extension Pack for Java).
 
 ## Dependencias
 - SQLite JDBC Driver - 3.51.1.0 ([Fonte aqui!](https://github.com/xerial/sqlite-jdbc/releases))
