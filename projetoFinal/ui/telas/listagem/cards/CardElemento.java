@@ -25,14 +25,6 @@ public class CardElemento extends CardListagemModelo<Elemento> {
         this.iconeAcoesLargura = iconeAcoesLargura;
         
         setModelo(obj);
-
-        btEditar.addActionListener(e -> {
-            mostrarEdicao();  
-        });
-
-        btApagar.addActionListener(e -> {
-            mostrarExclusão();  
-        });
         
     }
 
@@ -82,6 +74,13 @@ public class CardElemento extends CardListagemModelo<Elemento> {
         pp.mostrar(true);
     }
 
+    public void apagar(){
+        if (this.obj != null) ServicosElemento.apagar(this.obj.getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+
     public void setModelo(Elemento obj){
         if (obj != null){ 
             this.obj = obj;
@@ -89,16 +88,11 @@ public class CardElemento extends CardListagemModelo<Elemento> {
         }
     }
 
-    private void recarregarConteudo(){
+    public void recarregarConteudo(){
         setModelo(ServicosElemento.achar(this.obj.getId()));
     }
 
-    private void apagar(){
-        if (obj != null) ServicosElemento.apagar(this.obj.getId());
-        this.obj = null;
-        setVisible(false);
-    }
-
+   
     protected void gerarConteudo(Elemento obj){
         conteudoCard = new JPanel();
         JPanel leiaute = new JPanel();

@@ -11,8 +11,9 @@ import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoSelecionaCor;
 import projetoFinal.ui.componentes.campos.CampoTexto;
+import projetoFinal.ui.formularios.abstracao.FormModelo;
 
-public class CadastroElemento extends JPanel{
+public class CadastroElemento extends FormModelo<Elemento>{
     private boolean ehCadastro = true;
     private Elemento elemento;
 
@@ -24,15 +25,7 @@ public class CadastroElemento extends JPanel{
         this.elemento = elemento;
     }
 
-    public CadastroElemento() {
-        this(true);
-    }
-
-    public CadastroElemento(boolean ehCadastro) {
-        this(ehCadastro, null);
-    }
-
-    public CadastroElemento(boolean ehCadastro, Elemento el) {
+    public void carregarForm(boolean ehCadastro, Elemento el){
         setModelo(el);
         setTipo(ehCadastro);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -86,5 +79,18 @@ public class CadastroElemento extends JPanel{
             
         });
         formulario.add(btSalvar, gbc); 
+    }
+
+    public CadastroElemento() {
+        this(true);
+    }
+
+    public CadastroElemento(boolean ehCadastro) {
+        this(ehCadastro, null);
+    }
+    
+
+    public CadastroElemento(boolean ehCadastro, Elemento el) {
+        carregarForm(ehCadastro, el);
     }
 }
