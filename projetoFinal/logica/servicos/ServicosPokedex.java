@@ -6,6 +6,9 @@ import java.util.List;
 
 import projetoFinal.logica.dto.ElementoDTO;
 import projetoFinal.logica.dto.FraquezaVantagemDTO;
+import projetoFinal.logica.dto.PokedexDTO;
+import projetoFinal.logica.dto.PokemonElementoDTO;
+import projetoFinal.logica.dto.PokemonElementosDTO;
 import projetoFinal.logica.dto.PokemonPokedexDTO;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.modelos.Evolucao;
@@ -143,5 +146,36 @@ public class ServicosPokedex {
     public static PokemonPokedexDTO listarPokemonsPorJogo(Long idJogo){
         return new PokemonPokedexDTO();
     }
+
+    private static PokemonElementosDTO montarPokemonElementoDTO(long idPokemon, Long idJogo){
+            Pokemon p = daoPokemon.buscarPorId(idPokemon);
+            List<PokemonElemento> pes = ServicosPokemon.acharElementosPokemon(idPokemon, idJogo);
+            List<Elemento> elementos = new ArrayList<>();
+            for (PokemonElemento pe : pes){
+                Elemento e = ServicosElemento.achar(pe.getIdElemento());
+                elementos.add(e);
+            }
+            PokemonElementosDTO pesDTO = new PokemonElementosDTO();
+            pesDTO.setElementos(elementos);
+            pesDTO.setPokemon(p);
+            return pesDTO;
+
+    }
+
+    public static List<PokedexDTO> listarPokedexDTO(){
+        List<PokedexDTO> dtos = new ArrayList<PokedexDTO>();
+        List<Pokedex> objs = daoPokedex.listarTodos();
+        for (Pokedex obj : objs){
+            PokedexDTO dto = new PokedexDTO();
+            dto.setPokedex(obj);
+            dto.setJogo(ServicosJogo.achar(obj.getIdJogo()));
+            dto.setRegiao(ServicosRegiao.achar(obj.getIdRegiao()));
+            dto.setPokemon(ServicosPokedex.montarPokemonElementoDTO(obj.getIdPokemon(), obj.getIdJogo()));
+            dto.setAnte(ServicosPokedex.montarPokemonElementoDTO(obj.getIdAnterior(), obj.getIdJogo()));;
+            dto.setProx(ServicosPokedex.montarPokemonElementoDTO(obj.getIdProximo(), obj.getIdJogo()));;
+            dtos.add(dto);
+        }
+        return dtos;
+    };
     
 }

@@ -32,6 +32,9 @@ public class CampoTexto extends JPanel {
     public String getValor(){
         return campo.getText();
     }
+    public void setValor(String texto){
+        campo.setText(texto);
+    }
     public boolean temTexto(){
         return !(campo.getText().isEmpty());
     }

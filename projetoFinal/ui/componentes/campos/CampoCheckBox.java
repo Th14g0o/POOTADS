@@ -28,6 +28,9 @@ public class CampoCheckBox extends JPanel{
     public Boolean getValor(){
         return campo.isSelected();
     }
+    public void setValor(Boolean selecionar){
+        campo.setSelected(selecionar);
+    }
     public void temTexto(Boolean valor){
         campo.setSelected(valor);
     }

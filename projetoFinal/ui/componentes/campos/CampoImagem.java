@@ -14,11 +14,13 @@ public class CampoImagem extends JPanel {
 
     private JLabel preview;
     private File arquivoImagem;
+    private byte[] bytes;
 
     private static final int LARGURA = 120;
     private static final int ALTURA = 120;
 
     public CampoImagem(String labelTexto) {
+        this.bytes = null;
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setOpaque(false);
 
@@ -80,26 +82,29 @@ public class CampoImagem extends JPanel {
         return arquivoImagem;
     }
 
+    public void setImagem(byte[] bytes){
+        this.bytes = bytes;
+        if (this.bytes != null) preview.setIcon(Imagens.escalaIcone(this.bytes, LARGURA, ALTURA));
+        else limpar();
+        
+    }
+
     public byte[] getByteImagem() {
         File conteudo = getArquivoImagem();
-        if (conteudo == null) {
-            return null;
-        }
-        if (!conteudo.exists()) {
-            return null;
-        }
-        if (!conteudo.isFile()) {
-            return null;
+        boolean temArquivo = true;
+        if ((conteudo == null || !conteudo.exists() || !conteudo.isFile())) {
+            temArquivo = false;
         }
         try {
-            return Files.readAllBytes(conteudo.toPath());
+            if (temArquivo) return Files.readAllBytes(conteudo.toPath());
+            else return this.bytes;
         } catch (IOException e) {
             return null;
         }
     }
 
     public boolean temImagem() {
-        return arquivoImagem != null;
+        return arquivoImagem != null || this.bytes != null;
     }
     public void limpar() {
         arquivoImagem = null;

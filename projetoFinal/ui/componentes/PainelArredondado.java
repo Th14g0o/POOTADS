@@ -46,6 +46,13 @@ public class PainelArredondado extends JPanel {
         repaint();
     }
 
+    public void setRadius(int radius){
+        setRoundTopRight(radius);
+        setRoundTopLeft(radius);
+        setRoundBottomRight(radius);
+        setRoundBottomLeft(radius);
+    }
+
     public int getRoundBottomRight() {
         return roundBottomRight;
     }

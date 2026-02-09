@@ -1,7 +1,10 @@
 package projetoFinal.logica.servicos;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import projetoFinal.logica.dto.ElementoDTO;
+import projetoFinal.logica.dto.ElementoFraquezaVantagemDTO;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.modelos.FraquezaVantagem;
 import projetoFinal.logica.persistencia.DAO.ElementoDAO;
@@ -45,4 +48,17 @@ public class ServicosElemento {
         daoFV.deletar(id);
     }
 
+    
+    public static List<ElementoFraquezaVantagemDTO> listarElementoFraquezaVantagemDTO(){
+        List<ElementoFraquezaVantagemDTO> elDTO = new ArrayList<ElementoFraquezaVantagemDTO>();
+        List<FraquezaVantagem> fvS = daoFV.listarTodos();
+        for (FraquezaVantagem fv : fvS){
+            ElementoFraquezaVantagemDTO efvDTO = new ElementoFraquezaVantagemDTO();
+            efvDTO.setFraquezaVantagem(fv);
+            efvDTO.elementoAlvo = daoElemento.buscarPorId(fv.getIdElementoAlvo());
+            efvDTO.elementoFV = daoElemento.buscarPorId(fv.getIdElementoFraquezaVantagem());
+            elDTO.add(efvDTO);
+        }
+        return elDTO;
+    }
 }

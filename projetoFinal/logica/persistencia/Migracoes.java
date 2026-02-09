@@ -135,10 +135,13 @@ public final class Migracoes {
                 idEvolucao INTEGER NOT NULL,
                 estagio INTEGER NOT NULL,
                 requisitos TEXT NOT NULL,
+                estagioEvolucao INTEGER NOT NULL,
+                idJogo INTEGER NOT NULL,
 
                 UNIQUE (idPokemon, idEvolucao),
                 FOREIGN KEY (idPokemon) REFERENCES Pokemon(id) ON DELETE CASCADE,
-                FOREIGN KEY (idEvolucao) REFERENCES Pokemon(id) ON DELETE CASCADE
+                FOREIGN KEY (idEvolucao) REFERENCES Pokemon(id) ON DELETE CASCADE,
+                FOREIGN KEY (idJogo) REFERENCES Jogo(id) ON DELETE CASCADE
             );
         """;
         Migracoes.executarMigracao(sql);

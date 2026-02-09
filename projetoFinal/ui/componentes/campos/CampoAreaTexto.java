@@ -26,6 +26,10 @@ public class CampoAreaTexto extends JPanel {
         add(campo);
     }
 
+    public void setValor(String texto){
+        campo.setText(texto);
+    }
+
     public void limparValor(){
         campo.setText("");
     }

@@ -5,13 +5,29 @@ public class Evolucao{
     private Long idPokemon;
     private int estagio;
     private Long idEvolucao;
+    private int estagioEvolucao;
     private String requisitos;
+    private Long idJogo;
+
+    public void setEstagioEvolucao(int estagioEvolucao){
+        this.estagioEvolucao = estagioEvolucao;
+    }
+    public int getEstagioEvolucao(){
+        return this.estagioEvolucao;
+    }
 
     public void setId(Long id){
         this.id = id;
     }
     public Long getId(){
         return this.id;
+    }
+
+    public void setIdJogo(Long idJogo){
+        this.idJogo = idJogo;
+    }
+    public Long getIdJogo(){
+        return this.idJogo;
     }
 
     public void setPokemonId(Long idPokemon){

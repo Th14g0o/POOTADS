@@ -3,6 +3,7 @@ package projetoFinal.logica.dto;
 import projetoFinal.logica.abstracoes.ElementoCompleto;
 
 public class FraquezaVantagemDTO extends ElementoCompleto  {
+    private Long idFraquezaVantagem;
     private boolean ehFraqueza;
     private double multiplicador;
 
@@ -17,5 +18,11 @@ public class FraquezaVantagemDTO extends ElementoCompleto  {
     }
     public double getMultiplicador(){
         return this.multiplicador;
+    }
+    public void setIdFraquezaVantagem(Long idFraquezaVantagem){
+        this.idFraquezaVantagem = idFraquezaVantagem;
+    }
+    public Long getIdFraquezaVantagem(){
+        return this.idFraquezaVantagem;
     }
 }

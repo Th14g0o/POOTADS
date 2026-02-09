@@ -13,7 +13,7 @@
 - Interfaces: Definir interfaces para comportamentos comuns (ex: Emprestavel, Pagavel, etc.).
 - Coleções: Utilizar coleções como ArrayList, HashMap, etc., para armazenar listas de objetos.
 - Exceções: Implementar tratamento de exceções para situações de erro (ex: tentativa de emprestar um livro já emprestado).
-- ~~~Persistência de Dados: Salvar e carregar dados em arquivos (ex: .txt, .csv).
+- ~ Persistência de Dados: Salvar e carregar dados em arquivos (ex: .txt, .csv). ~
 ### 3. Funcionalidades Adicionais:
 - Validação de Dados: Validar entradas do usuário (ex: CPF, e-mail, datas, etc.).
 - Interface de Usuário: Implementar uma interface simples via console ou, opcionalmente.

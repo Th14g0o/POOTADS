@@ -7,11 +7,20 @@ import projetoFinal.ui.util.Cores;
 
 public class BotaoVermelho extends JButton{
     public BotaoVermelho(String texto) {
+        this(texto, Cores.VERMELHO, Color.WHITE);
+    }
+
+    public BotaoVermelho(String texto, Color corBG) {
+        this(texto, corBG, Cores.CorDeContraste(corBG));
+    }
+
+    public BotaoVermelho(String texto, Color corBG, Color corTexto) {
         super(texto);
-        setBackground(Cores.VERMELHO);
-        setForeground(Color.WHITE);
+        setBackground(corBG);
+        setForeground(corTexto);
         setBorderPainted(false);
         setFocusPainted(false);
         setCursor(new Cursor(Cursor.HAND_CURSOR));
+        
     }
 }

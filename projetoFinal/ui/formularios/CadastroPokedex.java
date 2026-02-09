@@ -2,14 +2,10 @@ package projetoFinal.ui.formularios;
 
 import java.awt.*;
 import javax.swing.*;
-
-import projetoFinal.logica.modelos.Elemento;
-import projetoFinal.logica.modelos.FraquezaVantagem;
 import projetoFinal.logica.modelos.Jogo;
 import projetoFinal.logica.modelos.Pokedex;
 import projetoFinal.logica.modelos.Pokemon;
 import projetoFinal.logica.modelos.Regiao;
-import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.logica.servicos.ServicosJogo;
 import projetoFinal.logica.servicos.ServicosPokedex;
 import projetoFinal.logica.servicos.ServicosPokemon;
@@ -21,7 +17,10 @@ import projetoFinal.ui.componentes.campos.CampoAreaTexto;
 import projetoFinal.ui.componentes.campos.CampoNumero;
 import projetoFinal.ui.componentes.campos.CampoSelecionaCor;
 import projetoFinal.ui.componentes.campos.CampoSelect;
+import projetoFinal.ui.interfaces.AoMudar;
 import projetoFinal.ui.componentes.tab.Rolagem;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CadastroPokedex extends JPanel{
@@ -31,12 +30,46 @@ public class CadastroPokedex extends JPanel{
     private List<Jogo> jogos;
     private List<Regiao> regioes;
 
-    private void carregarListas(){
+    private CampoSelect campoPokemon;
+    private CampoSelect campoAnterior;
+    private CampoSelect campoProximo;
+    private CampoSelect campoJogo;
+    private CampoSelect campoRegiao;
+
+    public void carregarListas(){
         this.jogos = ServicosJogo.listar();
         this.pokemons = ServicosPokemon.listar();
         this.pokemonsAnte = ServicosPokemon.listar();
         this.pokemonsProx = ServicosPokemon.listar();
         this.regioes = ServicosRegiao.listar();
+    }
+
+    public void recarregarListas(){
+        this.jogos = ServicosJogo.listar();
+        this.pokemons = ServicosPokemon.listar();
+        this.pokemonsAnte = ServicosPokemon.listar();
+        this.pokemonsProx = ServicosPokemon.listar();
+        this.regioes = ServicosRegiao.listar();
+
+        this.campoPokemon.limpar();
+        this.campoAnterior.limpar();
+        this.campoProximo.limpar();
+        this.campoJogo.limpar();
+        this.campoRegiao.limpar();
+
+        for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
+        for (Regiao r : regioes) campoRegiao.addOpcao(r.getId(), r.getNome());
+        for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
+        for (Pokemon p : pokemonsAnte) campoAnterior.addOpcao(p.getId(), p.getNome());
+        for (Pokemon p : pokemonsProx) campoProximo.addOpcao(p.getId(), p.getNome());
+    }
+    private void mudancaOrdemPokedex(){
+        Long idPoke = campoPokemon.getValorSelecionado();
+        Long idAnte = campoAnterior.getValorSelecionado();
+        Long idProx = campoProximo.getValorSelecionado();
+
+        campoProximo.filtrarIdDiferentes(new ArrayList<>(Arrays.asList(idPoke, idAnte)));
+        campoAnterior.filtrarIdDiferentes(new ArrayList<>(Arrays.asList(idPoke, idProx)));
     }
 
     public CadastroPokedex() {
@@ -59,17 +92,17 @@ public class CadastroPokedex extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoSelect campoJogo = new CampoSelect("Jogo:");
+        campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 1;
-        CampoSelect campoRegiao = new CampoSelect("Região:");
+        campoRegiao = new CampoSelect("Região:");
         for (Regiao r : regioes) campoRegiao.addOpcao(r.getId(), r.getNome());
         formulario.add(campoRegiao, gbc);
 
         gbc.gridy = 2;
-        CampoSelect campoPokemon = new CampoSelect("Pokemon:");
+        campoPokemon = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
         formulario.add(campoPokemon, gbc);
 
@@ -86,14 +119,18 @@ public class CadastroPokedex extends JPanel{
         formulario.add(campoCor, gbc);
 
         gbc.gridy = 6;
-        CampoSelect campoAnterior = new CampoSelect("Pokemon Anterior:");
+        campoAnterior = new CampoSelect("Pokemon Anterior:");
         for (Pokemon p : pokemonsAnte) campoAnterior.addOpcao(p.getId(), p.getNome());
         formulario.add(campoAnterior, gbc);
 
         gbc.gridy = 7;
-        CampoSelect campoProximo = new CampoSelect("Proximo Pokemon:");
+        campoProximo = new CampoSelect("Proximo Pokemon:");
         for (Pokemon p : pokemonsProx) campoProximo.addOpcao(p.getId(), p.getNome());
         formulario.add(campoProximo, gbc);
+        
+        campoAnterior.setOnChange(new AoMudar() {public void mudou(Long id) {mudancaOrdemPokedex();}});
+        campoProximo.setOnChange(new AoMudar() {public void mudou(Long id) {mudancaOrdemPokedex();}});
+        campoPokemon.setOnChange(new AoMudar() {public void mudou(Long id) {mudancaOrdemPokedex();}});
 
         gbc.gridy = 8;
         BotaoSalvar btSalvar = new BotaoSalvar();
@@ -112,7 +149,7 @@ public class CadastroPokedex extends JPanel{
                 px.setIdProximo(campoAnterior.getValorSelecionado());
                 px.setIdAnterior(campoProximo.getValorSelecionado());
                 ServicosPokedex.criar(px);
-                ModalSucesso.ExibirModal("Sucesso ao criar pokedex!");
+                ModalSucesso.ExibirModal("Sucesso ao criar Pokedex!");
                 campoJogo.limpar();
                 campoRegiao.limpar();
                 campoPokemon.limpar();
@@ -125,22 +162,18 @@ public class CadastroPokedex extends JPanel{
             else{
                 String erros = "";
                 if (!campoJogo.temValor()) 
-                    erros = erros + "o elemento"; 
+                    erros = erros + "o Jogo"; 
                 if (!campoRegiao.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o elemento alvo"; 
+                    erros = erros + (erros.length() > 0 ? ", " : "") + "a Região"; 
                 if (!campoPokemon.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "a seleção da vantagem ou desvantagem"; 
+                    erros = erros + (erros.length() > 0 ? ", " : "") + "o Pokemon "; 
                 if (!campoNumero.temTexto()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o multiplicador"; 
+                    erros = erros + (erros.length() > 0 ? ", " : "") + "o Numero na Pokedex"; 
                 if (!campoDescricao.temTexto()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o jogo";
+                    erros = erros + (erros.length() > 0 ? ", " : "") + "a Descrição";
                 if (!campoCor.temCorSelecionada()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o jogo";
-                if (!campoAnterior.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o jogo";
-                if (!campoAnterior.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o jogo";
-                ModalErro.ExibirModal("Faltou preencher " + erros + " da Vantagem/Desvantagem.");
+                    erros = erros + (erros.length() > 0 ? ", " : "") + "a Cor";
+                ModalErro.ExibirModal("Faltou preencher " + erros + " da Pokedex.");
             }
             
         });

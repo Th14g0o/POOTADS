@@ -16,7 +16,7 @@ import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoGrupoRadio;
 import projetoFinal.ui.componentes.campos.CampoNumero;
 import projetoFinal.ui.componentes.campos.CampoSelect;
-import projetoFinal.ui.componentes.campos.CampoSelect.AoMudar;
+import projetoFinal.ui.interfaces.AoMudar;
 import projetoFinal.ui.util.Enuns.TipoNumero;
 
 public class CadastroVantagem extends JPanel{
@@ -24,10 +24,28 @@ public class CadastroVantagem extends JPanel{
     private List<Elemento> elementos;
     private List<Elemento> fvs;
 
+    private CampoSelect campoElemento;
+    private CampoSelect campoVD;
+    private CampoSelect campoJogo;
+
     private void carregarListas(){
         jogos = ServicosJogo.listar();
         elementos = ServicosElemento.listar();
         fvs = ServicosElemento.listar();
+    }
+
+    public void recarregarListas(){
+        jogos = ServicosJogo.listar();
+        elementos = ServicosElemento.listar();
+        fvs = ServicosElemento.listar();
+
+        campoElemento.limpar();
+        campoVD.limpar();
+        campoJogo.limpar();
+
+        for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome()); 
+        for (Elemento e : fvs) campoVD.addOpcao(e.getId(), e.getNome());
+        for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
     public CadastroVantagem() {
@@ -48,12 +66,12 @@ public class CadastroVantagem extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoSelect campoElemento = new CampoSelect("Elemento:");
+        campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome()); 
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 1;
-        CampoSelect campoVD = new CampoSelect("Elemento que tem vantagem/desvantagem:");
+        campoVD = new CampoSelect("Elemento que tem vantagem/desvantagem:");
         for (Elemento e : fvs) campoVD.addOpcao(e.getId(), e.getNome());
         formulario.add(campoVD, gbc);
 
@@ -69,7 +87,7 @@ public class CadastroVantagem extends JPanel{
         formulario.add(campoMultiplicador, gbc);
 
         gbc.gridy = 4;
-        CampoSelect campoJogo  = new CampoSelect("Jogo:");
+        campoJogo  = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
         formulario.add(campoJogo, gbc);
 

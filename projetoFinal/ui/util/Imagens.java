@@ -18,6 +18,18 @@ public class Imagens {
         return icone.getImage().getScaledInstance(larg, altu, Image.SCALE_SMOOTH);
     }
 
+    public static Image escalaImagem(byte[] conteudoImg, int larg, int altu){
+        ImageIcon icone = new ImageIcon(conteudoImg);
+        return icone.getImage().getScaledInstance(larg, altu, Image.SCALE_SMOOTH);
+
+    }
+    public static ImageIcon escalaIcone(byte[] conteudoImg, int larg, int altu){
+        ImageIcon icone = new ImageIcon(conteudoImg);
+        return new ImageIcon(icone.getImage().getScaledInstance(larg, altu, Image.SCALE_SMOOTH));
+
+    }
+
+
     public static ImageIcon logo(int larg, int altu) {
         return getImagemIcone(
             "/projetoFinal/conteudos/imgs/comuns/iconePokebolaBorda.png",

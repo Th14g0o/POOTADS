@@ -6,11 +6,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import projetoFinal.ui.interfaces.AoMudar;
 
 public class CampoSelect extends JPanel {
-    public interface AoMudar {
-        void mudou(Long id);
-    }
 
     public record Opcao(Long id, String texto){
         @Override
@@ -47,7 +45,6 @@ public class CampoSelect extends JPanel {
         return this.getValorSelecionado() != null;
     }
     public void limpar(){
-        this.opcoes.removeAllElements();
         this.recarregarOpcoes();
     }
 
@@ -96,6 +93,17 @@ public class CampoSelect extends JPanel {
         this.selecionarPorId(sel);
     }
 
+    public void filtrarIdDiferentes(List<Long> ids){ 
+        if (ids == null || ids.size() < 1) return;
+        Long sel = this.getValorSelecionado();
+        this.opcoes.removeAllElements();
+        for (Opcao op : this.todasOpcoes){
+            if (!ids.contains(op.id()) || Objects.equals(op.id(), null)) this.opcoes.addElement(op);
+        }
+
+        this.selecionarPorId(sel);
+    }
+
     public void retirarFiltros(Long id){
         Long sel = this.getValorSelecionado();
         this.opcoes.removeAllElements();
@@ -107,9 +115,8 @@ public class CampoSelect extends JPanel {
 
     public void recarregarOpcoes(){
         this.opcoes.removeAllElements();
-        for (Opcao op : this.todasOpcoes){
-            this.opcoes.addElement(op);
-        }
+        this.todasOpcoes = new ArrayList<Opcao>();
+        addOpcao(null, "Selecione uma opção");
         if (opcoes.getSize() > 0) campo.setSelectedIndex(0);
     }
 

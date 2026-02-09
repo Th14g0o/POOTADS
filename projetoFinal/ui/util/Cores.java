@@ -16,7 +16,8 @@ public class Cores {
         return hex;
     }
     public static final String ColorParaHex(Color cor){
-        return RGBParaHex(cor.getRed(), cor.getGreen(), cor.getBlue());
+        if (cor != null) return RGBParaHex(cor.getRed(), cor.getGreen(), cor.getBlue());
+        else return null;
     }
     public static final Color HexParaColor(String hex){
         try {
@@ -25,5 +26,10 @@ public class Cores {
         } catch (Exception e) {
             return null;
         }
+    }
+    public static Color CorDeContraste(Color bg) {
+        if (bg == null) return Color.BLACK;
+        double luminancia = (0.299 * bg.getRed() + 0.587 * bg.getGreen() + 0.114 * bg.getBlue()) / 255.0;
+        return luminancia > 0.5 ? Color.BLACK : Color.WHITE;
     }
 }

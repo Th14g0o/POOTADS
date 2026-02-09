@@ -3,15 +3,21 @@ package projetoFinal.ui.telas.listagem;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
-import projetoFinal.logica.modelos.Pokedex;
-import projetoFinal.ui.componentes.CardComum;
-import projetoFinal.ui.componentes.botoes.BotaoIconeTexto;
-import projetoFinal.ui.componentes.tab.BotaoTab;
-import projetoFinal.ui.componentes.tab.Rolagem;
-import projetoFinal.ui.componentes.tab.TabPadrao;
-import projetoFinal.ui.util.Imagens;
 
-import java.awt.*;
+import projetoFinal.logica.dto.EvolucaoDTO;
+import projetoFinal.logica.dto.PokedexDTO;
+import projetoFinal.logica.dto.PokemonElementoDTO;
+import projetoFinal.logica.modelos.Pokemon;
+import projetoFinal.logica.servicos.ServicosPokemon;
+import projetoFinal.logica.servicos.ServicosPokedex;
+import projetoFinal.ui.componentes.tab.BotaoTab;
+import projetoFinal.ui.componentes.tab.TabPadrao;
+import projetoFinal.ui.interfaces.InstanciarGenerica;
+import projetoFinal.ui.telas.listagem.cards.CardEvolucao;
+import projetoFinal.ui.telas.listagem.cards.CardPokedex;
+import projetoFinal.ui.telas.listagem.cards.CardPokemon;
+import projetoFinal.ui.telas.listagem.cards.CardPokemonElemento;
+import projetoFinal.ui.util.Uteis;
 
 public class ListagemPokemon extends TabPadrao  {
     private JPanel conteudoPokemon = new JPanel();
@@ -21,6 +27,32 @@ public class ListagemPokemon extends TabPadrao  {
 
     private int iconeAcoesLargura = 20;
     private int iconeAcoesAltura = 20;
+
+    private List<Pokemon> pokemons = new ArrayList<Pokemon>();
+    private List<EvolucaoDTO> evolucoes = new ArrayList<EvolucaoDTO>();
+    private List<PokedexDTO> pokedexs = new ArrayList<PokedexDTO>();
+    private List<PokemonElementoDTO> pes = new ArrayList<PokemonElementoDTO>();
+
+    public void recarregarListaPokemon(){
+        this.pokemons = ServicosPokemon.listar();
+        this.configurarConteudoPokemon();
+    }
+
+    public void recarregarListaPokedex(){
+        this.pokedexs = ServicosPokedex.listarPokedexDTO();
+        this.configurarConteudoPokedex();
+    }
+
+    public void recarregarListaPE(){
+        this.pes = ServicosPokemon.listarPokemonElementoDTO();
+        this.configurarConteudoPokemonElemento();
+    }
+
+    public void recarregarListaEvolucao(){
+        this.evolucoes = ServicosPokemon.listarEvolucaoDTO();
+        this.configurarConteudoEvolucao();;
+    }
+
 
     public ListagemPokemon() {
         List<BotaoTab> bts = new ArrayList<>();
@@ -34,57 +66,50 @@ public class ListagemPokemon extends TabPadrao  {
         adicionarConteudo(conteudoEvolucao, "LISTA_EVOLUCAO");
         adicionarConteudo(conteudoPokedex, "LISTA_POKEDEX");
         iniciarTab();
-        configurarConteudoPokemon();
-        configurarConteudoPokemonElemento();
-        configurarConteudoEvolucao();
-        configurarConteudoPokedex();
+        recarregarListaPokemon();
+        recarregarListaEvolucao();
+        recarregarListaPE();
+        recarregarListaPokedex();
     }
 
     private void configurarConteudoPokemon(){
-        conteudoPokemon.setOpaque(false);
+        Uteis.conteudoCardListagemComun(
+            conteudoPokemon, pokemons, 
+            new InstanciarGenerica<Pokemon>() {
+                public CardPokemon novo(Pokemon obj) {return new CardPokemon(iconeAcoesLargura, iconeAcoesAltura, obj);}
+            }
+        );
     }
 
     private void configurarConteudoPokemonElemento(){
         conteudoPokemonElemento.setOpaque(false);
+        Uteis.conteudoCardListagemComun(
+            conteudoPokemonElemento, pes, 
+            new InstanciarGenerica<PokemonElementoDTO>() {
+                public CardPokemonElemento novo(PokemonElementoDTO obj) {return new CardPokemonElemento(iconeAcoesLargura, iconeAcoesAltura, obj);}
+            }
+        );
     }
 
     private void configurarConteudoEvolucao(){
         conteudoEvolucao.setOpaque(false);
+        Uteis.conteudoCardListagemComun(
+            conteudoEvolucao, evolucoes, 
+            new InstanciarGenerica<EvolucaoDTO>() {
+                public CardEvolucao novo(EvolucaoDTO obj) {return new CardEvolucao(iconeAcoesLargura, iconeAcoesAltura, obj);}
+            }
+        );
     }
 
     private void configurarConteudoPokedex(){
         conteudoPokedex.setOpaque(false);
-        conteudoPokedex.setLayout(new BorderLayout());
+        Uteis.conteudoCardListagemComun(
+            conteudoPokedex, pokedexs, 
+            new InstanciarGenerica<PokedexDTO>() {
+                public CardPokedex novo(PokedexDTO obj) {return new CardPokedex(iconeAcoesLargura, iconeAcoesAltura, obj);}
+            }
+        );
 
-        Rolagem rolagem = new Rolagem(true);
-        
-        for (int i = 0; i < 500; i++){
-            Pokedex pokedex = new Pokedex();
-            rolagem.conteudo.add(this.cardPokedex(pokedex));
-        }
-
-        conteudoPokedex.add(rolagem.rolagem, BorderLayout.CENTER);
-
-    }
-
-    private CardComum gerarCard(JPanel painel){
-        CardComum pr = new CardComum();
-        pr.setMargin(5, 5, 5, 5);
-        pr.setRadiusCard(10);
-        pr.addConteudo(painel);
-        return pr;
-    }
-
-    private CardComum cardPokedex(Pokedex pokedex){
-        JPanel painel = new JPanel();
-        painel.setOpaque(false);
-
-        CardComum pr = this.gerarCard(painel);
-
-        pr.addBotaoAcao(new BotaoIconeTexto("", Imagens.iconeLapisVerde(iconeAcoesLargura, iconeAcoesAltura)));
-        pr.addBotaoAcao(new BotaoIconeTexto("", Imagens.iconeLixeiraVermelha(iconeAcoesLargura, iconeAcoesAltura)));
-    
-        return pr;
     }
     
 }

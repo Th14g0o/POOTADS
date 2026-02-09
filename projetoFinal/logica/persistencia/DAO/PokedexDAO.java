@@ -23,8 +23,10 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
              PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setLong(1, p.getIdPokemon());
-            ps.setObject(2, p.getIdAnterior(), Types.INTEGER);
-            ps.setObject(3, p.getIdProximo(), Types.INTEGER);
+            if (p.getIdAnterior() != null) ps.setLong(2, p.getIdAnterior());
+            else ps.setString(2, "NULL"); 
+            if (p.getIdAnterior() != null) ps.setLong(3, p.getIdProximo());
+            else ps.setString(3, "NULL");
             ps.setLong(4, p.getIdJogo());
             ps.setLong(5, p.getIdRegiao());
             ps.setInt(6, p.getNumeroPokemon());
@@ -63,8 +65,10 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setLong(1, p.getIdPokemon());
-            ps.setObject(2, p.getIdAnterior(), Types.INTEGER);
-            ps.setObject(3, p.getIdProximo(), Types.INTEGER);
+            if (p.getIdAnterior() != null) ps.setLong(2, p.getIdAnterior());
+            else ps.setString(2, "NULL"); 
+            if (p.getIdAnterior() != null) ps.setLong(3, p.getIdProximo());
+            else ps.setString(3, "NULL");
             ps.setLong(4, p.getIdJogo());
             ps.setLong(5, p.getIdRegiao());
             ps.setInt(6, p.getNumeroPokemon());
@@ -98,8 +102,8 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
                 Pokedex p = new Pokedex();
                 p.setId(rs.getLong("id"));
                 p.setIdPokemon(rs.getLong("idPokemon"));
-                p.setIdAnterior((Long) rs.getObject("idAnterior"));
-                p.setIdProximo((Long) rs.getObject("idProximo"));
+                p.setIdAnterior(rs.getLong("idAnterior"));
+                p.setIdProximo(rs.getLong("idProximo"));
                 p.setIdJogo(rs.getLong("idJogo"));
                 p.setIdRegiao(rs.getLong("idRegiao"));
                 p.setNumeroPokemon(rs.getInt("numeroPokemon"));
@@ -134,8 +138,8 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
                 Pokedex p = new Pokedex();
                 p.setId(rs.getLong("id"));
                 p.setIdPokemon(rs.getLong("idPokemon"));
-                p.setIdAnterior((Long) rs.getObject("idAnterior"));
-                p.setIdProximo((Long) rs.getObject("idProximo"));
+                p.setIdAnterior(rs.getLong("idAnterior"));
+                p.setIdProximo(rs.getLong("idProximo"));
                 p.setIdJogo(rs.getLong("idJogo"));
                 p.setIdRegiao(rs.getLong("idRegiao"));
                 p.setNumeroPokemon(rs.getInt("numeroPokemon"));
@@ -169,8 +173,8 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
                 Pokedex p = new Pokedex();
                 p.setId(rs.getLong("id"));
                 p.setIdPokemon(rs.getLong("idPokemon"));
-                p.setIdAnterior((Long) rs.getObject("idAnterior"));
-                p.setIdProximo((Long) rs.getObject("idProximo"));
+                p.setIdAnterior(rs.getLong("idAnterior"));
+                p.setIdProximo(rs.getLong("idProximo"));
                 p.setIdJogo(rs.getLong("idJogo"));
                 p.setIdRegiao(rs.getLong("idRegiao"));
                 p.setNumeroPokemon(rs.getInt("numeroPokemon"));

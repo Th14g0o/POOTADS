@@ -10,8 +10,8 @@ import projetoFinal.logica.persistencia.BD;
 public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
     public Evolucao inserir(Evolucao p) {
         String sql = """
-            INSERT INTO Evolucao (idPokemon, idEvolucao, estagio, requisitos) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO Evolucao (idPokemon, idEvolucao, estagio, requisitos, idJogo, estagioEvolucao) 
+            VALUES (?, ?, ?, ?, ?, ?)
         """;
 
         try (Connection conn = BD.getConnection();
@@ -21,6 +21,8 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
             ps.setLong(2, p.getEvolucaoId());
             ps.setLong(3, p.getEstagio());
             ps.setString(4, p.getRequisitos());
+            ps.setLong(5, p.getIdJogo());
+            ps.setLong(6, p.getEstagioEvolucao());
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -39,7 +41,7 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
         if (p.getId() == null) throw new IllegalArgumentException("Evolução sem id");
 
         String sql = """
-            UPDATE Evolucao SET idPokemon=?, idEvolucao=?, estagio=?, requisitos=? 
+            UPDATE Evolucao SET idPokemon=?, idEvolucao=?, estagio=?, requisitos=?, idJogo=?, estagioEvolucao=?
             WHERE id=?
         """;
 
@@ -50,7 +52,9 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
             ps.setLong(2, p.getEvolucaoId());
             ps.setLong(3, p.getEstagio());
             ps.setString(4, p.getRequisitos());
-            ps.setLong(5, p.getId());
+            ps.setLong(5, p.getIdJogo());
+            ps.setLong(6, p.getEstagioEvolucao());
+            ps.setLong(7, p.getId());
             ps.executeUpdate();
 
         } catch (SQLException e) {
@@ -60,7 +64,7 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
 
     public Evolucao buscarPorId(Long id) {
         String sql = """
-            SELECT id, idPokemon, idEvolucao, estagio, requisitos FROM Evolucao 
+            SELECT id, idPokemon, idEvolucao, estagio, requisitos, idJogo, estagioEvolucao FROM Evolucao 
             WHERE id=?
         """;
 
@@ -78,6 +82,8 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
                 p.setEvolucaoId(rs.getLong("idEvolucao"));
                 p.setPokemonId(rs.getLong("idPokemon"));
                 p.setRequisitos(rs.getString("requisitos"));
+                p.setEstagioEvolucao(rs.getInt("estagioEvolucao"));
+                p.setIdJogo(rs.getLong("idJogo"));
                 return p;
             }
 
@@ -88,7 +94,7 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
 
     public List<Evolucao> listarTodos() {
         String sql = """
-            SELECT id, idPokemon, idEvolucao, estagio, requisitos FROM Evolucao 
+            SELECT id, idPokemon, idEvolucao, estagio, requisitos, idJogo, estagioEvolucao FROM Evolucao 
             ORDER BY id DESC
         """;
         List<Evolucao> lista = new ArrayList<>();
@@ -104,6 +110,8 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
                 p.setEvolucaoId(rs.getLong("idEvolucao"));
                 p.setPokemonId(rs.getLong("idPokemon"));
                 p.setRequisitos(rs.getString("requisitos"));
+                p.setEstagioEvolucao(rs.getInt("estagioEvolucao"));
+                p.setIdJogo(rs.getLong("idJogo"));
                 lista.add(p);
             }
 
@@ -116,7 +124,7 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
 
     public Evolucao listarPorPokemon(Long idPokemon) {
         String sql = """
-            SELECT id, idPokemon, idEvolucao, estagio, requisitos FROM Evolucao 
+            SELECT id, idPokemon, idEvolucao, estagio, requisitos, idJogo, estagioEvolucao FROM Evolucao 
             WHERE idPokemon=?
         """;
 
@@ -134,6 +142,8 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
                 p.setEvolucaoId(rs.getLong("idEvolucao"));
                 p.setPokemonId(rs.getLong("idPokemon"));
                 p.setRequisitos(rs.getString("requisitos"));
+                p.setEstagioEvolucao(rs.getInt("estagioEvolucao"));
+                p.setIdJogo(rs.getLong("idJogo"));
                 return p;
             }
 
@@ -144,7 +154,7 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
 
     public Evolucao listarPorPokemonEvolucao(Long idEvolucao) {
         String sql = """
-            SELECT id, idPokemon, idEvolucao, estagio, requisitos FROM Evolucao 
+            SELECT id, idPokemon, idEvolucao, estagio, requisitos, idJogo, estagioEvolucao FROM Evolucao 
             WHERE idEvolucao=?
         """;
 
@@ -162,6 +172,8 @@ public class EvolucaoDAO implements IDataAcessObject<Evolucao>{
                 p.setEvolucaoId(rs.getLong("idEvolucao"));
                 p.setPokemonId(rs.getLong("idPokemon"));
                 p.setRequisitos(rs.getString("requisitos"));
+                p.setEstagioEvolucao(rs.getInt("estagioEvolucao"));
+                p.setIdJogo(rs.getLong("idJogo"));
                 return p;
             }
 

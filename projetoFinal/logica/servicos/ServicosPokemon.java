@@ -1,7 +1,10 @@
 package projetoFinal.logica.servicos;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import projetoFinal.logica.dto.EvolucaoDTO;
+import projetoFinal.logica.dto.PokemonElementoDTO;
 import projetoFinal.logica.modelos.Evolucao;
 import projetoFinal.logica.modelos.Pokemon;
 import projetoFinal.logica.modelos.PokemonElemento;
@@ -41,6 +44,10 @@ public class ServicosPokemon {
         PokemonElemento obj = daoPE.buscarPorId(id);
         return obj;
     }
+     public static List<PokemonElemento> acharElementosPokemon(Long idPokemon, Long idJogo){
+        List<PokemonElemento> obj = daoPE.listarElementosPorPokemonJogo(idPokemon, idJogo);
+        return obj;
+    }
     public static List<PokemonElemento> listarElemento(){
         return daoPE.listarTodos();
     }
@@ -64,4 +71,31 @@ public class ServicosPokemon {
     public static void apagarEvolucao(Long id){
         daoEvolucao.deletar(id);
     }
+
+    public static List<EvolucaoDTO> listarEvolucaoDTO(){
+        List<EvolucaoDTO> evsDTO = new ArrayList<EvolucaoDTO>();
+        List<Evolucao> evs = daoEvolucao.listarTodos();
+        for (Evolucao ev : evs){
+            EvolucaoDTO evDTO = new EvolucaoDTO();
+            evDTO.setEvolucao(ev);
+            evDTO.setPokemon(daoPokemon.buscarPorId(ev.getPokemonId()));
+            evDTO.setPokeEvolucao(daoPokemon.buscarPorId(ev.getEvolucaoId()));
+            evsDTO.add(evDTO);
+        }
+        return evsDTO;
+    };
+
+    public static List<PokemonElementoDTO> listarPokemonElementoDTO(){
+        List<PokemonElementoDTO> dtos = new ArrayList<PokemonElementoDTO>();
+        List<PokemonElemento> objs = daoPE.listarTodos();
+        for (PokemonElemento obj : objs){
+            PokemonElementoDTO dto = new PokemonElementoDTO();
+            dto.setPokemonElemento(obj);
+            dto.setPokemon(daoPokemon.buscarPorId(obj.getIdPokemon()));
+            dto.setElemento(ServicosElemento.achar(obj.getIdElemento()));
+            dto.setJogo(ServicosJogo.achar(obj.getIdJogo()));
+            dtos.add(dto);
+        }
+        return dtos;
+    };
 }

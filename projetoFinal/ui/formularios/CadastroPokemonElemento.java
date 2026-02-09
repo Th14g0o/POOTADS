@@ -21,10 +21,28 @@ public class CadastroPokemonElemento extends JPanel{
     private List<Jogo> jogos;
     private List<Elemento> elementos;
 
+    private CampoSelect campoPokemon;
+    private CampoSelect campoJogo;
+    private CampoSelect campoElemento;
+
     private void carregarListas(){
         this.jogos = ServicosJogo.listar();
         this.elementos = ServicosElemento.listar();
         this.pokemons = ServicosPokemon.listar();
+    }
+
+    public void recarregarListas(){
+        this.jogos = ServicosJogo.listar();
+        this.elementos = ServicosElemento.listar();
+        this.pokemons = ServicosPokemon.listar();
+
+        campoPokemon.limpar();
+        campoJogo.limpar();
+        campoElemento.limpar();
+
+        for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
+        for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
+        for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
     public CadastroPokemonElemento() {
@@ -44,17 +62,17 @@ public class CadastroPokemonElemento extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoSelect campoPokemon = new CampoSelect("Pokemon:");
+        campoPokemon = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
         formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 1;
-        CampoSelect campoElemento = new CampoSelect("Elemento:");
+        campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 2;
-        CampoSelect campoJogo = new CampoSelect("Jogo:");
+        campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
         formulario.add(campoJogo, gbc);
 
@@ -68,7 +86,7 @@ public class CadastroPokemonElemento extends JPanel{
                 pe.setIdPokemon(campoPokemon.getValorSelecionado());
                 pe.setIdJogo(campoJogo.getValorSelecionado());
                 ServicosPokemon.adicionarElemento(pe);
-                ModalSucesso.ExibirModal("Sucesso ao criar Evolução");
+                ModalSucesso.ExibirModal("Sucesso ao criar Elemento do Pokemon!");
                 campoPokemon.limpar();
                 campoElemento.limpar();
                 campoJogo.limpar();
