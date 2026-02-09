@@ -3,14 +3,43 @@ package projetoFinal.ui.telas.listagem.cards;
 import javax.swing.*;
 import java.awt.*;
 import projetoFinal.logica.dto.PokemonElementoDTO;
+import projetoFinal.logica.modelos.Elemento;
+import projetoFinal.logica.modelos.PokemonElemento;
+import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.componentes.TagElementoArredondada;
+import projetoFinal.ui.formularios.CadastroPokemonElemento;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 import projetoFinal.ui.util.Imagens;
 
 public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
     public CardPokemonElemento(int iconeAcoesLargura, int iconeAcoesAltura, PokemonElementoDTO obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
         setModelo(obj);
+    }
+
+    public void mostrarExclusão(){
+        String nome = "o Pokemon-Elemento";
+        if (obj != null && obj.getPokemon() != null) nome = obj.getPokemon().getNome();
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Pokemon-Elemento", this, nome);
+        ppe.mostrar(true);
+    }
+
+    public void mostrarEdicao(){
+        CadastroPokemonElemento form = new CadastroPokemonElemento(false, this.obj.getPokemonElemento());
+        PopPupEdicao<PokemonElemento> ppe = new PopPupEdicao<PokemonElemento>("Editar Pokemon-Elemento", this, form);
+        ppe.mostrar(true);
+    }
+
+    public void apagar(){
+        if (this.obj != null && this.obj.getPokemonElemento() != null) ServicosPokemon.apagarElemento(this.obj.getPokemonElemento().getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+    public void recarregarConteudo(){
+        if (this.obj != null && this.obj.getPokemonElemento() != null) setModelo(this.obj);
     }
 
     public void setModelo(PokemonElementoDTO obj){

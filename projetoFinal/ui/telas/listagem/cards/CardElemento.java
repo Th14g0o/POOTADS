@@ -1,77 +1,34 @@
 package projetoFinal.ui.telas.listagem.cards;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.servicos.ServicosElemento;
-import projetoFinal.ui.componentes.PopPup;
 import projetoFinal.ui.componentes.TagElementoArredondada;
-import projetoFinal.ui.componentes.botoes.BotaoVermelho;
 import projetoFinal.ui.formularios.CadastroElemento;
-import projetoFinal.ui.interfaces.AoClicar;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
-import projetoFinal.ui.util.Cores;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 
 public class CardElemento extends CardListagemModelo<Elemento> {
     
     public CardElemento(int iconeAcoesLargura, int iconeAcoesAltura, Elemento obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
-        this.iconeAcoesAltura = iconeAcoesAltura;
-        this.iconeAcoesLargura = iconeAcoesLargura;
-        
         setModelo(obj);
-        
     }
 
     public void mostrarExclusão(){
-        JPanel conteudoPP = new JPanel();
-        conteudoPP.setBackground(Cores.AZUL);
-
-        JLabel texto = new JLabel("Tem certeza que deseja excluir " + (obj != null ? obj.getNome() : "o elemento") + "?");
-        texto.setOpaque(false);
-        texto.setForeground(Color.WHITE);
-        conteudoPP.add(texto);
-
-        PopPup pp = new PopPup("Exclusão de Elemento", this, conteudoPP);
-        BotaoVermelho ok = new BotaoVermelho("Confirmar", Cores.VERDE, Color.WHITE);
-        BotaoVermelho cancelar = new BotaoVermelho("Cancelar", Cores.VERMELHO, Color.WHITE);
-        pp.addBotao(
-            ok, true, 
-            new AoClicar() {
-                public void acao() { apagar(); }
-            }
-        );
-        pp.addBotao(
-            cancelar, true,
-            new AoClicar() {
-                public void acao() { recarregarConteudo(); }
-            }
-        );
-        pp.mostrar(true);
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Elementop", this,  (obj != null ? obj.getNome() : "o elemento"));
+        ppe.mostrar(true);
     }
 
     public void mostrarEdicao(){
-        PopPup pp = new PopPup("Edição de Elemento", this, new CadastroElemento(false, obj));
-        BotaoVermelho ok = new BotaoVermelho("Confirmar", Cores.VERDE, Color.WHITE);
-        BotaoVermelho cancelar = new BotaoVermelho("Cancelar", Cores.VERMELHO, Color.WHITE);
-        pp.addBotao(
-            ok, true, 
-            new AoClicar() {
-                public void acao() { recarregarConteudo(); }
-            }
-        );
-        pp.addBotao(
-            cancelar, true,
-            new AoClicar() {
-                public void acao() { recarregarConteudo(); }
-            }
-        );
-        pp.mostrar(true);
+        CadastroElemento form = new CadastroElemento(false, obj);
+        PopPupEdicao<Elemento> ppe = new PopPupEdicao<Elemento>("Editar Elemento", this, form);
+        ppe.mostrar(true);
     }
 
     public void apagar(){
@@ -80,6 +37,9 @@ public class CardElemento extends CardListagemModelo<Elemento> {
         setVisible(false);
     }
 
+    public void recarregarConteudo(){
+        setModelo(ServicosElemento.achar(this.obj.getId()));
+    }
 
     public void setModelo(Elemento obj){
         if (obj != null){ 
@@ -87,11 +47,6 @@ public class CardElemento extends CardListagemModelo<Elemento> {
             gerarConteudo(this.obj);
         }
     }
-
-    public void recarregarConteudo(){
-        setModelo(ServicosElemento.achar(this.obj.getId()));
-    }
-
    
     protected void gerarConteudo(Elemento obj){
         conteudoCard = new JPanel();

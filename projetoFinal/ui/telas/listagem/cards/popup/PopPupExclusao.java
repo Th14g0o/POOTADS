@@ -14,8 +14,8 @@ import projetoFinal.ui.util.Cores;
 public class PopPupExclusao extends PopPup {
     private JPanel conteudoPP = new JPanel();
     public PopPupExclusao(String Titulo, CardListagemModelo card, String objTxt){
+        super(Titulo, card, null);
         conteudoPP = new JPanel();
-        super(Titulo, card, conteudoPP);
 
         BotaoVermelho ok = new BotaoVermelho("Confirmar", Cores.VERDE, Color.WHITE);
         BotaoVermelho cancelar = new BotaoVermelho("Cancelar", Cores.VERMELHO, Color.WHITE);
@@ -31,7 +31,6 @@ public class PopPupExclusao extends PopPup {
                 public void acao() { card.recarregarConteudo(); }
             }
         );
-        mostrar(true);
 
         this.conteudoPP = new JPanel();
         this.conteudoPP.setBackground(Cores.AZUL);
@@ -40,5 +39,10 @@ public class PopPupExclusao extends PopPup {
         texto.setOpaque(false);
         texto.setForeground(Color.WHITE);
         this.conteudoPP.add(texto);
+        setConteudo(this.conteudoPP);
+    }
+
+    public void setVisibilidade(boolean mostra){
+        mostrar(mostra);
     }
 }

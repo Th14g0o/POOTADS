@@ -129,6 +129,11 @@ public class CampoSelect extends JPanel {
         if (Objects.equals(id, null) && opcoes.getSize() > 0) campo.setSelectedIndex(0);
     }
 
+    // Public helper to allow forms to select an option by id when editing
+    public void selecionar(Long id){
+        selecionarPorId(id);
+    }
+
     public void setOnChange(AoMudar fn){
          this.aoMudar = fn;
     }

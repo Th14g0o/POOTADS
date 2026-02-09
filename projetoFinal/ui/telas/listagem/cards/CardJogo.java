@@ -2,8 +2,13 @@ package projetoFinal.ui.telas.listagem.cards;
 
 import javax.swing.*;
 import java.awt.*;
+
 import projetoFinal.logica.modelos.Jogo;
+import projetoFinal.logica.servicos.ServicosJogo;
+import projetoFinal.ui.formularios.CadastroJogo;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 import projetoFinal.ui.util.Imagens;
 
 public class CardJogo extends CardListagemModelo<Jogo>{
@@ -14,6 +19,27 @@ public class CardJogo extends CardListagemModelo<Jogo>{
 
     public void setModelo(Jogo obj){
         if (obj != null) gerarConteudo(obj);
+    }
+
+    public void mostrarExclusão(){
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Elementop", this,  (obj != null ? obj.getNome() : "o elemento"));
+        ppe.mostrar(true);
+    }
+
+    public void mostrarEdicao(){
+        CadastroJogo form = new CadastroJogo();
+        PopPupEdicao<Jogo> ppe = new PopPupEdicao<Jogo>("Editar Jogo", this, form);
+        ppe.mostrar(true);
+    }
+
+    public void apagar(){
+        if (this.obj != null) ServicosJogo.apagar(this.obj.getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+    public void recarregarConteudo(){
+        setModelo(ServicosJogo.achar(this.obj.getId()));
     }
 
     protected void gerarConteudo(Jogo obj){

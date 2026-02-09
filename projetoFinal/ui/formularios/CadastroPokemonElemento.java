@@ -14,12 +14,16 @@ import projetoFinal.ui.componentes.ModalErro;
 import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoSelect;
+import projetoFinal.ui.formularios.abstracao.FormModelo;
+
 import java.util.List;
 
-public class CadastroPokemonElemento extends JPanel{
+public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
     private List<Pokemon> pokemons;
     private List<Jogo> jogos;
     private List<Elemento> elementos;
+
+    private PokemonElemento modelo;
 
     private CampoSelect campoPokemon;
     private CampoSelect campoJogo;
@@ -45,8 +49,11 @@ public class CadastroPokemonElemento extends JPanel{
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
-    public CadastroPokemonElemento() {
+    public void carregarForm(boolean ehCadastro, PokemonElemento modelo){
         this.carregarListas();
+        this.modelo = modelo;
+        setTipo(ehCadastro);
+        setModelo(modelo);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
 
@@ -64,16 +71,19 @@ public class CadastroPokemonElemento extends JPanel{
         gbc.gridy = 0;
         campoPokemon = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
+        if (!this.ehCadastro && this.modelo != null) campoPokemon.selecionar(this.modelo.getIdPokemon());
         formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 1;
         campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
+        if (!this.ehCadastro && this.modelo != null) campoElemento.selecionar(this.modelo.getIdElemento());
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 2;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
+        if (!this.ehCadastro && this.modelo != null) campoJogo.selecionar(this.modelo.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 3;
@@ -85,8 +95,13 @@ public class CadastroPokemonElemento extends JPanel{
                 pe.setIdElemento(campoElemento.getValorSelecionado());
                 pe.setIdPokemon(campoPokemon.getValorSelecionado());
                 pe.setIdJogo(campoJogo.getValorSelecionado());
-                ServicosPokemon.adicionarElemento(pe);
-                ModalSucesso.ExibirModal("Sucesso ao criar Elemento do Pokemon!");
+                if (!this.ehCadastro && this.modelo != null){
+                    pe.setId(this.modelo.getId());
+                    ServicosPokemon.atualizarElemento(pe);
+                } else {
+                    ServicosPokemon.adicionarElemento(pe);
+                }
+                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento do Pokemon!");
                 campoPokemon.limpar();
                 campoElemento.limpar();
                 campoJogo.limpar();
@@ -105,4 +120,8 @@ public class CadastroPokemonElemento extends JPanel{
         });
         formulario.add(btSalvar, gbc); 
     }
+
+    public CadastroPokemonElemento(){ this.carregarForm(true, null); }
+    public CadastroPokemonElemento(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public CadastroPokemonElemento(boolean ehCadastro, PokemonElemento pe){ this.carregarForm(ehCadastro, pe); }
 }

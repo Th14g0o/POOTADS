@@ -7,12 +7,20 @@ import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoTexto;
+import projetoFinal.ui.formularios.abstracao.FormModelo;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class CadastroJogo extends JPanel{
-    public CadastroJogo() {
+public class CadastroJogo extends FormModelo<Jogo>{
+    private Jogo jogo;
+    private CampoTexto campoNome;
+    private CampoImagem campoFoto;
+
+    public void carregarForm(boolean ehCadastro, Jogo j){
+        this.jogo = j;
+        setTipo(ehCadastro);
+        setModelo(j);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
 
@@ -28,11 +36,13 @@ public class CadastroJogo extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoTexto campoNome = new CampoTexto("Nome:");
+        campoNome = new CampoTexto("Nome:");
+        if (!this.ehCadastro && this.jogo != null) campoNome.setValor(this.jogo.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        CampoImagem campoFoto = new CampoImagem("Imagem do Jogo:");
+        campoFoto = new CampoImagem("Imagem do Jogo:");
+        if (!this.ehCadastro && this.jogo != null) campoFoto.setImagem(this.jogo.getImagem());
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
@@ -43,8 +53,13 @@ public class CadastroJogo extends JPanel{
             {
                 joghuin.setNome(campoNome.getValor());
                 joghuin.setImagem(campoFoto.getByteImagem());
-                ServicosJogo.criar(joghuin);
-                ModalSucesso.ExibirModal("Sucesso ao criar Jogo!");
+                if (!this.ehCadastro && this.jogo != null) {
+                    joghuin.setId(this.jogo.getId());
+                    ServicosJogo.atualizar(joghuin);
+                } else {
+                    ServicosJogo.criar(joghuin);
+                }
+                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Jogo!");
                 campoNome.limparValor();
                 campoFoto.limpar();
             }
@@ -55,5 +70,11 @@ public class CadastroJogo extends JPanel{
         });
         formulario.add(btSalvar, gbc); 
     }
+
+    public CadastroJogo() { this.carregarForm(true, null); }
+
+    public CadastroJogo(boolean ehCadastro) { this.carregarForm(ehCadastro, null); }
+
+    public CadastroJogo(boolean ehCadastro, Jogo j) { this.carregarForm(ehCadastro, j); }
     
 }

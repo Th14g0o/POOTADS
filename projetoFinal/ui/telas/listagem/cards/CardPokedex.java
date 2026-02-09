@@ -5,14 +5,42 @@ import java.awt.*;
 
 import projetoFinal.logica.dto.PokedexDTO;
 import projetoFinal.logica.modelos.Elemento;
+import projetoFinal.logica.servicos.ServicosPokedex;
 import projetoFinal.ui.componentes.TagElementoArredondada;
+import projetoFinal.ui.formularios.CadastroPokedex;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 import projetoFinal.ui.util.Imagens;
 
 public class CardPokedex extends CardListagemModelo<PokedexDTO>{
     public CardPokedex(int iconeAcoesLargura, int iconeAcoesAltura, PokedexDTO obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
         setModelo(obj);
+    }
+
+    public void mostrarExclusão(){
+        String nome = "o pokémon";
+        if (obj != null && obj.getPokemon() != null && obj.getPokemon().getPokemon() != null) nome = obj.getPokemon().getPokemon().getNome();
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Pokedex", this, nome);
+        ppe.mostrar(true);
+    }
+
+    public void mostrarEdicao(){
+        CadastroPokedex form = new CadastroPokedex();
+        PopPupEdicao<PokedexDTO> ppe = new PopPupEdicao<PokedexDTO>("Editar Pokedex", this, form);
+        ppe.mostrar(true);
+    }
+
+    public void apagar(){
+        if (this.obj != null && this.obj.getPokedex() != null) ServicosPokedex.apagar(this.obj.getPokedex().getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+    public void recarregarConteudo(){
+        // No direct EvolucaoDTO fetch helper available; keep existing DTO and re-render it.
+        if (this.obj != null) setModelo(this.obj);
     }
 
     public void setModelo(PokedexDTO obj){

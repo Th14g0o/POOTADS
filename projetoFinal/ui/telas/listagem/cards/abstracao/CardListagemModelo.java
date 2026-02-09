@@ -39,6 +39,8 @@ public abstract class CardListagemModelo<T> extends CardComum {
         });
 
         conteudoCard.setOpaque(false);  
+        this.iconeAcoesAltura = iconeAcoesAltura;
+        this.iconeAcoesLargura = iconeAcoesLargura;
     }
 
     public abstract void mostrarExclusão();

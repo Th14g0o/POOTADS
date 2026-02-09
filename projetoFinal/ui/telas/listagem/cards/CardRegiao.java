@@ -4,12 +4,37 @@ import javax.swing.*;
 import java.awt.*;
 
 import projetoFinal.logica.modelos.Regiao;
+import projetoFinal.logica.servicos.ServicosRegiao;
+import projetoFinal.ui.formularios.CadastroRegiao;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 
 public class CardRegiao extends CardListagemModelo<Regiao>{
     public CardRegiao(int iconeAcoesLargura, int iconeAcoesAltura, Regiao obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
         setModelo(obj);
+    }
+
+    public void mostrarExclusão(){
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Elementop", this,  (obj != null ? obj.getNome() : "o elemento"));
+        ppe.mostrar(true);
+    }
+
+    public void mostrarEdicao(){
+        CadastroRegiao form = new CadastroRegiao();
+        PopPupEdicao<Regiao> ppe = new PopPupEdicao<Regiao>("Editar Região", this, form);
+        ppe.mostrar(true);
+    }
+
+    public void apagar(){
+        if (this.obj != null) ServicosRegiao.apagar(this.obj.getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+    public void recarregarConteudo(){
+        setModelo(ServicosRegiao.achar(this.obj.getId()));
     }
 
     public void setModelo(Regiao obj){

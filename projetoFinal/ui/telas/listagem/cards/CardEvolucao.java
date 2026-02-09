@@ -3,14 +3,43 @@ package projetoFinal.ui.telas.listagem.cards;
 import javax.swing.*;
 import java.awt.*;
 import projetoFinal.logica.dto.EvolucaoDTO;
+import projetoFinal.logica.modelos.Evolucao;
+import projetoFinal.logica.servicos.ServicosPokemon;
+import projetoFinal.ui.formularios.CadastroEvolucao;
 import projetoFinal.ui.componentes.TagElementoArredondada;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
+import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
 import projetoFinal.ui.util.Imagens;
 
 public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
     public CardEvolucao(int iconeAcoesLargura, int iconeAcoesAltura, EvolucaoDTO obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
         setModelo(obj);
+    }
+
+    public void mostrarExclusão(){
+        String nome = "a evolução";
+        if (obj != null && obj.getPokemon() != null) nome = obj.getPokemon().getNome();
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Evolução", this, nome);
+        ppe.mostrar(true);
+    }
+
+    public void mostrarEdicao(){
+        CadastroEvolucao form = new CadastroEvolucao(false, obj != null ? obj.getEvolucao() : null);
+        PopPupEdicao<Evolucao> ppe = new PopPupEdicao<Evolucao>("Editar Evolução", this, form);
+        ppe.mostrar(true);
+    }
+
+    public void apagar(){
+        if (this.obj != null && this.obj.getEvolucao() != null) ServicosPokemon.apagarEvolucao(this.obj.getEvolucao().getId());
+        this.obj = null;
+        setVisible(false);
+    }
+
+    public void recarregarConteudo(){
+        // No direct DTO fetch helper available; re-render current DTO
+        if (this.obj != null) setModelo(this.obj);
     }
 
     public void setModelo(EvolucaoDTO obj){

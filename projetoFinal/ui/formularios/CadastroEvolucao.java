@@ -14,16 +14,18 @@ import projetoFinal.ui.componentes.campos.CampoAreaTexto;
 import projetoFinal.ui.componentes.campos.CampoNumero;
 import projetoFinal.ui.componentes.campos.CampoSelect;
 import projetoFinal.ui.componentes.tab.Rolagem;
+import projetoFinal.ui.formularios.abstracao.FormModelo;
 import projetoFinal.ui.interfaces.AoMudar;
 import java.util.List;
 
-public class CadastroEvolucao extends JPanel{
+public class CadastroEvolucao extends FormModelo<Evolucao>{
     private List<Pokemon> pokemons;
     private List<Pokemon> evolucoes;
     private List<Jogo> jogos;
     private CampoSelect campoNome;
     private CampoSelect campoEvolucao;
     private CampoSelect campoJogo;
+    private Evolucao modelo;
 
     private void carregarListas(){
         this.pokemons = ServicosPokemon.listar();
@@ -45,8 +47,15 @@ public class CadastroEvolucao extends JPanel{
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
-    public CadastroEvolucao() {
+    public CadastroEvolucao(){ this.carregarForm(true, null); }
+    public CadastroEvolucao(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public CadastroEvolucao(boolean ehCadastro, Evolucao evModel){ this.carregarForm(ehCadastro, evModel); }
+
+    public void carregarForm(boolean ehCadastro, Evolucao evModel){
         this.carregarListas();
+        this.modelo = evModel;
+        setTipo(ehCadastro);
+        setModelo(evModel);
         setLayout(new BorderLayout()); 
         setOpaque(false);
 
@@ -67,19 +76,23 @@ public class CadastroEvolucao extends JPanel{
         gbc.gridy = 0;
         campoNome = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoNome.addOpcao(p.getId(), p.getNome());
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoNome.selecionar(this.modelo.getPokemonId());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
         CampoNumero campoEstagio = new CampoNumero("Estagio:");
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEstagio.setValor(this.modelo.getEstagio());
         formulario.add(campoEstagio, gbc);
 
         gbc.gridy = 2;
         CampoAreaTexto campoRequisitos = new CampoAreaTexto("Requisitos:");
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoRequisitos.setValor(this.modelo.getRequisitos());
         formulario.add(campoRequisitos, gbc);
 
         gbc.gridy = 3;
         campoEvolucao = new CampoSelect("Pokemon Evolução:");
         for (Pokemon e : evolucoes) campoEvolucao.addOpcao(e.getId(), e.getNome());
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEvolucao.selecionar(this.modelo.getEvolucaoId());
         formulario.add(campoEvolucao, gbc);
 
         campoNome.setOnChange(new AoMudar() {public void mudou(Long id) {campoEvolucao.filtrarIdDiferentes(id);}});
@@ -87,11 +100,13 @@ public class CadastroEvolucao extends JPanel{
 
         gbc.gridy = 4;
         CampoNumero campoEstagioEV = new CampoNumero("Estagio Evolução:");
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEstagioEV.setValor(this.modelo.getEstagioEvolucao());
         formulario.add(campoEstagioEV, gbc);
 
         gbc.gridy = 5;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
+    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoJogo.selecionar(this.modelo.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 6;
@@ -108,8 +123,13 @@ public class CadastroEvolucao extends JPanel{
                 ev.setRequisitos(campoRequisitos.getValor());
                 ev.setIdJogo(campoJogo.getValorSelecionado());
                 ev.setEstagioEvolucao(campoEstagioEV.getInt());
-                ServicosPokemon.adicionarEvolucao(ev);
-                ModalSucesso.ExibirModal("Sucesso ao criar Evolução!");
+                if (!this.ehCadastro && this.modelo != null && this.modelo != null){
+                    ev.setId(this.modelo.getId());
+                    ServicosPokemon.atualizarEvolucao(ev);
+                } else {
+                    ServicosPokemon.adicionarEvolucao(ev);
+                }
+                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Evolução!");
                 campoRequisitos.limparValor();
                 campoEstagio.limpar();
                 campoEvolucao.limpar();

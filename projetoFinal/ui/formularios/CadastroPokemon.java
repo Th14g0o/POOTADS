@@ -7,12 +7,20 @@ import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
 import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoTexto;
+import projetoFinal.ui.formularios.abstracao.FormModelo;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class CadastroPokemon extends JPanel{
-    public CadastroPokemon() {
+public class CadastroPokemon extends FormModelo<Pokemon>{
+    private Pokemon pokemon;
+    private CampoTexto campoNome;
+    private CampoImagem campoFoto;
+
+    public void carregarForm(boolean ehCadastro, Pokemon p){
+        this.pokemon = p;
+        setTipo(ehCadastro);
+        setModelo(p);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
 
@@ -28,11 +36,13 @@ public class CadastroPokemon extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoTexto campoNome = new CampoTexto("Nome:");
+        campoNome = new CampoTexto("Nome:");
+        if (!this.ehCadastro && this.pokemon != null) campoNome.setValor(this.pokemon.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        CampoImagem campoFoto = new CampoImagem("Imagem do Pokemon:");
+        campoFoto = new CampoImagem("Imagem do Pokemon:");
+        if (!this.ehCadastro && this.pokemon != null) campoFoto.setImagem(this.pokemon.getImagem());
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
@@ -43,8 +53,13 @@ public class CadastroPokemon extends JPanel{
             {
                 poke.setNome(campoNome.getValor());
                 poke.setImagem(campoFoto.getByteImagem());
-                ServicosPokemon.criar(poke);
-                ModalSucesso.ExibirModal("Sucesso ao criar Pokemon!");
+                if (!this.ehCadastro && this.pokemon != null){
+                    poke.setId(this.pokemon.getId());
+                    ServicosPokemon.atualizar(poke);
+                } else {
+                    ServicosPokemon.criar(poke);
+                }
+                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Pokemon!");
                 campoNome.limparValor();
                 campoFoto.limpar();
             }
@@ -55,5 +70,9 @@ public class CadastroPokemon extends JPanel{
         });
         formulario.add(btSalvar, gbc); 
     }
+
+    public CadastroPokemon(){ this.carregarForm(true, null); }
+    public CadastroPokemon(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public CadastroPokemon(boolean ehCadastro, Pokemon p){ this.carregarForm(ehCadastro, p); }
     
 }
