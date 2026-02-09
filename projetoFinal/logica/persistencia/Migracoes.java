@@ -218,6 +218,10 @@ public final class Migracoes {
         """;
         Migracoes.executarMigracao(sql);
         sql = """
+            CREATE INDEX IF NOT EXISTS idx_evol_jogo  ON Evolucao(idJogo);
+        """;
+        Migracoes.executarMigracao(sql);
+        sql = """
             CREATE INDEX IF NOT EXISTS idx_px_pokemon   ON Pokedex(idPokemon);
         """;
         Migracoes.executarMigracao(sql);
