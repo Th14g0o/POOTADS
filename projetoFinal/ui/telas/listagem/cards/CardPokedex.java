@@ -27,8 +27,8 @@ public class CardPokedex extends CardListagemModelo<PokedexDTO>{
     }
 
     public void mostrarEdicao(){
-        CadastroPokedex form = new CadastroPokedex();
-        PopPupEdicao<PokedexDTO> ppe = new PopPupEdicao<PokedexDTO>("Editar Pokedex", this, form);
+        CadastroPokedex form = new CadastroPokedex(false, obj != null ? obj.getPokedex() : null);
+        PopPupEdicao<PokedexDTO> ppe = new PopPupEdicao("Editar Pokedex", this, form);
         ppe.mostrar(true);
     }
 
@@ -39,12 +39,14 @@ public class CardPokedex extends CardListagemModelo<PokedexDTO>{
     }
 
     public void recarregarConteudo(){
-        // No direct EvolucaoDTO fetch helper available; keep existing DTO and re-render it.
         if (this.obj != null) setModelo(this.obj);
     }
 
     public void setModelo(PokedexDTO obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null) { 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     protected void gerarConteudo(PokedexDTO obj){

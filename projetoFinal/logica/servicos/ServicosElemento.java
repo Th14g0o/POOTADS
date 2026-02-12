@@ -3,7 +3,6 @@ package projetoFinal.logica.servicos;
 import java.util.ArrayList;
 import java.util.List;
 
-import projetoFinal.logica.dto.ElementoDTO;
 import projetoFinal.logica.dto.ElementoFraquezaVantagemDTO;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.modelos.FraquezaVantagem;

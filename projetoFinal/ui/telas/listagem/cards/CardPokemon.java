@@ -23,7 +23,7 @@ public class CardPokemon extends CardListagemModelo<Pokemon>{
     }
 
     public void mostrarEdicao(){
-        CadastroPokemon form = new CadastroPokemon();
+        CadastroPokemon form = new CadastroPokemon(false, this.obj);
         PopPupEdicao<Pokemon> ppe = new PopPupEdicao<Pokemon>("Editar Pokemon", this, form);
         ppe.mostrar(true);
     }
@@ -39,7 +39,10 @@ public class CardPokemon extends CardListagemModelo<Pokemon>{
     }
 
     public void setModelo(Pokemon obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null){ 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     protected void gerarConteudo(Pokemon obj){

@@ -12,11 +12,9 @@ import java.awt.*;
 import javax.swing.*;
 
 public class CadastroRegiao extends FormModelo<Regiao>{
-    private Regiao regiao;
     private CampoTexto campoNome;
 
     public void carregarForm(boolean ehCadastro, Regiao r){
-        this.regiao = r;
         setTipo(ehCadastro);
         setModelo(r);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -35,7 +33,7 @@ public class CadastroRegiao extends FormModelo<Regiao>{
         gbc.gridx = 0;
         gbc.gridy = 0;
         campoNome = new CampoTexto("Nome:");
-        if (!this.ehCadastro && this.regiao != null) campoNome.setValor(this.regiao.getNome());
+        if (!this.ehCadastro && this.obj != null) campoNome.setValor(this.obj.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
@@ -45,8 +43,8 @@ public class CadastroRegiao extends FormModelo<Regiao>{
             if(campoNome.temTexto())
             {
                 rNovo.setNome(campoNome.getValor());
-                if (!this.ehCadastro && this.regiao != null){
-                    rNovo.setId(this.regiao.getId());
+                if (!this.ehCadastro && this.obj != null){
+                    rNovo.setId(this.obj.getId());
                     ServicosRegiao.atualizar(rNovo);
                 } else {
                     ServicosRegiao.criar(rNovo);

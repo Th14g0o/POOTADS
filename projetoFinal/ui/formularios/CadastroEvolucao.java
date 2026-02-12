@@ -25,7 +25,6 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
     private CampoSelect campoNome;
     private CampoSelect campoEvolucao;
     private CampoSelect campoJogo;
-    private Evolucao modelo;
 
     private void carregarListas(){
         this.pokemons = ServicosPokemon.listar();
@@ -53,7 +52,6 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
 
     public void carregarForm(boolean ehCadastro, Evolucao evModel){
         this.carregarListas();
-        this.modelo = evModel;
         setTipo(ehCadastro);
         setModelo(evModel);
         setLayout(new BorderLayout()); 
@@ -76,23 +74,23 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         gbc.gridy = 0;
         campoNome = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoNome.addOpcao(p.getId(), p.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoNome.selecionar(this.modelo.getPokemonId());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoNome.selecionar(this.obj.getPokemonId());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
         CampoNumero campoEstagio = new CampoNumero("Estagio:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEstagio.setValor(this.modelo.getEstagio());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagio.setValor(this.obj.getEstagio());
         formulario.add(campoEstagio, gbc);
 
         gbc.gridy = 2;
         CampoAreaTexto campoRequisitos = new CampoAreaTexto("Requisitos:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoRequisitos.setValor(this.modelo.getRequisitos());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoRequisitos.setValor(this.obj.getRequisitos());
         formulario.add(campoRequisitos, gbc);
 
         gbc.gridy = 3;
         campoEvolucao = new CampoSelect("Pokemon Evolução:");
         for (Pokemon e : evolucoes) campoEvolucao.addOpcao(e.getId(), e.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEvolucao.selecionar(this.modelo.getEvolucaoId());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEvolucao.selecionar(this.obj.getEvolucaoId());
         formulario.add(campoEvolucao, gbc);
 
         campoNome.setOnChange(new AoMudar() {public void mudou(Long id) {campoEvolucao.filtrarIdDiferentes(id);}});
@@ -100,13 +98,13 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
 
         gbc.gridy = 4;
         CampoNumero campoEstagioEV = new CampoNumero("Estagio Evolução:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoEstagioEV.setValor(this.modelo.getEstagioEvolucao());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagioEV.setValor(this.obj.getEstagioEvolucao());
         formulario.add(campoEstagioEV, gbc);
 
         gbc.gridy = 5;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo != null) campoJogo.selecionar(this.modelo.getIdJogo());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 6;
@@ -123,8 +121,8 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
                 ev.setRequisitos(campoRequisitos.getValor());
                 ev.setIdJogo(campoJogo.getValorSelecionado());
                 ev.setEstagioEvolucao(campoEstagioEV.getInt());
-                if (!this.ehCadastro && this.modelo != null && this.modelo != null){
-                    ev.setId(this.modelo.getId());
+                if (!this.ehCadastro && this.obj != null && this.obj != null){
+                    ev.setId(this.obj.getId());
                     ServicosPokemon.atualizarEvolucao(ev);
                 } else {
                     ServicosPokemon.adicionarEvolucao(ev);

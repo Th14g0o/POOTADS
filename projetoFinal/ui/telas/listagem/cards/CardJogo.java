@@ -18,7 +18,10 @@ public class CardJogo extends CardListagemModelo<Jogo>{
     }
 
     public void setModelo(Jogo obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null) { 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     public void mostrarExclusão(){

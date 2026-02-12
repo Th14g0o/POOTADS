@@ -15,14 +15,9 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 
 public class CadastroElemento extends FormModelo<Elemento>{
     private boolean ehCadastro = true;
-    private Elemento elemento;
 
     public void setTipo(boolean ehCadastro){
         this.ehCadastro = ehCadastro;
-    }
-
-    public void setModelo(Elemento elemento){
-        this.elemento = elemento;
     }
 
     public void carregarForm(boolean ehCadastro, Elemento el){
@@ -44,17 +39,17 @@ public class CadastroElemento extends FormModelo<Elemento>{
         gbc.gridx = 0;
         gbc.gridy = 0;
         CampoTexto campoNome = new CampoTexto("Nome:");
-        if (!this.ehCadastro && this.elemento != null) campoNome.setValor(this.elemento.getNome());
+        if (!this.ehCadastro && this.obj != null) campoNome.setValor(this.obj.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
         CampoImagem campoFoto = new CampoImagem("Imagem do Jogo:");
-         if (!this.ehCadastro && this.elemento != null) campoFoto.setImagem(this.elemento.getImagem());
+         if (!this.ehCadastro && this.obj != null) campoFoto.setImagem(this.obj.getImagem());
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
         CampoSelecionaCor campoCor = new CampoSelecionaCor("Selecione a cor representante:");
-         if (!this.ehCadastro && this.elemento != null) campoCor.setCorHex(this.elemento.getCor());
+         if (!this.ehCadastro && this.obj != null) campoCor.setCorHex(this.obj.getCor());
         formulario.add(campoCor, gbc);
 
         gbc.gridy = 3;
@@ -66,7 +61,10 @@ public class CadastroElemento extends FormModelo<Elemento>{
                 elemento.setNome(campoNome.getValor());
                 elemento.setImagem(campoFoto.getByteImagem());
                 elemento.setCor(campoCor.getCorSelecionadaHex());
-                if (!this.ehCadastro) ServicosElemento.atualizar(elemento);
+                if (!this.ehCadastro){ 
+                    elemento.setId(this.obj.getId());
+                    ServicosElemento.atualizar(elemento);
+                }
                 else ServicosElemento.criar(elemento);
                 ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento!");
                 campoNome.limparValor();

@@ -51,7 +51,7 @@ public class ListagemElemento extends TabPadrao  {
 
     private void configurarConteudoElemento(){
         Uteis.conteudoCardListagemComun(
-            conteudoElemento, elementos, 
+            conteudoElemento, this.elementos, 
             new InstanciarGenerica<Elemento>() {
                 public CardElemento novo(Elemento obj) {return new CardElemento(iconeAcoesLargura, iconeAcoesAltura, obj);}
             }

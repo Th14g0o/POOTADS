@@ -23,8 +23,6 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
     private List<Jogo> jogos;
     private List<Elemento> elementos;
 
-    private PokemonElemento modelo;
-
     private CampoSelect campoPokemon;
     private CampoSelect campoJogo;
     private CampoSelect campoElemento;
@@ -51,7 +49,6 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
 
     public void carregarForm(boolean ehCadastro, PokemonElemento modelo){
         this.carregarListas();
-        this.modelo = modelo;
         setTipo(ehCadastro);
         setModelo(modelo);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -71,19 +68,19 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
         gbc.gridy = 0;
         campoPokemon = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
-        if (!this.ehCadastro && this.modelo != null) campoPokemon.selecionar(this.modelo.getIdPokemon());
+        if (!this.ehCadastro && this.obj != null) campoPokemon.selecionar(this.obj.getIdPokemon());
         formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 1;
         campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome());
-        if (!this.ehCadastro && this.modelo != null) campoElemento.selecionar(this.modelo.getIdElemento());
+        if (!this.ehCadastro && this.obj != null) campoElemento.selecionar(this.obj.getIdElemento());
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 2;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-        if (!this.ehCadastro && this.modelo != null) campoJogo.selecionar(this.modelo.getIdJogo());
+        if (!this.ehCadastro && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 3;
@@ -95,8 +92,8 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
                 pe.setIdElemento(campoElemento.getValorSelecionado());
                 pe.setIdPokemon(campoPokemon.getValorSelecionado());
                 pe.setIdJogo(campoJogo.getValorSelecionado());
-                if (!this.ehCadastro && this.modelo != null){
-                    pe.setId(this.modelo.getId());
+                if (!this.ehCadastro && this.obj != null){
+                    pe.setId(this.obj.getId());
                     ServicosPokemon.atualizarElemento(pe);
                 } else {
                     ServicosPokemon.adicionarElemento(pe);

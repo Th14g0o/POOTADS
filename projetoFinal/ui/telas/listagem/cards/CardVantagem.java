@@ -29,8 +29,8 @@ public class CardVantagem extends CardListagemModelo<ElementoFraquezaVantagemDTO
     }
 
     public void mostrarEdicao(){
-        CadastroVantagem form = new CadastroVantagem();
-        PopPupEdicao<ElementoFraquezaVantagemDTO> ppe = new PopPupEdicao<ElementoFraquezaVantagemDTO>("Editar Vantagem/Desvantagem", this, form);
+        CadastroVantagem form = new CadastroVantagem(false, this.obj.getFraquezaVantagem());
+        PopPupEdicao<ElementoFraquezaVantagemDTO> ppe = new PopPupEdicao("Editar Vantagem/Desvantagem", this, form);
         ppe.mostrar(true);
     }
 
@@ -46,7 +46,10 @@ public class CardVantagem extends CardListagemModelo<ElementoFraquezaVantagemDTO
     }
 
     public void setModelo(ElementoFraquezaVantagemDTO obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null) { 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     protected void gerarConteudo(ElementoFraquezaVantagemDTO obj){

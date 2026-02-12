@@ -38,7 +38,10 @@ public class CardRegiao extends CardListagemModelo<Regiao>{
     }
 
     public void setModelo(Regiao obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null) { 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
 

@@ -16,4 +16,16 @@ public class ElementoFraquezaVantagemDTO extends FraquezaVantagem {
         setIdJogo(fv.getIdJogo());
 
     }
+
+    public FraquezaVantagem getFraquezaVantagem(){
+        FraquezaVantagem fv = new FraquezaVantagem();
+        fv.setId(getId());
+        fv.setIdElementoAlvo(getIdElementoAlvo());
+        fv.setIdElementoFraquezaVantagem(getIdElementoFraquezaVantagem());
+        fv.setEhFraqueza(getEhFraqueza());
+        fv.setMultiplicador(getMultiplicador());
+        fv.setIdJogo(getIdJogo());
+        return fv;
+
+    }
 }

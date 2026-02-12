@@ -13,12 +13,10 @@ import java.awt.*;
 import javax.swing.*;
 
 public class CadastroJogo extends FormModelo<Jogo>{
-    private Jogo jogo;
     private CampoTexto campoNome;
     private CampoImagem campoFoto;
 
     public void carregarForm(boolean ehCadastro, Jogo j){
-        this.jogo = j;
         setTipo(ehCadastro);
         setModelo(j);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -37,12 +35,12 @@ public class CadastroJogo extends FormModelo<Jogo>{
         gbc.gridx = 0;
         gbc.gridy = 0;
         campoNome = new CampoTexto("Nome:");
-        if (!this.ehCadastro && this.jogo != null) campoNome.setValor(this.jogo.getNome());
+        if (!this.ehCadastro && this.obj != null) campoNome.setValor(this.obj.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
         campoFoto = new CampoImagem("Imagem do Jogo:");
-        if (!this.ehCadastro && this.jogo != null) campoFoto.setImagem(this.jogo.getImagem());
+        if (!this.ehCadastro && this.obj != null) campoFoto.setImagem(this.obj.getImagem());
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
@@ -53,8 +51,8 @@ public class CadastroJogo extends FormModelo<Jogo>{
             {
                 joghuin.setNome(campoNome.getValor());
                 joghuin.setImagem(campoFoto.getByteImagem());
-                if (!this.ehCadastro && this.jogo != null) {
-                    joghuin.setId(this.jogo.getId());
+                if (!this.ehCadastro && this.obj != null) {
+                    joghuin.setId(this.obj.getId());
                     ServicosJogo.atualizar(joghuin);
                 } else {
                     ServicosJogo.criar(joghuin);

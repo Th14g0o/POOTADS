@@ -28,7 +28,7 @@ public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
 
     public void mostrarEdicao(){
         CadastroPokemonElemento form = new CadastroPokemonElemento(false, this.obj.getPokemonElemento());
-        PopPupEdicao<PokemonElemento> ppe = new PopPupEdicao<PokemonElemento>("Editar Pokemon-Elemento", this, form);
+        PopPupEdicao<PokemonElemento> ppe = new PopPupEdicao("Editar Pokemon-Elemento", this, form);
         ppe.mostrar(true);
     }
 
@@ -43,7 +43,10 @@ public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
     }
 
     public void setModelo(PokemonElementoDTO obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null){ 
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     protected void gerarConteudo(PokemonElementoDTO obj){

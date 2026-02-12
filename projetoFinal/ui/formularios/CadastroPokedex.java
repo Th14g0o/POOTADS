@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexDTO>{
+public class CadastroPokedex extends FormModelo<Pokedex>{
     private List<Pokemon> pokemons;
     private List<Pokemon> pokemonsAnte;
     private List<Pokemon> pokemonsProx;
@@ -37,8 +37,6 @@ public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexD
     private CampoSelect campoProximo;
     private CampoSelect campoJogo;
     private CampoSelect campoRegiao;
-
-    private projetoFinal.logica.dto.PokedexDTO modelo;
 
     public void carregarListas(){
         this.jogos = ServicosJogo.listar();
@@ -76,9 +74,8 @@ public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexD
         campoAnterior.filtrarIdDiferentes(new ArrayList<>(Arrays.asList(idPoke, idProx)));
     }
     
-    public void carregarForm(boolean ehCadastro, projetoFinal.logica.dto.PokedexDTO dto){
+    public void carregarForm(boolean ehCadastro, Pokedex dto){
         this.carregarListas();
-        this.modelo = dto;
         setTipo(ehCadastro);
         setModelo(dto);
 
@@ -102,46 +99,46 @@ public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexD
         gbc.gridy = 0;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoJogo.selecionar(this.modelo.getPokedex().getIdJogo());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 1;
         campoRegiao = new CampoSelect("Região:");
         for (Regiao r : regioes) campoRegiao.addOpcao(r.getId(), r.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoRegiao.selecionar(this.modelo.getPokedex().getIdRegiao());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoRegiao.selecionar(this.obj.getIdRegiao());
         formulario.add(campoRegiao, gbc);
 
         gbc.gridy = 2;
         campoPokemon = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoPokemon.addOpcao(p.getId(), p.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoPokemon.selecionar(this.modelo.getPokedex().getIdPokemon());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoPokemon.selecionar(this.obj.getIdPokemon());
         formulario.add(campoPokemon, gbc);
 
         gbc.gridy = 3;
         CampoNumero campoNumero = new CampoNumero("Número:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoNumero.setValor(this.modelo.getPokedex().getNumeroPokemon());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoNumero.setValor(this.obj.getNumeroPokemon());
         formulario.add(campoNumero, gbc);
 
         gbc.gridy = 4;
         CampoAreaTexto campoDescricao = new CampoAreaTexto("Descrição:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoDescricao.setValor(this.modelo.getPokedex().getDescricaoPokemon());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoDescricao.setValor(this.obj.getDescricaoPokemon());
         formulario.add(campoDescricao, gbc);
 
         gbc.gridy = 5;
         CampoSelecionaCor campoCor = new CampoSelecionaCor("Selecione a cor representante:");
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoCor.setCorHex(this.modelo.getPokedex().getCor());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoCor.setCorHex(this.obj.getCor());
         formulario.add(campoCor, gbc);
 
         gbc.gridy = 6;
         campoAnterior = new CampoSelect("Pokemon Anterior:");
         for (Pokemon p : pokemonsAnte) campoAnterior.addOpcao(p.getId(), p.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoAnterior.selecionar(this.modelo.getPokedex().getIdAnterior());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoAnterior.selecionar(this.obj.getIdAnterior());
         formulario.add(campoAnterior, gbc);
 
         gbc.gridy = 7;
         campoProximo = new CampoSelect("Proximo Pokemon:");
         for (Pokemon p : pokemonsProx) campoProximo.addOpcao(p.getId(), p.getNome());
-    if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null) campoProximo.selecionar(this.modelo.getPokedex().getIdProximo());
+    if (!this.ehCadastro && this.obj != null && this.obj != null) campoProximo.selecionar(this.obj.getIdProximo());
         formulario.add(campoProximo, gbc);
         
         campoAnterior.setOnChange(new AoMudar() {public void mudou(Long id) {mudancaOrdemPokedex();}});
@@ -164,8 +161,8 @@ public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexD
                 novo.setCor(campoCor.getCorSelecionadaHex());
                 novo.setIdProximo(campoAnterior.getValorSelecionado());
                 novo.setIdAnterior(campoProximo.getValorSelecionado());
-                if (!this.ehCadastro && this.modelo != null && this.modelo.getPokedex() != null){
-                    novo.setId(this.modelo.getPokedex().getId());
+                if (!this.ehCadastro && this.obj != null && this.obj != null){
+                    novo.setId(this.obj.getId());
                     ServicosPokedex.atualizar(novo);
                 } else {
                     ServicosPokedex.criar(novo);
@@ -203,5 +200,5 @@ public class CadastroPokedex extends FormModelo<projetoFinal.logica.dto.PokedexD
 
     public CadastroPokedex(){ carregarForm(true, null); }
     public CadastroPokedex(boolean ehCadastro){ carregarForm(ehCadastro, null); }
-    public CadastroPokedex(boolean ehCadastro, projetoFinal.logica.dto.PokedexDTO px){ carregarForm(ehCadastro, px); }
+    public CadastroPokedex(boolean ehCadastro, Pokedex px){ carregarForm(ehCadastro, px); }
 }

@@ -45,13 +45,11 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
-    private projetoFinal.logica.dto.ElementoFraquezaVantagemDTO fvModel;
     private CampoSelect campoElemento;
     private CampoSelect campoVD;
     private CampoSelect campoJogo;
 
-    public void carregarForm(boolean ehCadastro, projetoFinal.logica.dto.ElementoFraquezaVantagemDTO fv){
-        this.fvModel = fv;
+    public void carregarForm(boolean ehCadastro, FraquezaVantagem fv){
         setTipo(ehCadastro);
         setModelo(fv);
 
@@ -74,13 +72,13 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
         gbc.gridy = 0;
         campoElemento = new CampoSelect("Elemento:");
         for (Elemento e : elementos) campoElemento.addOpcao(e.getId(), e.getNome()); 
-    if (!this.ehCadastro && this.fvModel != null) campoElemento.selecionar(this.fvModel.getIdElementoAlvo());
+        if (!this.ehCadastro && this.obj != null) campoElemento.selecionar(this.obj.getIdElementoAlvo());
         formulario.add(campoElemento, gbc);
 
         gbc.gridy = 1;
         campoVD = new CampoSelect("Elemento que tem vantagem/desvantagem:");
         for (Elemento e : fvs) campoVD.addOpcao(e.getId(), e.getNome());
-    if (!this.ehCadastro && this.fvModel != null) campoVD.selecionar(this.fvModel.getIdElementoFraquezaVantagem());
+    if (!this.ehCadastro && this.obj != null) campoVD.selecionar(this.obj.getIdElementoFraquezaVantagem());
         formulario.add(campoVD, gbc);
 
         campoElemento.setOnChange(new AoMudar() {public void mudou(Long id) {campoVD.filtrarIdDiferentes(id);}});
@@ -88,18 +86,18 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
 
         gbc.gridy = 2;
         CampoGrupoRadio radioVantagem = new CampoGrupoRadio(List.of("Vantagem", "Desvantagem"));
-    if (!this.ehCadastro && this.fvModel != null) radioVantagem.setValor(this.fvModel.getEhFraqueza() ? "Desvantagem" : "Vantagem");
+    if (!this.ehCadastro && this.obj != null) radioVantagem.setValor(this.obj.getEhFraqueza() ? "Desvantagem" : "Vantagem");
         formulario.add(radioVantagem, gbc);
 
         gbc.gridy = 3;
         CampoNumero campoMultiplicador = new CampoNumero("Multiplicador:", 7, TipoNumero.DOUBLE);
-    if (!this.ehCadastro && this.fvModel != null) campoMultiplicador.setValor(this.fvModel.getMultiplicador());
+    if (!this.ehCadastro && this.obj != null) campoMultiplicador.setValor(this.obj.getMultiplicador());
         formulario.add(campoMultiplicador, gbc);
 
         gbc.gridy = 4;
         campoJogo  = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-    if (!this.ehCadastro && this.fvModel != null) campoJogo.selecionar(this.fvModel.getIdJogo());
+    if (!this.ehCadastro && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 5;
@@ -113,8 +111,8 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
                 fvNew.setEhFraqueza(radioVantagem.getValor() == 0 ? false : true);
                 fvNew.setMultiplicador(campoMultiplicador.getDouble());
                 fvNew.setIdJogo(campoJogo.getValorSelecionado());
-                if (!this.ehCadastro && this.fvModel != null){
-                    fvNew.setId(this.fvModel.getId());
+                if (!this.ehCadastro && this.obj != null){
+                    fvNew.setId(this.obj.getId());
                     ServicosElemento.atualizarFraquezaVantagem(fvNew);
                 } else {
                     ServicosElemento.criarFraquezaVantagem(fvNew);

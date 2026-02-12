@@ -21,7 +21,7 @@ public class CardElemento extends CardListagemModelo<Elemento> {
     }
 
     public void mostrarExclusão(){
-        PopPupExclusao ppe = new PopPupExclusao("Excluir Elementop", this,  (obj != null ? obj.getNome() : "o elemento"));
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Elemento", this,  (obj != null ? obj.getNome() : "o elemento"));
         ppe.mostrar(true);
     }
 
@@ -42,29 +42,15 @@ public class CardElemento extends CardListagemModelo<Elemento> {
     }
 
     public void setModelo(Elemento obj){
-        if (obj != null){ 
+         if (obj != null) { 
             this.obj = obj;
-            gerarConteudo(this.obj);
+            gerarConteudo(obj);
         }
     }
    
     protected void gerarConteudo(Elemento obj){
-        conteudoCard = new JPanel();
-        JPanel leiaute = new JPanel();
-        leiaute.setLayout(new BoxLayout(leiaute, BoxLayout.PAGE_AXIS));
-        leiaute.setOpaque(false);
-        leiaute.setAlignmentX(Component.LEFT_ALIGNMENT);
-        leiaute.setAlignmentY(Component.TOP_ALIGNMENT);
-        conteudoCard.add(leiaute);
-
-        leiaute.add(Box.createRigidArea(new Dimension(150,5)));
-
-        TagElementoArredondada painelElemento =  new TagElementoArredondada(obj);
-        Dimension pref = painelElemento.getPreferredSize();
-        painelElemento.setMaximumSize(pref);
-        painelElemento.setAlignmentX(Component.CENTER_ALIGNMENT);
-        painelElemento.setAlignmentY(Component.TOP_ALIGNMENT);
-        leiaute.add(painelElemento);
+        TagElementoArredondada painelElementoAlvo =  new TagElementoArredondada(obj);
+        conteudoCard.add(painelElementoAlvo);
     }
     
 }

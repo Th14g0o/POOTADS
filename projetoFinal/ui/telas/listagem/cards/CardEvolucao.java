@@ -6,7 +6,6 @@ import projetoFinal.logica.dto.EvolucaoDTO;
 import projetoFinal.logica.modelos.Evolucao;
 import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.formularios.CadastroEvolucao;
-import projetoFinal.ui.componentes.TagElementoArredondada;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -27,7 +26,7 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
 
     public void mostrarEdicao(){
         CadastroEvolucao form = new CadastroEvolucao(false, obj != null ? obj.getEvolucao() : null);
-        PopPupEdicao<Evolucao> ppe = new PopPupEdicao<Evolucao>("Editar Evolução", this, form);
+        PopPupEdicao<Evolucao> ppe = new PopPupEdicao("Editar Evolução", this, form);
         ppe.mostrar(true);
     }
 
@@ -38,7 +37,6 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
     }
 
     public void recarregarConteudo(){
-        // No direct DTO fetch helper available; re-render current DTO
         if (this.obj != null) setModelo(this.obj);
     }
 
