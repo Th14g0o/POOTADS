@@ -57,4 +57,9 @@ public class Evolucao{
     public String getRequisitos(){
         return this.requisitos;
     }
+
+    @Override
+    public String toString(){
+        return getRequisitos() + " - " + this.getEstagio();
+    }
 }

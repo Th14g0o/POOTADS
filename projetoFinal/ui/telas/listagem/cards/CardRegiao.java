@@ -22,7 +22,7 @@ public class CardRegiao extends CardListagemModelo<Regiao>{
     }
 
     public void mostrarEdicao(){
-        CadastroRegiao form = new CadastroRegiao();
+        CadastroRegiao form = new CadastroRegiao(false, this.obj);
         PopPupEdicao<Regiao> ppe = new PopPupEdicao<Regiao>("Editar Região", this, form);
         ppe.mostrar(true);
     }

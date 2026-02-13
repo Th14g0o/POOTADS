@@ -30,7 +30,7 @@ public class CardJogo extends CardListagemModelo<Jogo>{
     }
 
     public void mostrarEdicao(){
-        CadastroJogo form = new CadastroJogo();
+        CadastroJogo form = new CadastroJogo(false, this.obj);
         PopPupEdicao<Jogo> ppe = new PopPupEdicao<Jogo>("Editar Jogo", this, form);
         ppe.mostrar(true);
     }

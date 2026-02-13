@@ -28,7 +28,7 @@ public class PopPupExclusao extends PopPup {
         addBotao(
             cancelar, true,
             new AoClicar() {
-                public void acao() { card.recarregarConteudo(); }
+                public void acao() { }
             }
         );
 

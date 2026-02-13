@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import projetoFinal.logica.dto.EvolucaoDTO;
 import projetoFinal.logica.modelos.Evolucao;
-import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.formularios.CadastroEvolucao;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
@@ -26,7 +25,8 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
     }
 
     public void mostrarEdicao(){
-        CadastroEvolucao form = new CadastroEvolucao(false, obj != null ? obj.getEvolucao() : null);
+        Evolucao e = (this.obj != null ? this.obj.getEvolucao() : null);
+        CadastroEvolucao form = new CadastroEvolucao(false, e);
         PopPupEdicao<Evolucao> ppe = new PopPupEdicao("Editar Evolução", this, form);
         ppe.mostrar(true);
     }
@@ -46,7 +46,10 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
     }
 
     public void setModelo(EvolucaoDTO obj){
-        if (obj != null) gerarConteudo(obj);
+        if (obj != null) {
+            this.obj = obj;
+            gerarConteudo(obj);
+        }
     }
 
     protected void gerarConteudo(EvolucaoDTO obj){
@@ -137,7 +140,7 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
 
         cardEvolucao.add(Box.createRigidArea(new Dimension(0,5)));
 
-        JLabel textoEvolucao = new JLabel(obj.getPokeEvolucao().getNome()); 
+        JLabel textoEvolucao = new JLabel(obj.getEvolucao().getRequisitos()); 
         textoEvolucao.setForeground(Color.WHITE);
         textoEvolucao.setOpaque(false);
         textoEvolucao.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -146,15 +149,40 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
 
         cardEvolucao.add(Box.createRigidArea(new Dimension(0,5)));
 
-        if (obj.getPokeEvolucao().getImagem() == null)  cardEvolucao.add(Box.createRigidArea(new Dimension(0,50)));
+        if (obj.getPokeEvolucao() == null && obj.getPokeEvolucao().getImagem() == null)  
+            cardEvolucao.add(Box.createRigidArea(new Dimension(0,50)));
 
-        JLabel requisitos = new JLabel(obj.getPokemon().getNome()); 
+        JLabel requisitos = new JLabel(obj != null && obj.getEvolucao() != null ? obj.getEvolucao().getRequisitos() : ""); 
         requisitos.setForeground(Color.WHITE);
         requisitos.setOpaque(false);
         requisitos.setPreferredSize(new Dimension(50, 50));
         requisitos.setAlignmentX(Component.CENTER_ALIGNMENT);
         requisitos.setAlignmentY(Component.CENTER_ALIGNMENT);
         leiaute.add(requisitos);
+
+        leiaute.add(Box.createRigidArea(new Dimension(0,5)));
+
+        JLabel nomeJogo = new JLabel(obj.getJogo() != null ? obj.getJogo().getNome() : ""); 
+        nomeJogo.setForeground(Color.WHITE);
+        nomeJogo.setOpaque(false);
+        nomeJogo.setPreferredSize(new Dimension(50, 50));
+        nomeJogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nomeJogo.setAlignmentY(Component.CENTER_ALIGNMENT);
+        leiaute.add(nomeJogo);
+
+        leiaute.add(Box.createRigidArea(new Dimension(0,5)));
+
+        if (obj.getJogo() != null && obj.getJogo().getImagem() != null)  {
+            JLabel imagem;
+            imagem = new JLabel(Imagens.escalaIcone(obj.getJogo().getImagem(), 100, 100));
+            imagem.setOpaque(false);
+            imagem.setAlignmentX(Component.CENTER_ALIGNMENT);
+            imagem.setAlignmentY(Component.CENTER_ALIGNMENT);
+            leiaute.add(imagem);  
+        }
+        else leiaute.add(Box.createRigidArea(new Dimension(0,100)));
+          
+        
     }
     
 }

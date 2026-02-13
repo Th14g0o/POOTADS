@@ -33,7 +33,7 @@ public class JogoDAO implements IDataAcessObject<Jogo> {
     public void atualizar(Jogo p) {
         if (p.getId() == null) throw new IllegalArgumentException("Jogo sem id");
 
-        String sql = "UPDATE Jogo SET nome=?, imagens=? WHERE id=?";
+        String sql = "UPDATE Jogo SET nome=?, imagem=? WHERE id=?";
 
         try (Connection conn = BD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

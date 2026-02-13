@@ -24,9 +24,9 @@ public class PokedexDAO implements IDataAcessObject<Pokedex> {
 
             ps.setLong(1, p.getIdPokemon());
             if (p.getIdAnterior() != null) ps.setLong(2, p.getIdAnterior());
-            else ps.setString(2, "NULL"); 
+            else ps.setNull(2,  Types.BIGINT); 
             if (p.getIdAnterior() != null) ps.setLong(3, p.getIdProximo());
-            else ps.setString(3, "NULL");
+            else ps.setNull(3,  Types.BIGINT);
             ps.setLong(4, p.getIdJogo());
             ps.setLong(5, p.getIdRegiao());
             ps.setInt(6, p.getNumeroPokemon());

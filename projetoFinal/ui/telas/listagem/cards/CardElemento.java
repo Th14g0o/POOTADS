@@ -1,7 +1,5 @@
 package projetoFinal.ui.telas.listagem.cards;
 
-import javax.swing.JPanel;
-
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.ui.componentes.TagElementoArredondada;

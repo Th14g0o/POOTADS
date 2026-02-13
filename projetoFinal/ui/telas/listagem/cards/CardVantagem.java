@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 import projetoFinal.logica.dto.ElementoFraquezaVantagemDTO;
-import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.modelos.FraquezaVantagem;
 import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.ui.componentes.TagElementoArredondada;
@@ -29,7 +28,8 @@ public class CardVantagem extends CardListagemModelo<ElementoFraquezaVantagemDTO
     }
 
     public void mostrarEdicao(){
-        CadastroVantagem form = new CadastroVantagem(false, this.obj.getFraquezaVantagem());
+        FraquezaVantagem fv = this.obj != null ? this.obj.getFraquezaVantagem() : null;
+        CadastroVantagem form = new CadastroVantagem(false, fv);
         PopPupEdicao<ElementoFraquezaVantagemDTO> ppe = new PopPupEdicao("Editar Vantagem/Desvantagem", this, form);
         ppe.mostrar(true);
     }

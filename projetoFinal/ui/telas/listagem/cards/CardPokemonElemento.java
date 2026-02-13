@@ -3,7 +3,6 @@ package projetoFinal.ui.telas.listagem.cards;
 import javax.swing.*;
 import java.awt.*;
 import projetoFinal.logica.dto.PokemonElementoDTO;
-import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.modelos.PokemonElemento;
 import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.componentes.TagElementoArredondada;
@@ -27,7 +26,8 @@ public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
     }
 
     public void mostrarEdicao(){
-        CadastroPokemonElemento form = new CadastroPokemonElemento(false, this.obj.getPokemonElemento());
+        PokemonElemento pe = this.obj != null ? this.obj.getPokemonElemento() : null;
+        CadastroPokemonElemento form = new CadastroPokemonElemento(false, pe);
         PopPupEdicao<PokemonElemento> ppe = new PopPupEdicao("Editar Pokemon-Elemento", this, form);
         ppe.mostrar(true);
     }

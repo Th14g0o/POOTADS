@@ -78,6 +78,7 @@ public class ServicosPokemon {
         evDTO.setEvolucao(ev);
         evDTO.setPokemon(daoPokemon.buscarPorId(ev.getPokemonId()));
         evDTO.setPokeEvolucao(daoPokemon.buscarPorId(ev.getEvolucaoId()));
+        evDTO.setJogo(ServicosJogo.achar(ev.getIdJogo()));
         return evDTO;
         
     };
@@ -90,6 +91,7 @@ public class ServicosPokemon {
             evDTO.setEvolucao(ev);
             evDTO.setPokemon(daoPokemon.buscarPorId(ev.getPokemonId()));
             evDTO.setPokeEvolucao(daoPokemon.buscarPorId(ev.getEvolucaoId()));
+            evDTO.setJogo(ServicosJogo.achar(ev.getIdJogo()));
             evsDTO.add(evDTO);
         }
         return evsDTO;

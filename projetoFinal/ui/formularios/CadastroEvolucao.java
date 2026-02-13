@@ -55,8 +55,8 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
 
     public void carregarForm(boolean ehCadastro, Evolucao evModel){
         this.carregarListas();
-        setTipo(ehCadastro);
         setModelo(evModel);
+        setTipo(ehCadastro);
         setLayout(new BorderLayout()); 
         setOpaque(false);
 
@@ -77,23 +77,23 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         gbc.gridy = 0;
         campoNome = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoNome.addOpcao(p.getId(), p.getNome());
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoNome.selecionar(this.obj.getPokemonId());
+        if (!this.ehCadastro && this.obj != null) campoNome.selecionar(this.obj.getPokemonId());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
         campoEstagio = new CampoNumero("Estagio:");
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagio.setValor(this.obj.getEstagio());
+        if (!this.ehCadastro && this.obj != null) campoEstagio.setValor(this.obj.getEstagio());
         formulario.add(campoEstagio, gbc);
 
         gbc.gridy = 2;
         campoRequisitos = new CampoAreaTexto("Requisitos:");
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoRequisitos.setValor(this.obj.getRequisitos());
+        if (!this.ehCadastro && this.obj != null) campoRequisitos.setValor(this.obj.getRequisitos());
         formulario.add(campoRequisitos, gbc);
 
         gbc.gridy = 3;
         campoEvolucao = new CampoSelect("Pokemon Evolução:");
         for (Pokemon e : evolucoes) campoEvolucao.addOpcao(e.getId(), e.getNome());
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEvolucao.selecionar(this.obj.getEvolucaoId());
+        if (!this.ehCadastro && this.obj != null) campoEvolucao.selecionar(this.obj.getEvolucaoId());
         formulario.add(campoEvolucao, gbc);
 
         campoNome.setOnChange(new AoMudar() {public void mudou(Long id) {campoEvolucao.filtrarIdDiferentes(id);}});
@@ -101,13 +101,13 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
 
         gbc.gridy = 4;
         campoEstagioEV = new CampoNumero("Estagio Evolução:");
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagioEV.setValor(this.obj.getEstagioEvolucao());
+        if (!this.ehCadastro && this.obj != null) campoEstagioEV.setValor(this.obj.getEstagioEvolucao());
         formulario.add(campoEstagioEV, gbc);
 
         gbc.gridy = 5;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-        if (!this.ehCadastro && this.obj != null && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
+        if (!this.ehCadastro && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 6;

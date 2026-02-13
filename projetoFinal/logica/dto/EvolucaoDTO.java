@@ -1,12 +1,21 @@
 package projetoFinal.logica.dto;
 
 import projetoFinal.logica.modelos.Evolucao;
+import projetoFinal.logica.modelos.Jogo;
 import projetoFinal.logica.modelos.Pokemon;
 
 public class EvolucaoDTO {
     private Pokemon pokemon;
     private Pokemon pokeEvolucao;
     private Evolucao evolucao;
+    private Jogo jogo;
+
+    public void setJogo(Jogo jogo){
+        this.jogo = jogo;
+    }
+    public Jogo getJogo(){
+        return jogo;
+    }
 
     public void setEvolucao(Evolucao evolucao){
         this.evolucao = evolucao;
