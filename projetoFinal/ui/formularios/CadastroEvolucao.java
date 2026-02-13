@@ -25,6 +25,9 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
     private CampoSelect campoNome;
     private CampoSelect campoEvolucao;
     private CampoSelect campoJogo;
+    private CampoNumero campoEstagioEV;
+    private CampoNumero campoEstagio;
+    private CampoAreaTexto campoRequisitos;
 
     private void carregarListas(){
         this.pokemons = ServicosPokemon.listar();
@@ -57,7 +60,7 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         setLayout(new BorderLayout()); 
         setOpaque(false);
 
-         Rolagem rolagem = new Rolagem();
+        Rolagem rolagem = new Rolagem();
 
         // Organização do form em grid
         JPanel formulario = new JPanel(new GridBagLayout());
@@ -74,83 +77,90 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         gbc.gridy = 0;
         campoNome = new CampoSelect("Pokemon:");
         for (Pokemon p : pokemons) campoNome.addOpcao(p.getId(), p.getNome());
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoNome.selecionar(this.obj.getPokemonId());
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoNome.selecionar(this.obj.getPokemonId());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        CampoNumero campoEstagio = new CampoNumero("Estagio:");
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagio.setValor(this.obj.getEstagio());
+        campoEstagio = new CampoNumero("Estagio:");
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagio.setValor(this.obj.getEstagio());
         formulario.add(campoEstagio, gbc);
 
         gbc.gridy = 2;
-        CampoAreaTexto campoRequisitos = new CampoAreaTexto("Requisitos:");
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoRequisitos.setValor(this.obj.getRequisitos());
+        campoRequisitos = new CampoAreaTexto("Requisitos:");
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoRequisitos.setValor(this.obj.getRequisitos());
         formulario.add(campoRequisitos, gbc);
 
         gbc.gridy = 3;
         campoEvolucao = new CampoSelect("Pokemon Evolução:");
         for (Pokemon e : evolucoes) campoEvolucao.addOpcao(e.getId(), e.getNome());
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEvolucao.selecionar(this.obj.getEvolucaoId());
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEvolucao.selecionar(this.obj.getEvolucaoId());
         formulario.add(campoEvolucao, gbc);
 
         campoNome.setOnChange(new AoMudar() {public void mudou(Long id) {campoEvolucao.filtrarIdDiferentes(id);}});
         campoEvolucao.setOnChange(new AoMudar() {public void mudou(Long id) {campoNome.filtrarIdDiferentes(id);}});
 
         gbc.gridy = 4;
-        CampoNumero campoEstagioEV = new CampoNumero("Estagio Evolução:");
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagioEV.setValor(this.obj.getEstagioEvolucao());
+        campoEstagioEV = new CampoNumero("Estagio Evolução:");
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoEstagioEV.setValor(this.obj.getEstagioEvolucao());
         formulario.add(campoEstagioEV, gbc);
 
         gbc.gridy = 5;
         campoJogo = new CampoSelect("Jogo:");
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
-    if (!this.ehCadastro && this.obj != null && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
+        if (!this.ehCadastro && this.obj != null && this.obj != null) campoJogo.selecionar(this.obj.getIdJogo());
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 6;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         formulario.add(btSalvar, gbc); 
         btSalvar.addActionListener(e ->{
-            Evolucao ev = new Evolucao();
-            if(campoRequisitos.temTexto() && campoEstagio.temTexto() &&  campoEvolucao.temValor() && campoNome.temValor() &&
-            campoJogo.temValor() && campoEstagioEV.temTexto())
-            {
-                ev.setEstagio(campoEstagio.getInt());
-                ev.setEvolucaoId(campoEvolucao.getValorSelecionado());
-                ev.setPokemonId(campoNome.getValorSelecionado());
-                ev.setRequisitos(campoRequisitos.getValor());
-                ev.setIdJogo(campoJogo.getValorSelecionado());
-                ev.setEstagioEvolucao(campoEstagioEV.getInt());
-                if (!this.ehCadastro && this.obj != null && this.obj != null){
-                    ev.setId(this.obj.getId());
-                    ServicosPokemon.atualizarEvolucao(ev);
-                } else {
-                    ServicosPokemon.adicionarEvolucao(ev);
-                }
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Evolução!");
+            salvar();
+        });
+        add(rolagem.rolagem, BorderLayout.CENTER);
+    }
+
+     public boolean salvar(){
+        Evolucao ev = new Evolucao();
+        if(campoRequisitos.temTexto() && campoEstagio.temTexto() &&  campoEvolucao.temValor() && campoNome.temValor() &&
+        campoJogo.temValor() && campoEstagioEV.temTexto())
+        {
+            ev.setEstagio(campoEstagio.getInt());
+            ev.setEvolucaoId(campoEvolucao.getValorSelecionado());
+            ev.setPokemonId(campoNome.getValorSelecionado());
+            ev.setRequisitos(campoRequisitos.getValor());
+            ev.setIdJogo(campoJogo.getValorSelecionado());
+            ev.setEstagioEvolucao(campoEstagioEV.getInt());
+            if (!this.ehCadastro && this.obj != null && this.obj != null){
+                ev.setId(this.obj.getId());
+                ServicosPokemon.atualizarEvolucao(ev);
+            } else {
+                ServicosPokemon.adicionarEvolucao(ev);
+            }
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Evolução!");
+            if (ehCadastro){
                 campoRequisitos.limparValor();
                 campoEstagio.limpar();
                 campoEvolucao.limpar();
                 campoNome.limpar();
             }
-            else{
-                String erros = "";
-                if (!campoRequisitos.temTexto()) 
-                    erros = erros + "o(s) requisito(s)"; 
-                if (!campoEstagio.temTexto()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o estagio"; 
-                if (!campoEvolucao.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon evolução"; 
-                if (!campoNome.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon que tem evolução"; 
-                if (!campoJogo.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o campo de jogo"; 
-                if (!campoEstagioEV.temTexto()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o estafio da evolução"; 
-                ModalErro.ExibirModal("Faltou preencher " + erros + " da Evolução.");
-            }
-            
-        });
-        add(rolagem.rolagem, BorderLayout.CENTER);
+            return true;
+        }
+        else{
+            String erros = "";
+            if (!campoRequisitos.temTexto()) 
+                erros = erros + "o(s) requisito(s)"; 
+            if (!campoEstagio.temTexto()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o estagio"; 
+            if (!campoEvolucao.temValor()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon evolução"; 
+            if (!campoNome.temValor()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon que tem evolução"; 
+            if (!campoJogo.temValor()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o campo de jogo"; 
+            if (!campoEstagioEV.temTexto()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o estafio da evolução"; 
+            ModalErro.ExibirModal("Faltou preencher " + erros + " da Evolução.");
+            return false;
+        }
     }
 }

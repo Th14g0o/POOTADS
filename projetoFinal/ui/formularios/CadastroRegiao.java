@@ -37,27 +37,32 @@ public class CadastroRegiao extends FormModelo<Regiao>{
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-            Regiao rNovo = new Regiao();
-            if(campoNome.temTexto())
-            {
-                rNovo.setNome(campoNome.getValor());
-                if (!this.ehCadastro && this.obj != null){
-                    rNovo.setId(this.obj.getId());
-                    ServicosRegiao.atualizar(rNovo);
-                } else {
-                    ServicosRegiao.criar(rNovo);
-                }
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Região!");
-                campoNome.limparValor();
-            }
-            else{
-                ModalErro.ExibirModal("Faltou preencher o nome da Região.");
-            }
-            
+            salvar();            
         });
         formulario.add(btSalvar, gbc); 
+    }
+
+    public boolean salvar(){
+        Regiao rNovo = new Regiao();
+        if(campoNome.temTexto())
+        {
+            rNovo.setNome(campoNome.getValor());
+            if (!this.ehCadastro && this.obj != null){
+                rNovo.setId(this.obj.getId());
+                ServicosRegiao.atualizar(rNovo);
+            } else {
+                ServicosRegiao.criar(rNovo);
+            }
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Região!");
+            if (ehCadastro) campoNome.limparValor();
+            return true;
+        }
+        else{
+            ModalErro.ExibirModal("Faltou preencher o nome da Região.");
+            return false;
+        }
     }
 
     public CadastroRegiao(){ this.carregarForm(true, null); }

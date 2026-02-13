@@ -44,29 +44,36 @@ public class CadastroJogo extends FormModelo<Jogo>{
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-            Jogo joghuin = new Jogo();
-            if(campoNome.temTexto())
-            {
-                joghuin.setNome(campoNome.getValor());
-                joghuin.setImagem(campoFoto.getByteImagem());
-                if (!this.ehCadastro && this.obj != null) {
-                    joghuin.setId(this.obj.getId());
-                    ServicosJogo.atualizar(joghuin);
-                } else {
-                    ServicosJogo.criar(joghuin);
-                }
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Jogo!");
+            salvar();    
+        });
+        formulario.add(btSalvar, gbc); 
+    }
+
+    public boolean salvar(){
+        Jogo joghuin = new Jogo();
+        if(campoNome.temTexto())
+        {
+            joghuin.setNome(campoNome.getValor());
+            joghuin.setImagem(campoFoto.getByteImagem());
+            if (!this.ehCadastro && this.obj != null) {
+                joghuin.setId(this.obj.getId());
+                ServicosJogo.atualizar(joghuin);
+            } else {
+                ServicosJogo.criar(joghuin);
+            }
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Jogo!");
+            if (ehCadastro){
                 campoNome.limparValor();
                 campoFoto.limpar();
             }
-            else{
-                ModalErro.ExibirModal("Faltou preencher o nome do Jogo.");
-            }
-            
-        });
-        formulario.add(btSalvar, gbc); 
+            return true;
+        }
+        else{
+            ModalErro.ExibirModal("Faltou preencher o nome do Jogo.");
+            return false;
+        }
     }
 
     public CadastroJogo() { this.carregarForm(true, null); }

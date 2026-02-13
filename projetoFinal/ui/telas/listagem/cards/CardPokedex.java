@@ -35,11 +35,15 @@ public class CardPokedex extends CardListagemModelo<PokedexDTO>{
     public void apagar(){
         if (this.obj != null && this.obj.getPokedex() != null) ServicosPokedex.apagar(this.obj.getPokedex().getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        if (this.obj != null) setModelo(this.obj);
+        this.limparConteudoCard();
+        if (this.obj != null  && this.obj.getPokedex() != null) setModelo(ServicosPokedex.montarPokedexDTO(this.obj.getPokedex().getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(PokedexDTO obj){

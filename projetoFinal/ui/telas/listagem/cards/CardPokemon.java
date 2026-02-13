@@ -31,11 +31,15 @@ public class CardPokemon extends CardListagemModelo<Pokemon>{
     public void apagar(){
         if (this.obj != null) ServicosPokemon.apagar(this.obj.getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        setModelo(ServicosPokemon.achar(this.obj.getId()));
+        this.limparConteudoCard();
+        if (this.obj != null) setModelo(ServicosPokemon.achar(this.obj.getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(Pokemon obj){

@@ -19,13 +19,13 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 import java.util.List;
 
 public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
-    private List<Pokemon> pokemons;
-    private List<Jogo> jogos;
-    private List<Elemento> elementos;
-
     private CampoSelect campoPokemon;
     private CampoSelect campoJogo;
     private CampoSelect campoElemento;
+    
+    private List<Pokemon> pokemons;
+    private List<Jogo> jogos;
+    private List<Elemento> elementos;
 
     private void carregarListas(){
         this.jogos = ServicosJogo.listar();
@@ -84,38 +84,45 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
         formulario.add(campoJogo, gbc);
 
         gbc.gridy = 3;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-            PokemonElemento pe = new PokemonElemento();
-            if(campoPokemon.temValor() &&  campoElemento.temValor() && campoJogo.temValor())
-            {
-                pe.setIdElemento(campoElemento.getValorSelecionado());
-                pe.setIdPokemon(campoPokemon.getValorSelecionado());
-                pe.setIdJogo(campoJogo.getValorSelecionado());
-                if (!this.ehCadastro && this.obj != null){
-                    pe.setId(this.obj.getId());
-                    ServicosPokemon.atualizarElemento(pe);
-                } else {
-                    ServicosPokemon.adicionarElemento(pe);
-                }
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento do Pokemon!");
+            salvar();            
+        });
+        formulario.add(btSalvar, gbc); 
+    }
+
+    public boolean salvar(){
+        PokemonElemento pe = new PokemonElemento();
+        if(campoPokemon.temValor() &&  campoElemento.temValor() && campoJogo.temValor())
+        {
+            pe.setIdElemento(campoElemento.getValorSelecionado());
+            pe.setIdPokemon(campoPokemon.getValorSelecionado());
+            pe.setIdJogo(campoJogo.getValorSelecionado());
+            if (!this.ehCadastro && this.obj != null){
+                pe.setId(this.obj.getId());
+                ServicosPokemon.atualizarElemento(pe);
+            } else {
+                ServicosPokemon.adicionarElemento(pe);
+            }
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento do Pokemon!");
+            if (ehCadastro){
                 campoPokemon.limpar();
                 campoElemento.limpar();
                 campoJogo.limpar();
             }
-            else{
-                String erros = "";
-                if (!campoJogo.temValor()) 
-                    erros = erros + "o Jogo"; 
-                if (!campoPokemon.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon"; 
-                if (!campoElemento.temValor()) 
-                    erros = erros + (erros.length() > 0 ? ", " : "") + "o elemento";  
-                ModalErro.ExibirModal("Faltou preencher " + erros + " do Elemento do Pokemon.");
-            }
-            
-        });
-        formulario.add(btSalvar, gbc); 
+            return true;
+        }
+        else{
+            String erros = "";
+            if (!campoJogo.temValor()) 
+                erros = erros + "o Jogo"; 
+            if (!campoPokemon.temValor()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o pokemon"; 
+            if (!campoElemento.temValor()) 
+                erros = erros + (erros.length() > 0 ? ", " : "") + "o elemento";  
+            ModalErro.ExibirModal("Faltou preencher " + erros + " do Elemento do Pokemon.");
+            return false;
+        }
     }
 
     public CadastroPokemonElemento(){ this.carregarForm(true, null); }

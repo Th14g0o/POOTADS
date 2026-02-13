@@ -13,10 +13,18 @@ public class PopPupEdicao<T> extends PopPup {
         super(Titulo, card, form);
         BotaoVermelho ok = new BotaoVermelho("Confirmar", Cores.VERDE, Color.WHITE);
         BotaoVermelho cancelar = new BotaoVermelho("Cancelar", Cores.VERMELHO, Color.WHITE);
+        form.setVisibilidadeBtSalvar(false);
         addBotao(
-            ok, true, 
+            ok, false, 
             new AoClicar() {
-                public void acao() { card.recarregarConteudo(); }
+                public void acao() { 
+                    boolean resposta = form.salvar(); 
+                    if (resposta == true)
+                    {
+                        card.recarregarConteudo();
+                        dispose(); 
+                    }
+                }
             }
         );
         addBotao(

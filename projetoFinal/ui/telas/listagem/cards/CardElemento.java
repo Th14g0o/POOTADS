@@ -1,10 +1,7 @@
 package projetoFinal.ui.telas.listagem.cards;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.ui.componentes.TagElementoArredondada;
@@ -34,11 +31,15 @@ public class CardElemento extends CardListagemModelo<Elemento> {
     public void apagar(){
         if (this.obj != null) ServicosElemento.apagar(this.obj.getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        setModelo(ServicosElemento.achar(this.obj.getId()));
+        this.limparConteudoCard();
+        if (this.obj != null) setModelo(ServicosElemento.achar(this.obj.getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(Elemento obj){
@@ -49,7 +50,7 @@ public class CardElemento extends CardListagemModelo<Elemento> {
     }
    
     protected void gerarConteudo(Elemento obj){
-        TagElementoArredondada painelElementoAlvo =  new TagElementoArredondada(obj);
+        TagElementoArredondada painelElementoAlvo = new TagElementoArredondada(obj);
         conteudoCard.add(painelElementoAlvo);
     }
     

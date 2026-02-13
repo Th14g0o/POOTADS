@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import projetoFinal.logica.dto.EvolucaoDTO;
 import projetoFinal.logica.modelos.Evolucao;
+import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.formularios.CadastroEvolucao;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
@@ -33,11 +34,15 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
     public void apagar(){
         if (this.obj != null && this.obj.getEvolucao() != null) ServicosPokemon.apagarEvolucao(this.obj.getEvolucao().getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        if (this.obj != null) setModelo(this.obj);
+        this.limparConteudoCard();
+        if (this.obj != null && this.obj.getEvolucao() != null) setModelo(ServicosPokemon.acharEvolucaoDTO(this.obj.getEvolucao().getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(EvolucaoDTO obj){

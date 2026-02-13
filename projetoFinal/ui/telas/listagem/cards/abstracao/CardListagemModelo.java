@@ -43,6 +43,10 @@ public abstract class CardListagemModelo<T> extends CardComum {
         this.iconeAcoesLargura = iconeAcoesLargura;
     }
 
+    protected void limparConteudoCard(){
+        conteudoCard.removeAll(); 
+    }
+
     public abstract void mostrarExclusão();
     public abstract void mostrarEdicao();
     public abstract void apagar();

@@ -44,29 +44,36 @@ public class CadastroPokemon extends FormModelo<Pokemon>{
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-            Pokemon poke = new Pokemon();
-            if(campoNome.temTexto())
-            {
-                poke.setNome(campoNome.getValor());
-                poke.setImagem(campoFoto.getByteImagem());
-                if (!this.ehCadastro && this.obj != null){
-                    poke.setId(this.obj.getId());
-                    ServicosPokemon.atualizar(poke);
-                } else {
-                    ServicosPokemon.criar(poke);
-                }
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Pokemon!");
-                campoNome.limparValor();
-                campoFoto.limpar();
-            }
-            else{
-                ModalErro.ExibirModal("Faltou preencher o nome do Pokemon.");
-            }
-            
+           salvar();            
         });
         formulario.add(btSalvar, gbc); 
+    }
+
+    public boolean salvar(){
+        Pokemon poke = new Pokemon();
+        if(campoNome.temTexto())
+        {
+            poke.setNome(campoNome.getValor());
+            poke.setImagem(campoFoto.getByteImagem());
+            if (!this.ehCadastro && this.obj != null){
+                poke.setId(this.obj.getId());
+                ServicosPokemon.atualizar(poke);
+            } else {
+                ServicosPokemon.criar(poke);
+            }
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Pokemon!");
+            if (ehCadastro){
+                campoNome.limparValor();
+                campoFoto.limpar();
+            }   
+            return true;
+        }
+        else{
+            ModalErro.ExibirModal("Faltou preencher o nome do Pokemon.");
+            return false;
+        } 
     }
 
     public CadastroPokemon(){ this.carregarForm(true, null); }

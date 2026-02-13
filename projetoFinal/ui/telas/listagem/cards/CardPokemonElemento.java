@@ -35,11 +35,16 @@ public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
     public void apagar(){
         if (this.obj != null && this.obj.getPokemonElemento() != null) ServicosPokemon.apagarElemento(this.obj.getPokemonElemento().getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        if (this.obj != null && this.obj.getPokemonElemento() != null) setModelo(this.obj);
+        this.limparConteudoCard();
+        if (this.obj != null && this.obj.getPokemonElemento() != null) 
+            setModelo(ServicosPokemon.montarPokemonElementoDTO(this.obj.getPokemonElemento().getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(PokemonElementoDTO obj){

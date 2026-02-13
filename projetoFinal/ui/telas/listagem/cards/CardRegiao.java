@@ -30,11 +30,15 @@ public class CardRegiao extends CardListagemModelo<Regiao>{
     public void apagar(){
         if (this.obj != null) ServicosRegiao.apagar(this.obj.getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        setModelo(ServicosRegiao.achar(this.obj.getId()));
+        this.limparConteudoCard();
+        if (this.obj != null) setModelo(ServicosRegiao.achar(this.obj.getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(Regiao obj){
@@ -43,7 +47,6 @@ public class CardRegiao extends CardListagemModelo<Regiao>{
             gerarConteudo(obj);
         }
     }
-
 
     protected void gerarConteudo(Regiao obj){
         JPanel leiaute = new JPanel();

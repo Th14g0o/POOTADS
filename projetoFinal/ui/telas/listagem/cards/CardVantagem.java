@@ -37,12 +37,15 @@ public class CardVantagem extends CardListagemModelo<ElementoFraquezaVantagemDTO
     public void apagar(){
         if (this.obj != null) ServicosElemento.apagarFraquezaVantagem(this.obj.getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
-        // Re-render the same DTO
-        if (this.obj != null) setModelo(this.obj);
+        this.limparConteudoCard();
+        if (this.obj != null) setModelo(ServicosElemento.montarElementoFraquezaVantagemDTO(this.obj.getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     public void setModelo(ElementoFraquezaVantagemDTO obj){

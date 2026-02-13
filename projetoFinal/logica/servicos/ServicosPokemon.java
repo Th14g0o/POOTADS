@@ -72,6 +72,16 @@ public class ServicosPokemon {
         daoEvolucao.deletar(id);
     }
 
+    public static EvolucaoDTO acharEvolucaoDTO(Long id){
+        Evolucao ev = acharEvolucao(id);
+        EvolucaoDTO evDTO = new EvolucaoDTO();
+        evDTO.setEvolucao(ev);
+        evDTO.setPokemon(daoPokemon.buscarPorId(ev.getPokemonId()));
+        evDTO.setPokeEvolucao(daoPokemon.buscarPorId(ev.getEvolucaoId()));
+        return evDTO;
+        
+    };
+
     public static List<EvolucaoDTO> listarEvolucaoDTO(){
         List<EvolucaoDTO> evsDTO = new ArrayList<EvolucaoDTO>();
         List<Evolucao> evs = daoEvolucao.listarTodos();
@@ -83,6 +93,16 @@ public class ServicosPokemon {
             evsDTO.add(evDTO);
         }
         return evsDTO;
+    };
+    
+    public static PokemonElementoDTO montarPokemonElementoDTO(Long id){
+        PokemonElemento obj = acharElemento(id);
+        PokemonElementoDTO dto = new PokemonElementoDTO();
+        dto.setPokemonElemento(obj);
+        dto.setPokemon(daoPokemon.buscarPorId(obj.getIdPokemon()));
+        dto.setElemento(ServicosElemento.achar(obj.getIdElemento()));
+        dto.setJogo(ServicosJogo.achar(obj.getIdJogo()));
+        return dto;
     };
 
     public static List<PokemonElementoDTO> listarPokemonElementoDTO(){

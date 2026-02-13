@@ -47,6 +47,15 @@ public class ServicosElemento {
         daoFV.deletar(id);
     }
 
+    public static ElementoFraquezaVantagemDTO montarElementoFraquezaVantagemDTO(Long id){
+        FraquezaVantagem fv = acharFraquezaVantagem(id);
+        ElementoFraquezaVantagemDTO efvDTO = new ElementoFraquezaVantagemDTO();
+        efvDTO.setFraquezaVantagem(fv);
+        efvDTO.elementoAlvo = daoElemento.buscarPorId(fv.getIdElementoAlvo());
+        efvDTO.elementoFV = daoElemento.buscarPorId(fv.getIdElementoFraquezaVantagem());
+        return efvDTO;
+    }
+
     
     public static List<ElementoFraquezaVantagemDTO> listarElementoFraquezaVantagemDTO(){
         List<ElementoFraquezaVantagemDTO> elDTO = new ArrayList<ElementoFraquezaVantagemDTO>();

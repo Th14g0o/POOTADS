@@ -20,6 +20,10 @@ public class CadastroElemento extends FormModelo<Elemento>{
         this.ehCadastro = ehCadastro;
     }
 
+    private CampoTexto campoNome;
+    private CampoImagem campoFoto;
+    private CampoSelecionaCor campoCor;
+
     public void carregarForm(boolean ehCadastro, Elemento el){
         setModelo(el);
         setTipo(ehCadastro);
@@ -38,43 +42,24 @@ public class CadastroElemento extends FormModelo<Elemento>{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        CampoTexto campoNome = new CampoTexto("Nome:");
+        campoNome = new CampoTexto("Nome:");
         if (!this.ehCadastro && this.obj != null) campoNome.setValor(this.obj.getNome());
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        CampoImagem campoFoto = new CampoImagem("Imagem do Jogo:");
-         if (!this.ehCadastro && this.obj != null) campoFoto.setImagem(this.obj.getImagem());
+        campoFoto = new CampoImagem("Imagem do Jogo:");
+        if (!this.ehCadastro && this.obj != null) campoFoto.setImagem(this.obj.getImagem());
         formulario.add(campoFoto, gbc);
 
         gbc.gridy = 2;
-        CampoSelecionaCor campoCor = new CampoSelecionaCor("Selecione a cor representante:");
-         if (!this.ehCadastro && this.obj != null) campoCor.setCorHex(this.obj.getCor());
+        campoCor = new CampoSelecionaCor("Selecione a cor representante:");
+        if (!this.ehCadastro && this.obj != null) campoCor.setCorHex(this.obj.getCor());
         formulario.add(campoCor, gbc);
 
         gbc.gridy = 3;
-        BotaoSalvar btSalvar = new BotaoSalvar();
+        btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-            Elemento elemento = new Elemento();
-            if(campoNome.temTexto())
-            {
-                elemento.setNome(campoNome.getValor());
-                elemento.setImagem(campoFoto.getByteImagem());
-                elemento.setCor(campoCor.getCorSelecionadaHex());
-                if (!this.ehCadastro){ 
-                    elemento.setId(this.obj.getId());
-                    ServicosElemento.atualizar(elemento);
-                }
-                else ServicosElemento.criar(elemento);
-                ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento!");
-                campoNome.limparValor();
-                campoFoto.limpar();
-                campoCor.limpar();
-            }
-            else{
-                ModalErro.ExibirModal("Faltou preencher o nome do Elemento.");
-            }
-            
+            salvar();
         });
         formulario.add(btSalvar, gbc); 
     }
@@ -83,11 +68,36 @@ public class CadastroElemento extends FormModelo<Elemento>{
         this(true);
     }
 
+    public boolean salvar(){
+        Elemento elemento = new Elemento();
+        if(campoNome.temTexto())
+        {
+            elemento.setNome(campoNome.getValor());
+            elemento.setImagem(campoFoto.getByteImagem());
+            elemento.setCor(campoCor.getCorSelecionadaHex());
+            if (!this.ehCadastro){ 
+                elemento.setId(this.obj.getId());
+                ServicosElemento.atualizar(elemento);
+            }
+            else ServicosElemento.criar(elemento);
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Elemento!");
+            if (ehCadastro){
+                campoNome.limparValor();
+                campoFoto.limpar();
+                campoCor.limpar();
+            }
+            return true;
+        }
+        else{
+            ModalErro.ExibirModal("Faltou preencher o nome do Elemento.");
+            return false;
+        }
+    }
+
     public CadastroElemento(boolean ehCadastro) {
         this(ehCadastro, null);
     }
     
-
     public CadastroElemento(boolean ehCadastro, Elemento el) {
         carregarForm(ehCadastro, el);
     }

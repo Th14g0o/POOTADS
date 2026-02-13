@@ -162,9 +162,21 @@ public class ServicosPokedex {
 
     }
 
+    public static PokedexDTO montarPokedexDTO(Long id){
+        Pokedex obj = achar(id);
+        PokedexDTO dto = new PokedexDTO();
+        dto.setPokedex(obj);
+        dto.setJogo(ServicosJogo.achar(obj.getIdJogo()));
+        dto.setRegiao(ServicosRegiao.achar(obj.getIdRegiao()));
+        dto.setPokemon(ServicosPokedex.montarPokemonElementoDTO(obj.getIdPokemon(), obj.getIdJogo()));
+        dto.setAnte(ServicosPokedex.montarPokemonElementoDTO(obj.getIdAnterior(), obj.getIdJogo()));;
+        dto.setProx(ServicosPokedex.montarPokemonElementoDTO(obj.getIdProximo(), obj.getIdJogo()));;
+        return dto;
+    };
+
     public static List<PokedexDTO> listarPokedexDTO(){
         List<PokedexDTO> dtos = new ArrayList<PokedexDTO>();
-        List<Pokedex> objs = daoPokedex.listarTodos();
+        List<Pokedex> objs = listar();
         for (Pokedex obj : objs){
             PokedexDTO dto = new PokedexDTO();
             dto.setPokedex(obj);

@@ -14,7 +14,7 @@ import projetoFinal.ui.util.Imagens;
 public class CardJogo extends CardListagemModelo<Jogo>{
     public CardJogo(int iconeAcoesLargura, int iconeAcoesAltura, Jogo obj){
         super(iconeAcoesLargura, iconeAcoesAltura);
-       setModelo(obj);
+        setModelo(obj);
     }
 
     public void setModelo(Jogo obj){
@@ -25,7 +25,7 @@ public class CardJogo extends CardListagemModelo<Jogo>{
     }
 
     public void mostrarExclusão(){
-        PopPupExclusao ppe = new PopPupExclusao("Excluir Elementop", this,  (obj != null ? obj.getNome() : "o elemento"));
+        PopPupExclusao ppe = new PopPupExclusao("Excluir Elemento", this,  (obj != null ? obj.getNome() : "o elemento"));
         ppe.mostrar(true);
     }
 
@@ -38,11 +38,15 @@ public class CardJogo extends CardListagemModelo<Jogo>{
     public void apagar(){
         if (this.obj != null) ServicosJogo.apagar(this.obj.getId());
         this.obj = null;
+        conteudoCard.setVisible(false);
         setVisible(false);
     }
 
     public void recarregarConteudo(){
+        this.limparConteudoCard();
         setModelo(ServicosJogo.achar(this.obj.getId()));
+        conteudoCard.revalidate();
+        conteudoCard.repaint();
     }
 
     protected void gerarConteudo(Jogo obj){
