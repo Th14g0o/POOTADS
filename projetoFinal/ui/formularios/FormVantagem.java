@@ -20,7 +20,7 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 import projetoFinal.ui.interfaces.AoMudar;
 import projetoFinal.ui.util.Enuns.TipoNumero;
 
-public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
+public class FormVantagem extends FormModelo<FraquezaVantagem>{
     private CampoSelect campoElemento;
     private CampoSelect campoVD;
     private CampoSelect campoJogo;
@@ -36,6 +36,10 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
         elementos = ServicosElemento.listar();
         fvs = ServicosElemento.listar();
     }
+
+    public void recarregarConteudos(){
+        
+    };
 
     public void recarregarListas(){
         jogos = ServicosJogo.listar();
@@ -152,7 +156,7 @@ public class CadastroVantagem extends FormModelo<FraquezaVantagem>{
         }
     }
 
-    public CadastroVantagem(){ this.carregarForm(true, null); }
-    public CadastroVantagem(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
-    public CadastroVantagem(boolean ehCadastro, FraquezaVantagem fv){ this.carregarForm(ehCadastro, fv); }
+    public FormVantagem(){ this.carregarForm(true, null); }
+    public FormVantagem(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public FormVantagem(boolean ehCadastro, FraquezaVantagem fv){ this.carregarForm(ehCadastro, fv); }
 }

@@ -3,7 +3,7 @@ package projetoFinal.ui.telas.listagem.cards;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.ui.componentes.TagElementoArredondada;
-import projetoFinal.ui.formularios.CadastroElemento;
+import projetoFinal.ui.formularios.FormElemento;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -21,7 +21,7 @@ public class CardElemento extends CardListagemModelo<Elemento> {
     }
 
     public void mostrarEdicao(){
-        CadastroElemento form = new CadastroElemento(false, obj);
+        FormElemento form = new FormElemento(false, obj);
         PopPupEdicao<Elemento> ppe = new PopPupEdicao<Elemento>("Editar Elemento", this, form);
         ppe.mostrar(true);
     }

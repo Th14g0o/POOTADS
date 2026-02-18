@@ -1,6 +1,7 @@
 package projetoFinal.ui.telas.cadastros;
 
 import projetoFinal.ui.componentes.botoes.BotaoIconeTexto;
+import projetoFinal.ui.interfaces.IRecarregarConteudo;
 import projetoFinal.ui.util.Cores;
 import projetoFinal.ui.util.Imagens;
 import javax.swing.*;
@@ -8,15 +9,27 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cadastros extends JPanel  {;
+public class Cadastros extends JPanel implements IRecarregarConteudo  {
     private int tamIcones = 24;
     private List<BotaoIconeTexto> btsSubmenu = new ArrayList<BotaoIconeTexto>();
+
+    private CadastrosJogo cadastrosJogo = new CadastrosJogo();
+    private CadastrosRegiao cadastrosRegiao = new CadastrosRegiao();
+    private CadastrosPokemon cadastrosPokemon = new CadastrosPokemon();
+    private CadastrosElemento cadastrosElemento = new CadastrosElemento();
 
     private void ativarBtSubmenu(BotaoIconeTexto botao){
         for (BotaoIconeTexto bt : this.btsSubmenu){
             if (botao == bt) bt.ativarBt();
             else bt.normalizarBt();
         }
+    }
+
+    public void recarregarConteudos(){
+        cadastrosJogo.recarregarConteudos();
+        cadastrosElemento.recarregarConteudos();
+        cadastrosPokemon.recarregarConteudos();
+        cadastrosRegiao.recarregarConteudos();
     }
 
     public Cadastros() {
@@ -36,6 +49,7 @@ public class Cadastros extends JPanel  {;
         btnPokemon.setIconeSelecionado(Imagens.iconeCadastroPokemonSelecionado(tamIcones, tamIcones));
         BotaoIconeTexto btnElemento = new BotaoIconeTexto("ELEMENTO", Imagens.iconeCadastroElemento(tamIcones, tamIcones));
         btnElemento.setIconeSelecionado(Imagens.iconeCadastroElementoSelecionado(tamIcones, tamIcones));
+
         btsSubmenu.add(btnJogo);
         btsSubmenu.add(btnRegiao);
         btsSubmenu.add(btnPokemon);
@@ -50,10 +64,10 @@ public class Cadastros extends JPanel  {;
         CardLayout cardLayout = new CardLayout();
         JPanel painelConteudo = new JPanel(cardLayout);
         painelConteudo.setBackground(new  Color(208, 61, 108));
-        painelConteudo.add(new CadastrosJogo(), "CADASTROS_JOGO");
-        painelConteudo.add(new CadastrosRegiao(), "CADASTROS_REGIAO");
-        painelConteudo.add(new CadastrosPokemon(), "CADASTROS_POKEMON");
-        painelConteudo.add(new CadastrosElemento(), "CADASTROS_ELEMENTO");
+        painelConteudo.add(cadastrosJogo, "CADASTROS_JOGO");
+        painelConteudo.add(cadastrosRegiao, "CADASTROS_REGIAO");
+        painelConteudo.add(cadastrosPokemon, "CADASTROS_POKEMON");
+        painelConteudo.add(cadastrosElemento, "CADASTROS_ELEMENTO");
 
         add(painelConteudo, BorderLayout.CENTER);
 
@@ -66,18 +80,22 @@ public class Cadastros extends JPanel  {;
         btnJogo.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS_JOGO");
             this.ativarBtSubmenu(btnJogo);
+            cadastrosJogo.recarregarConteudos();
         });
         btnRegiao.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS_REGIAO");
             this.ativarBtSubmenu(btnRegiao);
+            cadastrosRegiao.recarregarConteudos();
         });
         btnPokemon.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS_POKEMON");
             this.ativarBtSubmenu(btnPokemon);
+            cadastrosPokemon.recarregarConteudos();
         });
         btnElemento.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS_ELEMENTO");
             this.ativarBtSubmenu(btnElemento);
+            cadastrosElemento.recarregarConteudos();
         });
     }
 }

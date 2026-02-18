@@ -7,7 +7,7 @@ import projetoFinal.logica.dto.PokedexDTO;
 import projetoFinal.logica.modelos.Elemento;
 import projetoFinal.logica.servicos.ServicosPokedex;
 import projetoFinal.ui.componentes.TagElementoArredondada;
-import projetoFinal.ui.formularios.CadastroPokedex;
+import projetoFinal.ui.formularios.FormPokedex;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -27,7 +27,7 @@ public class CardPokedex extends CardListagemModelo<PokedexDTO>{
     }
 
     public void mostrarEdicao(){
-        CadastroPokedex form = new CadastroPokedex(false, obj != null ? obj.getPokedex() : null);
+        FormPokedex form = new FormPokedex(false, obj != null ? obj.getPokedex() : null);
         PopPupEdicao<PokedexDTO> ppe = new PopPupEdicao("Editar Pokedex", this, form);
         ppe.mostrar(true);
     }

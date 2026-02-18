@@ -6,7 +6,7 @@ import projetoFinal.logica.dto.PokemonElementoDTO;
 import projetoFinal.logica.modelos.PokemonElemento;
 import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.ui.componentes.TagElementoArredondada;
-import projetoFinal.ui.formularios.CadastroPokemonElemento;
+import projetoFinal.ui.formularios.FormPokemonElemento;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -27,7 +27,7 @@ public class CardPokemonElemento extends CardListagemModelo<PokemonElementoDTO>{
 
     public void mostrarEdicao(){
         PokemonElemento pe = this.obj != null ? this.obj.getPokemonElemento() : null;
-        CadastroPokemonElemento form = new CadastroPokemonElemento(false, pe);
+        FormPokemonElemento form = new FormPokemonElemento(false, pe);
         PopPupEdicao<PokemonElemento> ppe = new PopPupEdicao("Editar Pokemon-Elemento", this, form);
         ppe.mostrar(true);
     }

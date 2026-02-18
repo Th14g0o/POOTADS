@@ -5,7 +5,7 @@ import java.awt.*;
 
 import projetoFinal.logica.modelos.Pokemon;
 import projetoFinal.logica.servicos.ServicosPokemon;
-import projetoFinal.ui.formularios.CadastroPokemon;
+import projetoFinal.ui.formularios.FormPokemon;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -23,7 +23,7 @@ public class CardPokemon extends CardListagemModelo<Pokemon>{
     }
 
     public void mostrarEdicao(){
-        CadastroPokemon form = new CadastroPokemon(false, this.obj);
+        FormPokemon form = new FormPokemon(false, this.obj);
         PopPupEdicao<Pokemon> ppe = new PopPupEdicao<Pokemon>("Editar Pokemon", this, form);
         ppe.mostrar(true);
     }

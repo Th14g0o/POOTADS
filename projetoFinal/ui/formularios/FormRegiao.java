@@ -1,24 +1,26 @@
 package projetoFinal.ui.formularios;
 
-import projetoFinal.logica.modelos.Pokemon;
-import projetoFinal.logica.servicos.ServicosPokemon;
+import projetoFinal.logica.modelos.Regiao;
+import projetoFinal.logica.servicos.ServicosRegiao;
 import projetoFinal.ui.componentes.ModalErro;
 import projetoFinal.ui.componentes.ModalSucesso;
 import projetoFinal.ui.componentes.botoes.BotaoSalvar;
-import projetoFinal.ui.componentes.campos.CampoImagem;
 import projetoFinal.ui.componentes.campos.CampoTexto;
 import projetoFinal.ui.formularios.abstracao.FormModelo;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class CadastroPokemon extends FormModelo<Pokemon>{
+public class FormRegiao extends FormModelo<Regiao>{
     private CampoTexto campoNome;
-    private CampoImagem campoFoto;
 
-    public void carregarForm(boolean ehCadastro, Pokemon p){
+    public void recarregarConteudos(){
+     
+    };
+
+    public void carregarForm(boolean ehCadastro, Regiao r){
         setTipo(ehCadastro);
-        setModelo(p);
+        setModelo(r);
         setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         setOpaque(false);
 
@@ -39,45 +41,36 @@ public class CadastroPokemon extends FormModelo<Pokemon>{
         formulario.add(campoNome, gbc);
 
         gbc.gridy = 1;
-        campoFoto = new CampoImagem("Imagem do Pokemon:");
-        if (!this.ehCadastro && this.obj != null) campoFoto.setImagem(this.obj.getImagem());
-        formulario.add(campoFoto, gbc);
-
-        gbc.gridy = 2;
         btSalvar = new BotaoSalvar();
         btSalvar.addActionListener(e ->{
-           salvar();            
+            salvar();            
         });
         formulario.add(btSalvar, gbc); 
     }
 
     public boolean salvar(){
-        Pokemon poke = new Pokemon();
+        Regiao rNovo = new Regiao();
         if(campoNome.temTexto())
         {
-            poke.setNome(campoNome.getValor());
-            poke.setImagem(campoFoto.getByteImagem());
+            rNovo.setNome(campoNome.getValor());
             if (!this.ehCadastro && this.obj != null){
-                poke.setId(this.obj.getId());
-                ServicosPokemon.atualizar(poke);
+                rNovo.setId(this.obj.getId());
+                ServicosRegiao.atualizar(rNovo);
             } else {
-                ServicosPokemon.criar(poke);
+                ServicosRegiao.criar(rNovo);
             }
-            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Pokemon!");
-            if (ehCadastro){
-                campoNome.limparValor();
-                campoFoto.limpar();
-            }   
+            ModalSucesso.ExibirModal("Sucesso ao " + (this.ehCadastro ? "criar" : "atualizar") + " Região!");
+            if (ehCadastro) campoNome.limparValor();
             return true;
         }
         else{
-            ModalErro.ExibirModal("Faltou preencher o nome do Pokemon.");
+            ModalErro.ExibirModal("Faltou preencher o nome da Região.");
             return false;
-        } 
+        }
     }
 
-    public CadastroPokemon(){ this.carregarForm(true, null); }
-    public CadastroPokemon(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
-    public CadastroPokemon(boolean ehCadastro, Pokemon p){ this.carregarForm(ehCadastro, p); }
+    public FormRegiao(){ this.carregarForm(true, null); }
+    public FormRegiao(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public FormRegiao(boolean ehCadastro, Regiao r){ this.carregarForm(ehCadastro, r); }
     
 }

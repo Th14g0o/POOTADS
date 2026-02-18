@@ -13,12 +13,16 @@ import projetoFinal.ui.componentes.campos.CampoSelecionaCor;
 import projetoFinal.ui.componentes.campos.CampoTexto;
 import projetoFinal.ui.formularios.abstracao.FormModelo;
 
-public class CadastroElemento extends FormModelo<Elemento>{
+public class FormElemento extends FormModelo<Elemento>{
     private boolean ehCadastro = true;
 
     public void setTipo(boolean ehCadastro){
         this.ehCadastro = ehCadastro;
     }
+
+    public void recarregarConteudos(){
+            
+    };
 
     private CampoTexto campoNome;
     private CampoImagem campoFoto;
@@ -64,7 +68,7 @@ public class CadastroElemento extends FormModelo<Elemento>{
         formulario.add(btSalvar, gbc); 
     }
 
-    public CadastroElemento() {
+    public FormElemento() {
         this(true);
     }
 
@@ -94,11 +98,11 @@ public class CadastroElemento extends FormModelo<Elemento>{
         }
     }
 
-    public CadastroElemento(boolean ehCadastro) {
+    public FormElemento(boolean ehCadastro) {
         this(ehCadastro, null);
     }
     
-    public CadastroElemento(boolean ehCadastro, Elemento el) {
+    public FormElemento(boolean ehCadastro, Elemento el) {
         carregarForm(ehCadastro, el);
     }
 }

@@ -24,4 +24,6 @@ public abstract class FormModelo<T> extends JPanel{
     public abstract void carregarForm(boolean ehCadastro, T el);
 
     public abstract boolean salvar();
+
+    public abstract void recarregarConteudos();
 }

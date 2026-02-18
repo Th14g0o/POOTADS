@@ -7,7 +7,7 @@ import projetoFinal.logica.dto.ElementoFraquezaVantagemDTO;
 import projetoFinal.logica.modelos.FraquezaVantagem;
 import projetoFinal.logica.servicos.ServicosElemento;
 import projetoFinal.ui.componentes.TagElementoArredondada;
-import projetoFinal.ui.formularios.CadastroVantagem;
+import projetoFinal.ui.formularios.FormVantagem;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -29,7 +29,7 @@ public class CardVantagem extends CardListagemModelo<ElementoFraquezaVantagemDTO
 
     public void mostrarEdicao(){
         FraquezaVantagem fv = this.obj != null ? this.obj.getFraquezaVantagem() : null;
-        CadastroVantagem form = new CadastroVantagem(false, fv);
+        FormVantagem form = new FormVantagem(false, fv);
         PopPupEdicao<ElementoFraquezaVantagemDTO> ppe = new PopPupEdicao("Editar Vantagem/Desvantagem", this, form);
         ppe.mostrar(true);
     }

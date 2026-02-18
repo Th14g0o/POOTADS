@@ -12,9 +12,13 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 import java.awt.*;
 import javax.swing.*;
 
-public class CadastroJogo extends FormModelo<Jogo>{
+public class FormJogo extends FormModelo<Jogo>{
     private CampoTexto campoNome;
     private CampoImagem campoFoto;
+
+    public void recarregarConteudos(){
+        
+    };
 
     public void carregarForm(boolean ehCadastro, Jogo j){
         setTipo(ehCadastro);
@@ -76,10 +80,10 @@ public class CadastroJogo extends FormModelo<Jogo>{
         }
     }
 
-    public CadastroJogo() { this.carregarForm(true, null); }
+    public FormJogo() { this.carregarForm(true, null); }
 
-    public CadastroJogo(boolean ehCadastro) { this.carregarForm(ehCadastro, null); }
+    public FormJogo(boolean ehCadastro) { this.carregarForm(ehCadastro, null); }
 
-    public CadastroJogo(boolean ehCadastro, Jogo j) { this.carregarForm(ehCadastro, j); }
+    public FormJogo(boolean ehCadastro, Jogo j) { this.carregarForm(ehCadastro, j); }
     
 }

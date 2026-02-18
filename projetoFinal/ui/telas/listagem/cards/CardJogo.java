@@ -5,7 +5,7 @@ import java.awt.*;
 
 import projetoFinal.logica.modelos.Jogo;
 import projetoFinal.logica.servicos.ServicosJogo;
-import projetoFinal.ui.formularios.CadastroJogo;
+import projetoFinal.ui.formularios.FormJogo;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -30,7 +30,7 @@ public class CardJogo extends CardListagemModelo<Jogo>{
     }
 
     public void mostrarEdicao(){
-        CadastroJogo form = new CadastroJogo(false, this.obj);
+        FormJogo form = new FormJogo(false, this.obj);
         PopPupEdicao<Jogo> ppe = new PopPupEdicao<Jogo>("Editar Jogo", this, form);
         ppe.mostrar(true);
     }

@@ -18,7 +18,7 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 
 import java.util.List;
 
-public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
+public class FormPokemonElemento extends FormModelo<PokemonElemento>{
     private CampoSelect campoPokemon;
     private CampoSelect campoJogo;
     private CampoSelect campoElemento;
@@ -32,6 +32,10 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
         this.elementos = ServicosElemento.listar();
         this.pokemons = ServicosPokemon.listar();
     }
+
+    public void recarregarConteudos(){
+        recarregarListas();
+    };
 
     public void recarregarListas(){
         this.jogos = ServicosJogo.listar();
@@ -125,7 +129,7 @@ public class CadastroPokemonElemento extends FormModelo<PokemonElemento>{
         }
     }
 
-    public CadastroPokemonElemento(){ this.carregarForm(true, null); }
-    public CadastroPokemonElemento(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
-    public CadastroPokemonElemento(boolean ehCadastro, PokemonElemento pe){ this.carregarForm(ehCadastro, pe); }
+    public FormPokemonElemento(){ this.carregarForm(true, null); }
+    public FormPokemonElemento(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public FormPokemonElemento(boolean ehCadastro, PokemonElemento pe){ this.carregarForm(ehCadastro, pe); }
 }

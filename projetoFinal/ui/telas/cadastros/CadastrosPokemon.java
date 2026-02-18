@@ -2,39 +2,47 @@ package projetoFinal.ui.telas.cadastros;
 
 import projetoFinal.ui.componentes.tab.BotaoTab;
 import projetoFinal.ui.componentes.tab.TabPadrao;
-import projetoFinal.ui.formularios.CadastroEvolucao;
-import projetoFinal.ui.formularios.CadastroPokedex;
-import projetoFinal.ui.formularios.CadastroPokemon;
-import projetoFinal.ui.formularios.CadastroPokemonElemento;
+import projetoFinal.ui.formularios.FormEvolucao;
+import projetoFinal.ui.formularios.FormPokedex;
+import projetoFinal.ui.formularios.FormPokemon;
+import projetoFinal.ui.formularios.FormPokemonElemento;
 import projetoFinal.ui.interfaces.AoClicar;
+import projetoFinal.ui.interfaces.IRecarregarConteudo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CadastrosPokemon extends TabPadrao {
-    private CadastroPokemon cadastroPokemon = new CadastroPokemon();
-    private CadastroPokemonElemento cadastroElemento = new CadastroPokemonElemento();
-    private CadastroEvolucao cadastroEvolucao = new CadastroEvolucao();
-    private CadastroPokedex cadastroPokedex = new CadastroPokedex();
+public class CadastrosPokemon extends TabPadrao implements IRecarregarConteudo {
+    private FormPokemon cadastroPokemon = new FormPokemon();
+    private FormPokemonElemento cadastroElemento = new FormPokemonElemento();
+    private FormEvolucao cadastroEvolucao = new FormEvolucao();
+    private FormPokedex cadastroPokedex = new FormPokedex();
+
+    public void recarregarConteudos(){
+        cadastroElemento.recarregarConteudos();
+        cadastroEvolucao.recarregarConteudos();
+        cadastroPokedex.recarregarConteudos();
+    }
+
     public CadastrosPokemon() {
         List<BotaoTab> bts = new ArrayList<>();
         bts.add(new BotaoTab("Pokemon", "CADASTRO_POKEMON"));
         bts.add(
             new BotaoTab(
                 "Elemento para Pokemon", "CADASTRO_ELEMENTO_POKEMON",
-                new AoClicar() {public void acao() {cadastroElemento.recarregarListas();};}
+                new AoClicar() {public void acao() {cadastroElemento.recarregarConteudos();};}
             )
         );
         bts.add(
             new BotaoTab(
                 "Evolução", "CADASTRO_EVOLUCAO",
-                new AoClicar() {public void acao() {cadastroEvolucao.recarregarListas();};}
+                new AoClicar() {public void acao() {cadastroEvolucao.recarregarConteudos();};}
             )
         );
         bts.add(
             new BotaoTab(
                 "Pokedex", "CADASTRO_POKEDEX",
-                new AoClicar() {public void acao() {cadastroPokedex.recarregarListas();};}
+                new AoClicar() {public void acao() {cadastroPokedex.recarregarConteudos();};}
             )
         );
         setBotoes(bts);

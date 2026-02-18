@@ -7,19 +7,24 @@ import projetoFinal.logica.modelos.Regiao;
 import projetoFinal.logica.servicos.ServicosRegiao;
 import projetoFinal.ui.componentes.tab.BotaoTab;
 import projetoFinal.ui.componentes.tab.TabPadrao;
+import projetoFinal.ui.interfaces.IRecarregarConteudo;
 import projetoFinal.ui.interfaces.InstanciarGenerica;
 import projetoFinal.ui.telas.listagem.cards.CardRegiao;
 import projetoFinal.ui.util.Uteis;
 
-public class ListagemRegiao extends TabPadrao  {
+public class ListagemRegiao extends TabPadrao implements IRecarregarConteudo {
     private int iconeAcoesLargura = 20;
     private int iconeAcoesAltura = 20;
 
     private JPanel conteudoRegiao = new JPanel();
     private List<Regiao> regioes = new ArrayList<Regiao>();
-    public void recarregarListaJogos(){
+    public void recarregarRegioes(){
         this.regioes = ServicosRegiao.listar();
         this.configurarConteudoRegiao();
+    }
+
+    public void recarregarConteudos(){
+        recarregarRegioes();
     }
 
     public ListagemRegiao() {
@@ -29,7 +34,8 @@ public class ListagemRegiao extends TabPadrao  {
         this.configurarConteudoRegiao();
         adicionarConteudo(conteudoRegiao, "LISTA_REGIAO");
         iniciarTab();
-        recarregarListaJogos();
+        
+        recarregarConteudos();
     }
     private void configurarConteudoRegiao(){
         Uteis.conteudoCardListagemComun(

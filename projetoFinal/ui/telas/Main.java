@@ -25,6 +25,11 @@ public class Main extends JFrame {
             else bt.setForeground(Cores.AMARELO);
         }
     }
+    private Home telaHome = new Home();
+    private Cadastros telaCadastros = new Cadastros();
+    private Listas telaListas = new Listas();
+    private Time telaTime = new Time();
+    private Pokedex telaPokedex = new Pokedex();
 
     public Main() {
         // Criando tela
@@ -77,14 +82,12 @@ public class Main extends JFrame {
         botoesHeader.add(btnTime);
         botoesHeader.add(btnPokedex);
 
-
         painelBotoes.add(btnHome);
         painelBotoes.add(btnCadastros);
         painelBotoes.add(btnListas);
         painelBotoes.add(btnTime);
         painelBotoes.add(btnPokedex);
         
-
         cabecalho.add(painelLogo, BorderLayout.WEST);
         cabecalho.add(painelBotoes, BorderLayout.EAST);
         
@@ -92,11 +95,13 @@ public class Main extends JFrame {
         cardLayout = new CardLayout();
         painelConteudo = new JPanel(cardLayout);
         painelConteudo.setBackground(new  Color(208, 61, 108));
-        painelConteudo.add(new Home(), "HOME");
-        painelConteudo.add(new Cadastros(), "CADASTROS");
-        painelConteudo.add(new Listas(), "LISTAGEM");
-        painelConteudo.add(new Time(), "TIME");
-        painelConteudo.add(new Pokedex(), "POKEDEX");
+
+
+        painelConteudo.add(telaHome, "HOME");
+        painelConteudo.add(telaCadastros, "CADASTROS");
+        painelConteudo.add(telaListas, "LISTAGEM");
+        painelConteudo.add(telaTime, "TIME");
+        painelConteudo.add(telaPokedex, "POKEDEX");
         
         add(painelConteudo, BorderLayout.CENTER);        
 
@@ -111,6 +116,7 @@ public class Main extends JFrame {
         btnCadastros.addActionListener(e -> {
             cardLayout.show(painelConteudo, "CADASTROS");
             this.destacarBotaoAtual(btnCadastros);
+            telaCadastros.recarregarConteudos();
         });
         btnTime.addActionListener(e -> {
             cardLayout.show(painelConteudo, "TIME");
@@ -123,6 +129,7 @@ public class Main extends JFrame {
         btnListas.addActionListener(e ->{
             cardLayout.show(painelConteudo, "LISTAGEM");
             this.destacarBotaoAtual(btnListas);
+            telaListas.recarregarConteudos();
         });
     }
 

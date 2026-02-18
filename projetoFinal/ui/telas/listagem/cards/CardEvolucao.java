@@ -5,7 +5,7 @@ import java.awt.*;
 import projetoFinal.logica.dto.EvolucaoDTO;
 import projetoFinal.logica.modelos.Evolucao;
 import projetoFinal.logica.servicos.ServicosPokemon;
-import projetoFinal.ui.formularios.CadastroEvolucao;
+import projetoFinal.ui.formularios.FormEvolucao;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -26,7 +26,7 @@ public class CardEvolucao extends CardListagemModelo<EvolucaoDTO>{
 
     public void mostrarEdicao(){
         Evolucao e = (this.obj != null ? this.obj.getEvolucao() : null);
-        CadastroEvolucao form = new CadastroEvolucao(false, e);
+        FormEvolucao form = new FormEvolucao(false, e);
         PopPupEdicao<Evolucao> ppe = new PopPupEdicao("Editar Evolução", this, form);
         ppe.mostrar(true);
     }

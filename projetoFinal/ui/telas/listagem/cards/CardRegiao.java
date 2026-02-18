@@ -5,7 +5,7 @@ import java.awt.*;
 
 import projetoFinal.logica.modelos.Regiao;
 import projetoFinal.logica.servicos.ServicosRegiao;
-import projetoFinal.ui.formularios.CadastroRegiao;
+import projetoFinal.ui.formularios.FormRegiao;
 import projetoFinal.ui.telas.listagem.cards.abstracao.CardListagemModelo;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupEdicao;
 import projetoFinal.ui.telas.listagem.cards.popup.PopPupExclusao;
@@ -22,7 +22,7 @@ public class CardRegiao extends CardListagemModelo<Regiao>{
     }
 
     public void mostrarEdicao(){
-        CadastroRegiao form = new CadastroRegiao(false, this.obj);
+        FormRegiao form = new FormRegiao(false, this.obj);
         PopPupEdicao<Regiao> ppe = new PopPupEdicao<Regiao>("Editar Região", this, form);
         ppe.mostrar(true);
     }

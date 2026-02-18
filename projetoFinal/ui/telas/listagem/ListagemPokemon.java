@@ -12,6 +12,7 @@ import projetoFinal.logica.servicos.ServicosPokemon;
 import projetoFinal.logica.servicos.ServicosPokedex;
 import projetoFinal.ui.componentes.tab.BotaoTab;
 import projetoFinal.ui.componentes.tab.TabPadrao;
+import projetoFinal.ui.interfaces.IRecarregarConteudo;
 import projetoFinal.ui.interfaces.InstanciarGenerica;
 import projetoFinal.ui.telas.listagem.cards.CardEvolucao;
 import projetoFinal.ui.telas.listagem.cards.CardPokedex;
@@ -19,7 +20,7 @@ import projetoFinal.ui.telas.listagem.cards.CardPokemon;
 import projetoFinal.ui.telas.listagem.cards.CardPokemonElemento;
 import projetoFinal.ui.util.Uteis;
 
-public class ListagemPokemon extends TabPadrao  {
+public class ListagemPokemon extends TabPadrao implements IRecarregarConteudo  {
     private JPanel conteudoPokemon = new JPanel();
     private JPanel conteudoPokemonElemento = new JPanel();
     private JPanel conteudoEvolucao = new JPanel();
@@ -53,6 +54,12 @@ public class ListagemPokemon extends TabPadrao  {
         this.configurarConteudoEvolucao();;
     }
 
+    public void recarregarConteudos(){
+        recarregarListaPokemon();
+        recarregarListaEvolucao();
+        recarregarListaPE();
+        recarregarListaPokedex();
+    }
 
     public ListagemPokemon() {
         List<BotaoTab> bts = new ArrayList<>();
@@ -66,10 +73,7 @@ public class ListagemPokemon extends TabPadrao  {
         adicionarConteudo(conteudoEvolucao, "LISTA_EVOLUCAO");
         adicionarConteudo(conteudoPokedex, "LISTA_POKEDEX");
         iniciarTab();
-        recarregarListaPokemon();
-        recarregarListaEvolucao();
-        recarregarListaPE();
-        recarregarListaPokedex();
+        recarregarConteudos();
     }
 
     private void configurarConteudoPokemon(){

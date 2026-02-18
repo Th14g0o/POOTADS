@@ -24,9 +24,10 @@ public class Uteis {
     } 
 
     public static <T> void conteudoCardListagemComun(JPanel painelPai, List<T> objs, InstanciarGenerica<T> card){
+        painelPai.removeAll();
         painelPai.setOpaque(false);
         painelPai.setLayout(new BorderLayout());
-
+        
         Rolagem rolagem = new Rolagem(true);
         rolagem.conteudo.removeAll();
         
@@ -35,5 +36,8 @@ public class Uteis {
         }
 
         painelPai.add(rolagem.rolagem, BorderLayout.CENTER);
+
+        painelPai.revalidate();
+        painelPai.repaint();
     }
 }

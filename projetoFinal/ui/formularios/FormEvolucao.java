@@ -18,7 +18,7 @@ import projetoFinal.ui.formularios.abstracao.FormModelo;
 import projetoFinal.ui.interfaces.AoMudar;
 import java.util.List;
 
-public class CadastroEvolucao extends FormModelo<Evolucao>{
+public class FormEvolucao extends FormModelo<Evolucao>{
     private List<Pokemon> pokemons;
     private List<Pokemon> evolucoes;
     private List<Jogo> jogos;
@@ -35,6 +35,10 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         this.jogos = ServicosJogo.listar();
     }
 
+    public void recarregarConteudos(){
+        recarregarListas();
+    };
+
     public void recarregarListas(){
         this.pokemons = ServicosPokemon.listar();
         this.evolucoes = ServicosPokemon.listar();
@@ -49,9 +53,9 @@ public class CadastroEvolucao extends FormModelo<Evolucao>{
         for (Jogo j : jogos) campoJogo.addOpcao(j.getId(), j.getNome());
     }
 
-    public CadastroEvolucao(){ this.carregarForm(true, null); }
-    public CadastroEvolucao(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
-    public CadastroEvolucao(boolean ehCadastro, Evolucao evModel){ this.carregarForm(ehCadastro, evModel); }
+    public FormEvolucao(){ this.carregarForm(true, null); }
+    public FormEvolucao(boolean ehCadastro){ this.carregarForm(ehCadastro, null); }
+    public FormEvolucao(boolean ehCadastro, Evolucao evModel){ this.carregarForm(ehCadastro, evModel); }
 
     public void carregarForm(boolean ehCadastro, Evolucao evModel){
         this.carregarListas();

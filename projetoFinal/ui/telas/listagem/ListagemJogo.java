@@ -8,11 +8,12 @@ import projetoFinal.logica.modelos.Jogo;
 import projetoFinal.logica.servicos.ServicosJogo;
 import projetoFinal.ui.componentes.tab.BotaoTab;
 import projetoFinal.ui.componentes.tab.TabPadrao;
+import projetoFinal.ui.interfaces.IRecarregarConteudo;
 import projetoFinal.ui.interfaces.InstanciarGenerica;
 import projetoFinal.ui.telas.listagem.cards.CardJogo;
 import projetoFinal.ui.util.Uteis;
 
-public class ListagemJogo extends TabPadrao  {
+public class ListagemJogo extends TabPadrao implements IRecarregarConteudo  {
     private int iconeAcoesLargura = 20;
     private int iconeAcoesAltura = 20;
 
@@ -22,12 +23,15 @@ public class ListagemJogo extends TabPadrao  {
         this.jogos = ServicosJogo.listar();
         this.configurarConteudoJogo();
     }
+
+    public void recarregarConteudos(){
+        recarregarListaJogos();
+    }
     
     public ListagemJogo() {
         List<BotaoTab> bts = new ArrayList<>();
         bts.add(new BotaoTab("Jogo", "LISTA_JOGO"));
         setBotoes(bts);
-        this.configurarConteudoJogo();
         adicionarConteudo(conteudoJogo, "LISTA_JOGO");
         iniciarTab();
         recarregarListaJogos();

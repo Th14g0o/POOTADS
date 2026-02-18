@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CadastroPokedex extends FormModelo<Pokedex>{
+public class FormPokedex extends FormModelo<Pokedex>{
     private CampoSelect campoPokemon;
     private CampoSelect campoAnterior;
     private CampoSelect campoProximo;
@@ -48,6 +48,12 @@ public class CadastroPokedex extends FormModelo<Pokedex>{
         this.pokemonsProx = ServicosPokemon.listar();
         this.regioes = ServicosRegiao.listar();
     }
+
+    public void recarregarConteudos(){
+        recarregarListas();
+    };
+
+
 
     public void recarregarListas(){
         this.jogos = ServicosJogo.listar();
@@ -208,7 +214,7 @@ public class CadastroPokedex extends FormModelo<Pokedex>{
         }
     }
 
-    public CadastroPokedex(){ carregarForm(true, null); }
-    public CadastroPokedex(boolean ehCadastro){ carregarForm(ehCadastro, null); }
-    public CadastroPokedex(boolean ehCadastro, Pokedex px){ carregarForm(ehCadastro, px); }
+    public FormPokedex(){ carregarForm(true, null); }
+    public FormPokedex(boolean ehCadastro){ carregarForm(ehCadastro, null); }
+    public FormPokedex(boolean ehCadastro, Pokedex px){ carregarForm(ehCadastro, px); }
 }
