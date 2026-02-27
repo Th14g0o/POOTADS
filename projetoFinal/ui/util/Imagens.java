@@ -153,4 +153,11 @@ public class Imagens {
             larg, altu
         );
     }
+
+    public static ImageIcon iconeAdicionarMaisBranco(int larg, int altu) {
+        return getImagemIcone(
+            "/projetoFinal/conteudos/imgs/comuns/iconeAdicionarMaisBranco.png",
+            larg, altu
+        );
+    }
 }

@@ -3,7 +3,6 @@ package projetoFinal.ui.componentes.tab;
 import javax.swing.*;
 
 import projetoFinal.ui.util.Cores;
-import projetoFinal.ui.interfaces.AoClicar;
 import java.awt.*;
 import java.util.List;
 

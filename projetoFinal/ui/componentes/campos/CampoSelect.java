@@ -52,13 +52,14 @@ public class CampoSelect extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setOpaque(false);
 
-        JLabel label = new JLabel(labelTexto);
-        label.setForeground(Color.WHITE);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        add(label);
+        if (!labelTexto.isBlank()){
+            JLabel label = new JLabel(labelTexto);
+            label.setForeground(Color.WHITE);
+            label.setAlignmentX(Component.LEFT_ALIGNMENT);
+            add(label);
+            add(Box.createRigidArea(new Dimension(0,5)));
+        }
         
-        add(Box.createRigidArea(new Dimension(0,5)));
-    
         opcoes = new DefaultComboBoxModel<Opcao>();
         campo = new JComboBox<Opcao>(opcoes);
         campo.setAlignmentX(Component.LEFT_ALIGNMENT);
