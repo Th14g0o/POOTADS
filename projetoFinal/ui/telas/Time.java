@@ -2,6 +2,7 @@ package projetoFinal.ui.telas;
 
 import javax.swing.*;
 
+import projetoFinal.ui.componentes.LayoutVertical;
 import projetoFinal.ui.componentes.botoes.BotaoIconeTexto;
 import projetoFinal.ui.componentes.botoes.BotaoVermelho;
 import projetoFinal.ui.componentes.campos.CampoSelect;
@@ -10,21 +11,19 @@ import projetoFinal.ui.util.Imagens;
 
 import java.awt.*;
 
-public class Time extends JPanel  {
+public class Time extends LayoutVertical  {
     public Time() {
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         setOpaque(false);
         
         JPanel painelAcoesTime = new JPanel(new FlowLayout(FlowLayout.LEFT, 20,20));
         painelAcoesTime.setOpaque(false);
         painelAcoesTime.setAlignmentY(Component.TOP_ALIGNMENT);
-        painelAcoesTime.setMaximumSize(new Dimension(Integer.MAX_VALUE, painelAcoesTime.getPreferredSize().height));
-        add(painelAcoesTime);
+        addPainel(painelAcoesTime);
 
         CampoSelect time = new CampoSelect("");
         painelAcoesTime.add(time);
 
-        BotaoVermelho btCriar = new BotaoVermelho("Criar", Cores.VERDE, Color.WHITE);
+        BotaoVermelho btCriar = new BotaoVermelho("Criar", Cores.VERMELHO, Color.WHITE);
         btCriar.altura(time.campo.getPreferredSize().height + 1);
         painelAcoesTime.add(btCriar);
 
@@ -35,40 +34,37 @@ public class Time extends JPanel  {
         JPanel painelEspacosTime = new JPanel(new FlowLayout(FlowLayout.LEFT, 20,20));
         painelEspacosTime.setBackground(Cores.AZUL);
         painelEspacosTime.setAlignmentY(Component.TOP_ALIGNMENT);
-        painelEspacosTime.setMaximumSize(new Dimension(Integer.MAX_VALUE, painelEspacosTime.getPreferredSize().height));
-        add(painelEspacosTime);
+        addPainel(painelEspacosTime);
 
         BotaoIconeTexto btAdd1 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd1.padding(10, 10, 10, 10);
-        btAdd1.adicionarFundo(Cores.VERDE);
+        btAdd1.padding(20, 20, 20, 20);
+        btAdd1.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd1);
 
         BotaoIconeTexto btAdd2 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd2.padding(10, 10, 10, 10);
-        btAdd2.adicionarFundo(Cores.VERDE);
+        btAdd2.padding(20, 20, 20, 20);
+        btAdd2.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd2);
 
         BotaoIconeTexto btAdd3 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd3.padding(10, 10, 10, 10);
-        btAdd3.adicionarFundo(Cores.VERDE);
+        btAdd3.padding(20, 20, 20, 20);
+        btAdd3.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd3);
 
         BotaoIconeTexto btAdd4 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd4.padding(10, 10, 10, 10);
-        btAdd4.adicionarFundo(Cores.VERDE);
+        btAdd4.padding(20, 20, 20, 20);
+        btAdd4.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd4);
 
         BotaoIconeTexto btAdd5 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd5.padding(10, 10, 10, 10);
-        btAdd5.adicionarFundo(Cores.VERDE);
+        btAdd5.padding(20, 20, 20, 20);
+        btAdd5.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd5);
 
         BotaoIconeTexto btAdd6 = new BotaoIconeTexto("", Imagens.iconeAdicionarMaisBranco(50, 50));
-        btAdd6.padding(10, 10, 10, 10);
-        btAdd6.adicionarFundo(Cores.VERDE);
+        btAdd6.padding(20, 20, 20, 20);
+        btAdd6.adicionarFundo(Cores.VERMELHO);
         painelEspacosTime.add(btAdd6);
 
-        // em conjunto com setMaximumSize ajusta as alturas
-        add(Box.createVerticalGlue());
     }
 }
